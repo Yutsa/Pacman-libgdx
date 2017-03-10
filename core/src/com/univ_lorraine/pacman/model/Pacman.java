@@ -1,6 +1,6 @@
 package com.univ_lorraine.pacman.model;
 
-import com.badlogic.gdx.math.Vector2;
+import java.awt.Point;
 
 /**
  * The class representing Pacman
@@ -13,7 +13,7 @@ public class Pacman extends GameElement {
      * @param position Position of Pacman.
      * @param wolrd World of Pacman.
      */
-    public Pacman(Vector2 position, World wolrd)
+    public Pacman(Point position, World wolrd)
     {
         super(position, wolrd);
     }

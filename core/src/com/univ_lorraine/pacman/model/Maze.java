@@ -1,7 +1,6 @@
 package com.univ_lorraine.pacman.model;
 
-import com.badlogic.gdx.math.Vector2;
-
+import java.awt.Point;
 import java.util.Iterator;
 
 /**
@@ -90,7 +89,7 @@ public class Maze implements Iterable<GameElement> {
     private void loadDemoLevel() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                blocks[i][j] = new Block(new Vector2(i, j), world);
+                blocks[i][j] = new Block(new Point(i, j), world);
             }
         }
     }

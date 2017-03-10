@@ -1,6 +1,6 @@
 package com.univ_lorraine.pacman.model;
 
-import com.badlogic.gdx.math.Vector2;
+import java.awt.Point;
 
 /**
  * Base class for the game elements such as pacman, the blocks or the ghosts.
@@ -9,7 +9,7 @@ public abstract class GameElement {
     /**
      * The mPosition of the GameElement on the map.
      */
-    protected Vector2 mPosition;
+    protected Point mPosition;
     /**
      * The World in which the element is.
      */
@@ -20,7 +20,7 @@ public abstract class GameElement {
      * @param position The mPosition of the element.
      * @param world The mWorld of the element.
      */
-    protected GameElement(Vector2 position, World world) {
+    protected GameElement(Point position, World world) {
         setPosition(position);
         setWorld(world);
     }
@@ -29,7 +29,7 @@ public abstract class GameElement {
      * Returns the mPosition of the element.
      * @return Vector2 The mPosition of the element.
      */
-    public Vector2 getPosition() {
+    public Point getPosition() {
         return mPosition;
     }
 
@@ -38,7 +38,7 @@ public abstract class GameElement {
      * Sets the mPosition of the element.
      * @param position The mPosition of the element.
      */
-    public void setPosition(Vector2 position) {
+    public void setPosition(Point position) {
         if (position == null)
             throw new IllegalArgumentException("Position cannot be null");
         this.mPosition = position;
