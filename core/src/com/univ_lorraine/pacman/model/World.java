@@ -10,8 +10,8 @@ public class World implements Iterable<GameElement> {
     private ArrayList<GameElement> mGameElements;
 
     public World() {
-        mPacman = new Pacman(new Vector2D(0, 0), this);
-        mMaze = new Maze(this, 10, 10);
+        mPacman = new Pacman(new Vector2D(14, 13), this);
+        mMaze = new Maze(this);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
     }

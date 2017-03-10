@@ -1,5 +1,10 @@
 package com.univ_lorraine.pacman.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 
 /**
@@ -12,11 +17,8 @@ public class Maze implements Iterable<GameElement> {
     private World world;
     private Block[][] blocks;
 
-    public Maze(World world, int width, int height) {
+    public Maze(World world) {
         setWorld(world);
-        setWidth(width);
-        setHeight(height);
-        blocks = new Block[width][height];
         loadDemoLevel();
     }
 
@@ -67,12 +69,15 @@ public class Maze implements Iterable<GameElement> {
 
             @Override
             public GameElement next() {
-                GameElement gameElement = blocks[x][y];
-                x++;
-                if (x >= width) {
-                    x = 0;
-                    y++;
-                }
+                GameElement gameElement;
+                do {
+                    gameElement = blocks[x][y];
+                    x++;
+                    if (x >= width) {
+                        x = 0;
+                        y++;
+                    }
+                } while (gameElement == null && hasNext());
                 return gameElement;
             }
 
@@ -86,10 +91,24 @@ public class Maze implements Iterable<GameElement> {
     }
 
     private void loadDemoLevel() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                blocks[i][j] = new Block(new Vector2D(i, j), world);
+        setWidth(28);
+        setHeight(31);
+        blocks = new Block[width][height];
+        FileHandle handle = Gdx.files.internal("levels/base_lvl.txt");
+        InputStream stream = handle.read();
+        try {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    char c = (char)stream.read();
+                    if(c == '\n')
+                        c = (char)stream.read();
+                    if(c == '1')
+                        blocks[x][y] = new Block(new Vector2D(x, y), world);
+                    else blocks[x][y] = null;
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

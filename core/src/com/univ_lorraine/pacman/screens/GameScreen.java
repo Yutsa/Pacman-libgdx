@@ -19,6 +19,7 @@ public class GameScreen implements Screen {
     {
         mWorld = new World();
         mWorldRenderer = new WorldRenderer(mWorld);
+        mCamera = new OrthographicCamera();
     }
 
     @Override
@@ -28,12 +29,17 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mWorldRenderer.render();
+        mWorldRenderer.render(mCamera);
     }
 
     @Override
     public void resize(int width, int height) {
-
+        mCamera.setToOrtho(true, width, height);
+        mCamera.position.set (width / 2, height / 2, 0);
+        mWorldRenderer.setSize(Math.min((float) width / mWorld.getWidth(),
+                (float)height / mWorld.getHeight()));
+        mCamera.position.set(0, 0, 0);
+        mCamera.update();
     }
 
     @Override
