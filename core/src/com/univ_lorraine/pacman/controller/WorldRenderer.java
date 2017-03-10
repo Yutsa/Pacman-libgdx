@@ -1,4 +1,4 @@
-package com.univ_lorraine.pacman.view;
+package com.univ_lorraine.pacman.controller;
 
 /**
  * @author Édouard WILLISSECK
