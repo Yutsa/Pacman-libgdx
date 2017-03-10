@@ -3,11 +3,15 @@ package com.univ_lorraine.pacman.view;
 import com.badlogic.gdx.graphics.Texture;
 import com.univ_lorraine.pacman.model.GameElement;
 
+
 /**
  * The factory singleton that will return the textures needed.
  */
 public class TextureFactory {
 
+    public enum TextureInfo {
+        DEFAULT_TEXTURE, PACMAN_RIGHT, PACMAN_LEFT, PACMAN_UP, PACMAN_DOWN
+    }
     /**
      * An instance of the TextureFactory
      */
