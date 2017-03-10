@@ -1,17 +1,22 @@
 package com.univ_lorraine.pacman.view;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.Pacman;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * The factory singleton that will return the textures needed.
  */
 public class TextureFactory {
-
-    public enum TextureInfo {
-        DEFAULT_TEXTURE, PACMAN_RIGHT, PACMAN_LEFT, PACMAN_UP, PACMAN_DOWN
-    }
+    /**
+     * A map that associates a GameElement to its texture.
+     */
+    private Map<Class<?>, Texture> mTextureMap;
     /**
      * An instance of the TextureFactory
      */
@@ -33,6 +38,9 @@ public class TextureFactory {
     private TextureFactory(){
         pacmanTexture = new Texture("pacmanRight.png");
         blocTexture = new Texture("bloc.png");
+        mTextureMap = new HashMap<Class<?>, Texture>();
+        mTextureMap.put(Pacman.class, pacmanTexture);
+        mTextureMap.put(Block.class, blocTexture);
     }
 
     /**
@@ -48,31 +56,7 @@ public class TextureFactory {
         return instance;
     }
 
-    /**
-     * Returns the simple pacman texture.
-     * @return Texture The pacman texture.
-     */
-    public Texture getTexturePacman() {
-        return pacmanTexture;
-    }
-
-    /**
-     * Returns the block texture.
-     * @return Texture The block's texture.
-     */
-    public Texture getTextureBloc() {
-        return blocTexture;
-    }
-
     public Texture getTexture(GameElement element) {
-        switch (element.getTextureID()) {
-            case PACMAN_RIGHT:
-                return pacmanTexture;
-            case BLOCK:
-                return blocTexture;
-            default:
-                throw new IllegalArgumentException("The texture id of the element " +
-                        "is not recognized");
-        }
+        return mTextureMap.get(element.getClass());
     }
 }
