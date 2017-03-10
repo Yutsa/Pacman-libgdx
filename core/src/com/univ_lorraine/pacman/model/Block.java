@@ -14,7 +14,7 @@ public class Block extends GameElement {
      * @param world The mWorld of the block.
      */
     public Block(Vector2 position, World world) {
-        super(position, world, textureID.BLOCK);
+        super(position, world);
     }
 
 

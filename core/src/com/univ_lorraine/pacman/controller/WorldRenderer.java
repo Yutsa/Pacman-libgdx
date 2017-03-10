@@ -34,7 +34,7 @@ public class WorldRenderer {
             Vector2 position = e.getPosition();
             batch.draw(textureFactory.getTexture(e),
                     position.x * 48,
-                    position.y * 48);
+                    position.y * 48, 12, 12);
         }
         batch.end();
     }

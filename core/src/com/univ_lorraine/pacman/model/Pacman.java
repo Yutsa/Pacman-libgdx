@@ -15,7 +15,7 @@ public class Pacman extends GameElement {
      */
     public Pacman(Vector2 position, World wolrd)
     {
-        super(position, wolrd, textureID.PACMAN_RIGHT);
+        super(position, wolrd);
     }
 
     /**

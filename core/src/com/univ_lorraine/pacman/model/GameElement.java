@@ -6,11 +6,6 @@ import com.badlogic.gdx.math.Vector2;
  * Base class for the game elements such as pacman, the blocks or the ghosts.
  */
 public abstract class GameElement {
-
-    public enum textureID {
-        BLOCK, PACMAN_RIGHT
-    }
-
     /**
      * The mPosition of the GameElement on the map.
      */
@@ -20,18 +15,14 @@ public abstract class GameElement {
      */
     protected World mWorld;
 
-    protected textureID mTextureID;
-
     /**
      * Creates a GameElement with a mPosition and a mWorld.
      * @param position The mPosition of the element.
      * @param world The mWorld of the element.
-     * @param textureID
      */
-    protected GameElement(Vector2 position, World world, textureID textureID) {
+    protected GameElement(Vector2 position, World world) {
         setPosition(position);
         setWorld(world);
-        setTextureID(textureID);
     }
 
     /**
@@ -61,16 +52,5 @@ public abstract class GameElement {
         if (world == null)
             throw new IllegalArgumentException("World cannot be null");
         this.mWorld = world;
-    }
-
-    public void setTextureID(textureID textureID) {
-        if (textureID == null) {
-            throw new IllegalArgumentException("Must contain a textureID");
-        }
-        mTextureID = textureID;
-    }
-
-    public textureID getTextureID() {
-        return mTextureID;
     }
 }
