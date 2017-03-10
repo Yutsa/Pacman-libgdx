@@ -1,14 +1,9 @@
 package com.univ_lorraine.pacman.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.univ_lorraine.pacman.controller.WorldRenderer;
-import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.World;
-import com.univ_lorraine.pacman.view.TextureFactory;
 
 /**
  * @author Édouard WILLISSECK
@@ -17,6 +12,7 @@ import com.univ_lorraine.pacman.view.TextureFactory;
 public class GameScreen implements Screen {
     private World mWorld;
     private WorldRenderer mWorldRenderer;
+    private OrthographicCamera mCamera;
 
 
     public GameScreen()

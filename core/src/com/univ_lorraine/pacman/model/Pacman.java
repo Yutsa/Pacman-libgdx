@@ -1,7 +1,5 @@
 package com.univ_lorraine.pacman.model;
 
-import java.awt.Point;
-
 /**
  * The class representing Pacman
  */
@@ -13,7 +11,7 @@ public class Pacman extends GameElement {
      * @param position Position of Pacman.
      * @param wolrd World of Pacman.
      */
-    public Pacman(Point position, World wolrd)
+    public Pacman(Vector2D position, World wolrd)
     {
         super(position, wolrd);
     }

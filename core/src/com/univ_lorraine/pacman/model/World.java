@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.model;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -11,7 +10,7 @@ public class World implements Iterable<GameElement> {
     private ArrayList<GameElement> mGameElements;
 
     public World() {
-        mPacman = new Pacman(new Point(0, 0), this);
+        mPacman = new Pacman(new Vector2D(0, 0), this);
         mMaze = new Maze(this, 10, 10);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
