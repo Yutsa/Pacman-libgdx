@@ -17,15 +17,12 @@ import com.univ_lorraine.pacman.view.TextureFactory;
 public class GameScreen implements Screen {
     private World mWorld;
     private WorldRenderer mWorldRenderer;
-    private SpriteBatch batch;
-    private TextureFactory textureFactory;
+
 
     public GameScreen()
     {
         mWorld = new World();
-        mWorldRenderer = new WorldRenderer();
-        textureFactory = TextureFactory.getInstance();
-        batch = new SpriteBatch();
+        mWorldRenderer = new WorldRenderer(mWorld);
     }
 
     @Override
@@ -35,18 +32,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        batch.begin();
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        /* Iterates through the maze and renders the block */
-        for (GameElement e : mWorld) {
-            Vector2 position = e.getPosition();
-            batch.draw(textureFactory.getTexture(e),
-                    position.x * 48,
-                    position.y * 48);
-        }
-        batch.end();
+        mWorldRenderer.render();
     }
 
     @Override
