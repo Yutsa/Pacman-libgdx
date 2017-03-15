@@ -2,6 +2,7 @@ package com.univ_lorraine.pacman.view;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.univ_lorraine.pacman.model.Block;
+import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Pacman;
 
@@ -32,15 +33,19 @@ public class TextureFactory {
      */
     private static Texture blocTexture;
 
+    private static Texture emptyTexture;
+
     /**
      * Constructor that loads the textures.
      */
     private TextureFactory(){
         pacmanTexture = new Texture("pacmanRight.png");
         blocTexture = new Texture("bloc.png");
+        emptyTexture = new Texture("dark.png");
         mTextureMap = new HashMap<Class<?>, Texture>();
         mTextureMap.put(Pacman.class, pacmanTexture);
         mTextureMap.put(Block.class, blocTexture);
+        mTextureMap.put(EmptyTile.class, emptyTexture);
     }
 
     /**

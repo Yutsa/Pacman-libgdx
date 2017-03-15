@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.Vector2D;
@@ -82,7 +83,7 @@ public class WorldRenderer implements InputProcessor {
                 break;
 
         }
-        if (mWorld.getMaze().getBlock(newPosition.x, newPosition.y) == null)
+        if (mWorld.getMaze().getBlock(newPosition.x, newPosition.y) instanceof EmptyTile)
             pacman.setPosition(newPosition);
         return true;
     }

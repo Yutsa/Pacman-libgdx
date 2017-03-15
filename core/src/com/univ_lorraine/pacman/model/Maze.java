@@ -15,7 +15,7 @@ public class Maze implements Iterable<GameElement> {
     private int width;
     private int height;
     private World world;
-    private Block[][] blocks;
+    private GameElement[][] blocks;
 
     public Maze(World world) {
         setWorld(world);
@@ -52,7 +52,7 @@ public class Maze implements Iterable<GameElement> {
         this.world = world;
     }
 
-    public Block getBlock(int x, int y) {
+    public GameElement getBlock(int x, int y) {
         return blocks[x][y];
     }
 
@@ -93,7 +93,7 @@ public class Maze implements Iterable<GameElement> {
     private void loadDemoLevel() {
         setWidth(28);
         setHeight(31);
-        blocks = new Block[width][height];
+        blocks = new GameElement[width][height];
         FileHandle handle = Gdx.files.internal("levels/base_lvl.txt");
         InputStream stream = handle.read();
         try {
@@ -104,7 +104,8 @@ public class Maze implements Iterable<GameElement> {
                         c = (char)stream.read();
                     if(c == '1')
                         blocks[x][y] = new Block(new Vector2D(x, y), world);
-                    else blocks[x][y] = null;
+                    else
+                        blocks[x][y] = new EmptyTile(new Vector2D(x, y), world);
                 }
             }
         } catch (IOException e) {
