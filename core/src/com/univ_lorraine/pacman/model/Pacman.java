@@ -21,6 +21,5 @@ public class Pacman extends GameElement {
      * @param move The quantity of movement.
      */
     public void update(double move) {
-
     }
 }
