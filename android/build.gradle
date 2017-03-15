@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "com.devmobile.game"
         minSdkVersion 8
-        targetSdkVersion 23
+        targetSdkVersion 25
     }
 }
 
