@@ -52,7 +52,7 @@ public class Maze implements Iterable<GameElement> {
         this.world = world;
     }
 
-    public Block get(int x, int y) {
+    public Block getBlock(int x, int y) {
         return blocks[x][y];
     }
 

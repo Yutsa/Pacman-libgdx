@@ -82,7 +82,8 @@ public class WorldRenderer implements InputProcessor {
                 break;
 
         }
-        pacman.setPosition(newPosition);
+        if (mWorld.getMaze().getBlock(newPosition.x, newPosition.y) == null)
+            pacman.setPosition(newPosition);
         return true;
     }
 
