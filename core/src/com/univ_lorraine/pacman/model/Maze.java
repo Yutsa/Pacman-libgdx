@@ -22,6 +22,10 @@ public class Maze implements Iterable<GameElement> {
         loadDemoLevel();
     }
 
+    public int getWidth() {
+        return width;
+    }
+
     public void setWidth(int width) {
         if (width <= 0) {
             throw new IllegalArgumentException("The width of the maze cannot be negative.");
@@ -29,20 +33,16 @@ public class Maze implements Iterable<GameElement> {
         this.width = width;
     }
 
-    public int getWidth() {
-        return width;
+    public int getHeight() {
+        return height;
     }
 
     public void setHeight(int height) {
-        if (height <= 0){
+        if (height <= 0) {
             throw new IllegalArgumentException("The height of the maze cannot be negative.");
         }
 
         this.height = height;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public void setWorld(World world) {
@@ -70,14 +70,12 @@ public class Maze implements Iterable<GameElement> {
             @Override
             public GameElement next() {
                 GameElement gameElement;
-                do {
-                    gameElement = blocks[x][y];
-                    x++;
-                    if (x >= width) {
-                        x = 0;
-                        y++;
-                    }
-                } while (gameElement == null && hasNext());
+                gameElement = blocks[x][y];
+                x++;
+                if (x >= width) {
+                    x = 0;
+                    y++;
+                }
                 return gameElement;
             }
 
@@ -99,10 +97,10 @@ public class Maze implements Iterable<GameElement> {
         try {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    char c = (char)stream.read();
-                    if(c == '\n')
-                        c = (char)stream.read();
-                    if(c == '1')
+                    char c = (char) stream.read();
+                    if (c == '\n')
+                        c = (char) stream.read();
+                    if (c == '1')
                         blocks[x][y] = new Block(new Vector2D(x, y), world);
                     else
                         blocks[x][y] = new EmptyTile(new Vector2D(x, y), world);
