@@ -32,6 +32,19 @@ public class Pacman extends GameElement {
         mCurrentDirection = currentDirection;
     }
 
+    public static int getSpeed() {
+        return mSpeed;
+    }
+
+    public Direction getWantedDirection() {
+
+        return mWantedDirection;
+    }
+
+    public void setWantedDirection(Direction wantedDirection) {
+        mWantedDirection = wantedDirection;
+    }
+
     /**
      * Updates the mPosition of pacman.
      */
