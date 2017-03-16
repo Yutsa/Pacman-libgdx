@@ -11,7 +11,7 @@ public class Pacman extends GameElement {
      * The direction in which the pacman is oriented/going.
      */
     private Direction mDirection;
-    public static final int mSpeed = 5;
+    public static final int mSpeed = 10;
     /**
      * Calls the GameElement constructor to create the Pacman instance.
      * @param position Position of Pacman.

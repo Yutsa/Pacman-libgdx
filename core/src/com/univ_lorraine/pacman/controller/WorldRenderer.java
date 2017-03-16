@@ -49,13 +49,13 @@ public class WorldRenderer implements InputProcessor {
         for (GameElement e : mWorld) {
             Vector2D position = e.getPosition();
             batch.draw(textureFactory.getTexture(e),
-                    ((position.x / 100) - mWorld.getWidth() / 2f) * size,
-                    ((position.y / 100) - mWorld.getHeight() / 2f) * size, size, size);
+                    ((position.x / 100f) - mWorld.getWidth() / 2f) * size,
+                    ((position.y / 100f) - mWorld.getHeight() / 2f) * size, size, size);
         }
         batch.end();
         if (mWorld.getPacman().getDirection() != null)
             movePacman();
-        //Gdx.app.log(WorldRenderer.class.getName(), mWorld.getPacman().getPosition().toString());
+        Gdx.app.log(WorldRenderer.class.getName(), mWorld.getPacman().getPosition().toString());
     }
 
     public void movePacman() {
@@ -72,7 +72,7 @@ public class WorldRenderer implements InputProcessor {
             case RIGHT:
                 newPosition = new Vector2D(pacman.getPosition().x + Pacman.mSpeed,
                         pacman.getPosition().y);
-                if (mWorld.getMaze().getBlock((newPosition.x / 100),
+                if (mWorld.getMaze().getBlock((newPosition.x / 100) + 1,
                         (newPosition.y / 100)) instanceof EmptyTile)
                     pacman.setPosition(newPosition);
                 break;
@@ -87,7 +87,7 @@ public class WorldRenderer implements InputProcessor {
                 newPosition = new Vector2D(pacman.getPosition().x,
                         pacman.getPosition().y + Pacman.mSpeed);
                 if (mWorld.getMaze().getBlock((newPosition.x / 100),
-                        (newPosition.y / 100)) instanceof EmptyTile)
+                        (newPosition.y / 100) + 1) instanceof EmptyTile)
                     pacman.setPosition(newPosition);
                 break;
         }
