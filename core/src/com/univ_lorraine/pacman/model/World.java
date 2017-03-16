@@ -6,14 +6,22 @@ import java.util.Iterator;
 public class World implements Iterable<GameElement> {
     private Pacman mPacman;
     private Maze mMaze;
+    /**
+     * The coefficient by which the logical world is bigger than the onscreen world.
+     */
+    private int mCoef = 100;
 
     private ArrayList<GameElement> mGameElements;
 
     public World() {
-        mPacman = new Pacman(new Vector2D(14 * 100, 13 * 100), this);
+        mPacman = new Pacman(new Vector2D(14 * mCoef, 13 * mCoef), this);
         mMaze = new Maze(this);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
+    }
+
+    public int getCoef() {
+        return mCoef;
     }
 
     public int getWidth() {

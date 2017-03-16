@@ -17,15 +17,9 @@ public class Maze implements Iterable<GameElement> {
     private World world;
     private GameElement[][] blocks;
 
-    public int getCoef() {
-        return mCoef;
-    }
-
-    private int mCoef = 100;
-
     public Maze(World world) {
         setWorld(world);
-        loadDemoLevel();
+//        loadDemoLevel();
     }
 
     public int getWidth() {
@@ -94,7 +88,7 @@ public class Maze implements Iterable<GameElement> {
         return it;
     }
 
-    private void loadDemoLevel() {
+    public void loadDemoLevel(int coeff) {
         setWidth(28);
         setHeight(31);
         blocks = new GameElement[width][height];
@@ -107,9 +101,9 @@ public class Maze implements Iterable<GameElement> {
                     if (c == '\n')
                         c = (char) stream.read();
                     if (c == '1')
-                        blocks[x][y] = new Block(new Vector2D(x * mCoef, y * mCoef), world);
+                        blocks[x][y] = new Block(new Vector2D(x * coeff, y * coeff), world);
                     else
-                        blocks[x][y] = new EmptyTile(new Vector2D(x * mCoef, y * mCoef), world);
+                        blocks[x][y] = new EmptyTile(new Vector2D(x * coeff, y * coeff), world);
                 }
             }
         } catch (IOException e) {
