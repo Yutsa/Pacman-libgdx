@@ -12,7 +12,7 @@ public class Pacman extends GameElement {
      */
     private Direction mCurrentDirection;
     private Direction mWantedDirection;
-    public static final int mSpeed = 10;
+    public static final int mSpeed = 500;
     /**
      * Calls the GameElement constructor to create the Pacman instance.
      * @param position Position of Pacman.
@@ -53,16 +53,16 @@ public class Pacman extends GameElement {
         switch (mCurrentDirection)
         {
             case LEFT:
-                mPosition.x -= mSpeed;
+                mPosition.x -= (mSpeed * deltaTime);
                 break;
             case RIGHT:
-                mPosition.x += mSpeed;
+                mPosition.x += (mSpeed * deltaTime);
                 break;
             case UP:
-                mPosition.y -= mSpeed;
+                mPosition.y -= (mSpeed * deltaTime);
                 break;
             case DOWN:
-                mPosition.y += mSpeed;
+                mPosition.y += (mSpeed * deltaTime);
                 break;
         }
     }
