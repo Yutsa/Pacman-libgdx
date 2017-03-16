@@ -22,9 +22,12 @@ public class WorldRenderer implements InputProcessor {
     private SpriteBatch batch;
     private TextureFactory textureFactory;
     private World mWorld;
+    private double epsilon = 0.1;
+    private int mCoef;
 
     /**
      * Creates the WorldRenderer.
+     *
      * @param world The world being controlled by the {@link WorldRenderer}
      */
     public WorldRenderer(World world) {
@@ -32,10 +35,12 @@ public class WorldRenderer implements InputProcessor {
         batch = new SpriteBatch();
         mWorld = world;
         Gdx.input.setInputProcessor(this);
+        mCoef = mWorld.getMaze().getCoef();
     }
 
     /**
      * Gets the size of the sprites.
+     *
      * @return The size of the sprites.
      */
     public double getSize() {
@@ -44,6 +49,7 @@ public class WorldRenderer implements InputProcessor {
 
     /**
      * Sets the size of the sprites.
+     *
      * @param size The size of the sprites.
      */
     public void setSize(float size) {
@@ -52,7 +58,8 @@ public class WorldRenderer implements InputProcessor {
 
     /**
      * Renders the maze and the {@link GameElement}s
-     * @param camera The camera for the game.
+     *
+     * @param camera    The camera for the game.
      * @param deltaTime The time passed between two renders.
      */
     public void render(OrthographicCamera camera, float deltaTime) {
@@ -76,6 +83,7 @@ public class WorldRenderer implements InputProcessor {
 
     /**
      * Moves the pacman on the {@link com.univ_lorraine.pacman.model.Maze}
+     *
      * @param deltaTime The time elapsed between two renders.
      */
     public void movePacman(float deltaTime) {
@@ -86,38 +94,52 @@ public class WorldRenderer implements InputProcessor {
 
         switch (pacman.getCurrentDirection()) {
             case LEFT:
-                if (mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
-                        (pacman.getPosition().y / 100)) instanceof EmptyTile)
-                {
+                if (mWorld.getMaze().getBlock(
+                        (int) Math.ceil((pacman.getPosition().x / ((float) mCoef)) - 1),
+                        (pacman.getPosition().y / mCoef)) instanceof EmptyTile) {
 
-                    pacman.getPosition().y = (int) Math.floor(pacman.getPosition().y / 100) * 100;
                     pacman.updatePosition(deltaTime);
+
+                    if (pacman.getPosition().x / ((float) mCoef) - (pacman.getPosition().x / mCoef) < epsilon)
+                        pacman.getPosition().x = (pacman.getPosition().x / mCoef) * mCoef;
                 }
                 break;
             case RIGHT:
-                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100) + 1,
-                        (pacman.getPosition().y / 100)) instanceof EmptyTile)
-                {
-                    pacman.getPosition().y = (int) Math.floor(pacman.getPosition().y / 100) * 100;
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef) + 1,
+                        (pacman.getPosition().y / mCoef)) instanceof EmptyTile) {
+
                     pacman.updatePosition(deltaTime);
+
+                    if ((pacman.getPosition().x / mCoef) + 1
+                            - pacman.getPosition().x / ((float) mCoef) < epsilon) {
+                        pacman.getPosition().x = ((pacman.getPosition().x / mCoef) + 1) * mCoef;
+                    }
                 }
                 break;
             case UP:
-                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
-                        (int) Math.ceil((pacman.getPosition().y / 100f)) - 1)
-                        instanceof EmptyTile)
-                {
-                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / 100) * 100;
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
+                        (int) Math.ceil((pacman.getPosition().y / ((float) mCoef))) - 1)
+                        instanceof EmptyTile) {
+                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / mCoef) * mCoef;
+
                     pacman.updatePosition(deltaTime);
+
+                    if (pacman.getPosition().y / ((float) mCoef) - (pacman.getPosition().y / mCoef) < epsilon)
+                        pacman.getPosition().y = (pacman.getPosition().y / mCoef) * mCoef;
 
                 }
                 break;
             case DOWN:
-                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
-                        (pacman.getPosition().y / 100) +1 ) instanceof EmptyTile)
-                {
-                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / 100) * 100;
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
+                        (pacman.getPosition().y / mCoef) + 1) instanceof EmptyTile) {
+                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / mCoef) * mCoef;
+
                     pacman.updatePosition(deltaTime);
+
+                    if ((pacman.getPosition().y / mCoef) + 1
+                            - pacman.getPosition().y / ((float) mCoef) < epsilon) {
+                        pacman.getPosition().y = ((pacman.getPosition().y / mCoef) + 1) * mCoef;
+                    }
                 }
                 break;
         }
@@ -125,7 +147,8 @@ public class WorldRenderer implements InputProcessor {
 
     /**
      * Checks if the pacman can go to the wanted direction or not.
-     * @param pacman The {@link Pacman} that is moving.
+     *
+     * @param pacman          The {@link Pacman} that is moving.
      * @param wantedDirection The direction the {@link Pacman} wants to go.
      */
     private void checkWantedDirection(Pacman pacman, Pacman.Direction wantedDirection) {
@@ -141,33 +164,29 @@ public class WorldRenderer implements InputProcessor {
         switch (wantedDirection) {
             case LEFT:
                 if ((nextBlock = mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
-                        (pacman.getPosition().y / 100))) instanceof EmptyTile)
-                {
-                    if  (pacman.getPosition().y == nextBlock.getPosition().y)
+                        (pacman.getPosition().y / 100))) instanceof EmptyTile) {
+                    if (pacman.getPosition().y == nextBlock.getPosition().y)
                         pacman.setCurrentDirection(wantedDirection);
                 }
                 break;
             case RIGHT:
                 if ((nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / 100) + 1,
-                        (pacman.getPosition().y / 100))) instanceof EmptyTile)
-                {
-                    if  (pacman.getPosition().y == nextBlock.getPosition().y)
+                        (pacman.getPosition().y / 100))) instanceof EmptyTile) {
+                    if (pacman.getPosition().y == nextBlock.getPosition().y)
                         pacman.setCurrentDirection(wantedDirection);
                 }
                 break;
             case UP:
                 if ((nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
                         (int) Math.ceil((pacman.getPosition().y / 100f)) - 1))
-                        instanceof EmptyTile)
-                {
+                        instanceof EmptyTile) {
                     if (pacman.getPosition().x == nextBlock.getPosition().x)
                         pacman.setCurrentDirection(wantedDirection);
                 }
                 break;
             case DOWN:
                 if ((nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
-                        (pacman.getPosition().y / 100) +1 )) instanceof EmptyTile)
-                {
+                        (pacman.getPosition().y / 100) + 1)) instanceof EmptyTile) {
                     if (pacman.getPosition().x == nextBlock.getPosition().x)
                         pacman.setCurrentDirection(wantedDirection);
                 }
