@@ -64,7 +64,7 @@ public class WorldRenderer implements InputProcessor {
                 if (mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
                         (pacman.getPosition().y / 100)) instanceof EmptyTile)
                 {
-                    pacman.getPosition().x -= 10;
+                    pacman.updatePosition(pacman.getDirection());
                     pacman.getPosition().y = Math.round(pacman.getPosition().y / 100) * 100;
                 }
                 break;
@@ -72,7 +72,7 @@ public class WorldRenderer implements InputProcessor {
                 if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100) + 1,
                         (pacman.getPosition().y / 100)) instanceof EmptyTile)
                 {
-                    pacman.getPosition().x += 10;
+                    pacman.updatePosition(pacman.getDirection());
                     pacman.getPosition().y = Math.round(pacman.getPosition().y / 100) * 100;
                 }
                 break;
@@ -81,7 +81,7 @@ public class WorldRenderer implements InputProcessor {
                         (int) Math.ceil((pacman.getPosition().y / 100f)) - 1)
                         instanceof EmptyTile)
                 {
-                    pacman.getPosition().y -= 10;
+                    pacman.updatePosition(pacman.getDirection());
                     pacman.getPosition().x = Math.round(pacman.getPosition().x / 100) * 100;
                 }
                 break;
@@ -89,7 +89,7 @@ public class WorldRenderer implements InputProcessor {
                 if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
                         (pacman.getPosition().y / 100) +1 ) instanceof EmptyTile)
                 {
-                    pacman.getPosition().y += 10;
+                    pacman.updatePosition(pacman.getDirection());
                     pacman.getPosition().x = Math.round(pacman.getPosition().x / 100) * 100;
                 }
                 break;

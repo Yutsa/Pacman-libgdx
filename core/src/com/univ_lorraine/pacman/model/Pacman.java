@@ -34,6 +34,21 @@ public class Pacman extends GameElement {
     /**
      * Updates the mPosition of pacman.
      */
-    public void update() {
+    public void updatePosition(Direction direction) {
+        switch (mDirection)
+        {
+            case LEFT:
+                mPosition.x -= mSpeed;
+                break;
+            case RIGHT:
+                mPosition.x += mSpeed;
+                break;
+            case UP:
+                mPosition.y -= mSpeed;
+                break;
+            case DOWN:
+                mPosition.y += mSpeed;
+                break;
+        }
     }
 }
