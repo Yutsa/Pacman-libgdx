@@ -49,7 +49,7 @@ public class Pacman extends GameElement {
     /**
      * Updates the mPosition of pacman.
      */
-    public void updatePosition() {
+    public void updatePosition(float deltaTime) {
         switch (mCurrentDirection)
         {
             case LEFT:

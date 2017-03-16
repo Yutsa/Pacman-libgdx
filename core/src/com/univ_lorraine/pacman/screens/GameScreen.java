@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mWorldRenderer.render(mCamera);
+        mWorldRenderer.render(mCamera, delta);
     }
 
     @Override
