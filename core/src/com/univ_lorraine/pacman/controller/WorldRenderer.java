@@ -53,42 +53,45 @@ public class WorldRenderer implements InputProcessor {
                     ((position.y / 100f) - mWorld.getHeight() / 2f) * size, size, size);
         }
         batch.end();
-        if (mWorld.getPacman().getDirection() != null)
-            movePacman();
+        movePacman();
         Gdx.app.log(WorldRenderer.class.getName(), mWorld.getPacman().getPosition().toString());
     }
 
     public void movePacman() {
         Pacman pacman = mWorld.getPacman();
-        Vector2D newPosition;
         switch (pacman.getDirection()) {
             case LEFT:
-                newPosition = new Vector2D(pacman.getPosition().x - Pacman.mSpeed,
-                        pacman.getPosition().y);
-                if (mWorld.getMaze().getBlock((newPosition.x / 100),
-                        (newPosition.y / 100)) instanceof EmptyTile)
-                    pacman.setPosition(newPosition);
+                if (mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
+                        (pacman.getPosition().y / 100)) instanceof EmptyTile)
+                {
+                    pacman.getPosition().x -= 10;
+                    pacman.getPosition().y = Math.round(pacman.getPosition().y / 100) * 100;
+                }
                 break;
             case RIGHT:
-                newPosition = new Vector2D(pacman.getPosition().x + Pacman.mSpeed,
-                        pacman.getPosition().y);
-                if (mWorld.getMaze().getBlock((newPosition.x / 100) + 1,
-                        (newPosition.y / 100)) instanceof EmptyTile)
-                    pacman.setPosition(newPosition);
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100) + 1,
+                        (pacman.getPosition().y / 100)) instanceof EmptyTile)
+                {
+                    pacman.getPosition().x += 10;
+                    pacman.getPosition().y = Math.round(pacman.getPosition().y / 100) * 100;
+                }
                 break;
             case UP:
-                newPosition = new Vector2D(pacman.getPosition().x,
-                        pacman.getPosition().y - Pacman.mSpeed);
-                if (mWorld.getMaze().getBlock((newPosition.x / 100),
-                        (newPosition.y / 100)) instanceof EmptyTile)
-                    pacman.setPosition(newPosition);
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
+                        (int) Math.ceil((pacman.getPosition().y / 100f)) - 1)
+                        instanceof EmptyTile)
+                {
+                    pacman.getPosition().y -= 10;
+                    pacman.getPosition().x = Math.round(pacman.getPosition().x / 100) * 100;
+                }
                 break;
             case DOWN:
-                newPosition = new Vector2D(pacman.getPosition().x,
-                        pacman.getPosition().y + Pacman.mSpeed);
-                if (mWorld.getMaze().getBlock((newPosition.x / 100),
-                        (newPosition.y / 100) + 1) instanceof EmptyTile)
-                    pacman.setPosition(newPosition);
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
+                        (pacman.getPosition().y / 100) +1 ) instanceof EmptyTile)
+                {
+                    pacman.getPosition().y += 10;
+                    pacman.getPosition().x = Math.round(pacman.getPosition().x / 100) * 100;
+                }
                 break;
         }
     }

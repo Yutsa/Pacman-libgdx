@@ -20,6 +20,7 @@ public class Pacman extends GameElement {
     public Pacman(Vector2D position, World wolrd)
     {
         super(position, wolrd);
+        mDirection = Direction.RIGHT;
     }
 
     public Direction getDirection() {
