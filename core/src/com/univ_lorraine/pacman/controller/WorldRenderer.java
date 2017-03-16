@@ -23,6 +23,10 @@ public class WorldRenderer implements InputProcessor {
     private TextureFactory textureFactory;
     private World mWorld;
 
+    /**
+     * Creates the WorldRenderer.
+     * @param world The world being controlled by the {@link WorldRenderer}
+     */
     public WorldRenderer(World world) {
         textureFactory = TextureFactory.getInstance();
         batch = new SpriteBatch();
@@ -30,14 +34,27 @@ public class WorldRenderer implements InputProcessor {
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Gets the size of the sprites.
+     * @return The size of the sprites.
+     */
     public double getSize() {
         return size;
     }
 
+    /**
+     * Sets the size of the sprites.
+     * @param size The size of the sprites.
+     */
     public void setSize(float size) {
         this.size = size;
     }
 
+    /**
+     * Renders the maze and the {@link GameElement}s
+     * @param camera The camera for the game.
+     * @param deltaTime The time passed between two renders.
+     */
     public void render(OrthographicCamera camera, float deltaTime) {
         batch.begin();
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -57,6 +74,10 @@ public class WorldRenderer implements InputProcessor {
         Gdx.app.log(WorldRenderer.class.getName(), mWorld.getPacman().getPosition().toString());
     }
 
+    /**
+     * Moves the pacman on the {@link com.univ_lorraine.pacman.model.Maze}
+     * @param deltaTime The time elapsed between two renders.
+     */
     public void movePacman(float deltaTime) {
         Pacman pacman = mWorld.getPacman();
         Pacman.Direction wantedDirection = pacman.getWantedDirection();
@@ -68,13 +89,16 @@ public class WorldRenderer implements InputProcessor {
                 if (mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
                         (pacman.getPosition().y / 100)) instanceof EmptyTile)
                 {
-                        pacman.updatePosition(deltaTime);
+
+                    pacman.getPosition().y = (int) Math.floor(pacman.getPosition().y / 100) * 100;
+                    pacman.updatePosition(deltaTime);
                 }
                 break;
             case RIGHT:
                 if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100) + 1,
                         (pacman.getPosition().y / 100)) instanceof EmptyTile)
                 {
+                    pacman.getPosition().y = (int) Math.floor(pacman.getPosition().y / 100) * 100;
                     pacman.updatePosition(deltaTime);
                 }
                 break;
@@ -83,6 +107,7 @@ public class WorldRenderer implements InputProcessor {
                         (int) Math.ceil((pacman.getPosition().y / 100f)) - 1)
                         instanceof EmptyTile)
                 {
+                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / 100) * 100;
                     pacman.updatePosition(deltaTime);
 
                 }
@@ -91,13 +116,18 @@ public class WorldRenderer implements InputProcessor {
                 if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
                         (pacman.getPosition().y / 100) +1 ) instanceof EmptyTile)
                 {
+                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / 100) * 100;
                     pacman.updatePosition(deltaTime);
-
                 }
                 break;
         }
     }
 
+    /**
+     * Checks if the pacman can go to the wanted direction or not.
+     * @param pacman The {@link Pacman} that is moving.
+     * @param wantedDirection The direction the {@link Pacman} wants to go.
+     */
     private void checkWantedDirection(Pacman pacman, Pacman.Direction wantedDirection) {
         GameElement nextBlock;
 
