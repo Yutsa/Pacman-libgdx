@@ -59,12 +59,12 @@ public class WorldRenderer implements InputProcessor {
 
     public void movePacman() {
         Pacman pacman = mWorld.getPacman();
-        switch (pacman.getDirection()) {
+        switch (pacman.getCurrentDirection()) {
             case LEFT:
                 if (mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
                         (pacman.getPosition().y / 100)) instanceof EmptyTile)
                 {
-                    pacman.updatePosition(pacman.getDirection());
+                    pacman.updatePosition();
                     pacman.getPosition().y = Math.round(pacman.getPosition().y / 100) * 100;
                 }
                 break;
@@ -72,7 +72,7 @@ public class WorldRenderer implements InputProcessor {
                 if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100) + 1,
                         (pacman.getPosition().y / 100)) instanceof EmptyTile)
                 {
-                    pacman.updatePosition(pacman.getDirection());
+                    pacman.updatePosition();
                     pacman.getPosition().y = Math.round(pacman.getPosition().y / 100) * 100;
                 }
                 break;
@@ -81,7 +81,7 @@ public class WorldRenderer implements InputProcessor {
                         (int) Math.ceil((pacman.getPosition().y / 100f)) - 1)
                         instanceof EmptyTile)
                 {
-                    pacman.updatePosition(pacman.getDirection());
+                    pacman.updatePosition();
                     pacman.getPosition().x = Math.round(pacman.getPosition().x / 100) * 100;
                 }
                 break;
@@ -89,7 +89,7 @@ public class WorldRenderer implements InputProcessor {
                 if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
                         (pacman.getPosition().y / 100) +1 ) instanceof EmptyTile)
                 {
-                    pacman.updatePosition(pacman.getDirection());
+                    pacman.updatePosition();
                     pacman.getPosition().x = Math.round(pacman.getPosition().x / 100) * 100;
                 }
                 break;
@@ -101,19 +101,19 @@ public class WorldRenderer implements InputProcessor {
         Pacman pacman = mWorld.getPacman();
         switch (keycode) {
             case Input.Keys.LEFT:
-                pacman.setDirection(Pacman.Direction.LEFT);
+                pacman.setCurrentDirection(Pacman.Direction.LEFT);
                 Gdx.app.log(WorldRenderer.class.getName(), "LEFT");
                 break;
             case Input.Keys.RIGHT:
-                pacman.setDirection(Pacman.Direction.RIGHT);
+                pacman.setCurrentDirection(Pacman.Direction.RIGHT);
                 Gdx.app.log(WorldRenderer.class.getName(), "RIGHT");
                 break;
             case Input.Keys.UP:
-                pacman.setDirection(Pacman.Direction.UP);
+                pacman.setCurrentDirection(Pacman.Direction.UP);
                 Gdx.app.log(WorldRenderer.class.getName(), "UP");
                 break;
             case Input.Keys.DOWN:
-                pacman.setDirection(Pacman.Direction.DOWN);
+                pacman.setCurrentDirection(Pacman.Direction.DOWN);
                 Gdx.app.log(WorldRenderer.class.getName(), "DOWN");
                 break;
         }

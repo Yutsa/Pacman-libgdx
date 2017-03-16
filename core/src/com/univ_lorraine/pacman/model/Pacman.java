@@ -5,12 +5,13 @@ package com.univ_lorraine.pacman.model;
  */
 
 public class Pacman extends GameElement {
-    public enum Direction {LEFT, UP, RIGHT, DOWN};
+    public enum Direction {LEFT, UP, RIGHT, DOWN}
 
     /**
      * The direction in which the pacman is oriented/going.
      */
-    private Direction mDirection;
+    private Direction mCurrentDirection;
+    private Direction mWantedDirection;
     public static final int mSpeed = 10;
     /**
      * Calls the GameElement constructor to create the Pacman instance.
@@ -20,22 +21,22 @@ public class Pacman extends GameElement {
     public Pacman(Vector2D position, World wolrd)
     {
         super(position, wolrd);
-        mDirection = Direction.RIGHT;
+        mCurrentDirection = Direction.RIGHT;
     }
 
-    public Direction getDirection() {
-        return mDirection;
+    public Direction getCurrentDirection() {
+        return mCurrentDirection;
     }
 
-    public void setDirection(Direction direction) {
-        mDirection = direction;
+    public void setCurrentDirection(Direction currentDirection) {
+        mCurrentDirection = currentDirection;
     }
 
     /**
      * Updates the mPosition of pacman.
      */
-    public void updatePosition(Direction direction) {
-        switch (mDirection)
+    public void updatePosition() {
+        switch (mCurrentDirection)
         {
             case LEFT:
                 mPosition.x -= mSpeed;
