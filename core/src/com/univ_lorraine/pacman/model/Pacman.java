@@ -22,6 +22,7 @@ public class Pacman extends GameElement {
     {
         super(position, wolrd);
         mCurrentDirection = Direction.RIGHT;
+        mWantedDirection = Direction.RIGHT;
     }
 
     public Direction getCurrentDirection() {

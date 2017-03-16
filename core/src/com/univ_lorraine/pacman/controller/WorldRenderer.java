@@ -54,11 +54,42 @@ public class WorldRenderer implements InputProcessor {
         }
         batch.end();
         movePacman();
-        Gdx.app.log(WorldRenderer.class.getName(), mWorld.getPacman().getPosition().toString());
     }
 
     public void movePacman() {
         Pacman pacman = mWorld.getPacman();
+        switch (pacman.getWantedDirection()) {
+            case LEFT:
+                if (mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
+                        (pacman.getPosition().y / 100)) instanceof EmptyTile)
+                {
+                    pacman.setCurrentDirection(pacman.getWantedDirection());
+                }
+                break;
+            case RIGHT:
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100) + 1,
+                        (pacman.getPosition().y / 100)) instanceof EmptyTile)
+                {
+                    pacman.setCurrentDirection(pacman.getWantedDirection());
+                }
+                break;
+            case UP:
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
+                        (int) Math.ceil((pacman.getPosition().y / 100f)) - 1)
+                        instanceof EmptyTile)
+                {
+                    pacman.setCurrentDirection(pacman.getWantedDirection());
+                }
+                break;
+            case DOWN:
+                if (mWorld.getMaze().getBlock((pacman.getPosition().x / 100),
+                        (pacman.getPosition().y / 100) +1 ) instanceof EmptyTile)
+                {
+                    pacman.setCurrentDirection(pacman.getWantedDirection());
+                }
+                break;
+        }
+
         switch (pacman.getCurrentDirection()) {
             case LEFT:
                 if (mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / 100f) - 1),
@@ -101,19 +132,19 @@ public class WorldRenderer implements InputProcessor {
         Pacman pacman = mWorld.getPacman();
         switch (keycode) {
             case Input.Keys.LEFT:
-                pacman.setCurrentDirection(Pacman.Direction.LEFT);
+                pacman.setWantedDirection(Pacman.Direction.LEFT);
                 Gdx.app.log(WorldRenderer.class.getName(), "LEFT");
                 break;
             case Input.Keys.RIGHT:
-                pacman.setCurrentDirection(Pacman.Direction.RIGHT);
+                pacman.setWantedDirection(Pacman.Direction.RIGHT);
                 Gdx.app.log(WorldRenderer.class.getName(), "RIGHT");
                 break;
             case Input.Keys.UP:
-                pacman.setCurrentDirection(Pacman.Direction.UP);
+                pacman.setWantedDirection(Pacman.Direction.UP);
                 Gdx.app.log(WorldRenderer.class.getName(), "UP");
                 break;
             case Input.Keys.DOWN:
-                pacman.setCurrentDirection(Pacman.Direction.DOWN);
+                pacman.setWantedDirection(Pacman.Direction.DOWN);
                 Gdx.app.log(WorldRenderer.class.getName(), "DOWN");
                 break;
         }
