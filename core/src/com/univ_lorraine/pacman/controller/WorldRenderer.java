@@ -18,9 +18,17 @@ import com.univ_lorraine.pacman.view.TextureFactory;
  */
 
 public class WorldRenderer implements InputProcessor {
+    float size;
     private SpriteBatch batch;
     private TextureFactory textureFactory;
     private World mWorld;
+
+    public WorldRenderer(World world) {
+        textureFactory = TextureFactory.getInstance();
+        batch = new SpriteBatch();
+        mWorld = world;
+        Gdx.input.setInputProcessor(this);
+    }
 
     public double getSize() {
         return size;
@@ -28,15 +36,6 @@ public class WorldRenderer implements InputProcessor {
 
     public void setSize(float size) {
         this.size = size;
-    }
-
-    float size;
-
-    public WorldRenderer(World world) {
-        textureFactory = TextureFactory.getInstance();
-        batch = new SpriteBatch();
-        mWorld = world;
-        Gdx.input.setInputProcessor(this);
     }
 
     public void render(OrthographicCamera camera) {
@@ -50,41 +49,72 @@ public class WorldRenderer implements InputProcessor {
         for (GameElement e : mWorld) {
             Vector2D position = e.getPosition();
             batch.draw(textureFactory.getTexture(e),
-                    (position.x - mWorld.getWidth() / 2f) * size,
-                    (position.y - mWorld.getHeight() / 2f) * size, size, size);
+                    ((position.x / 100) - mWorld.getWidth() / 2f) * size,
+                    ((position.y / 100) - mWorld.getHeight() / 2f) * size, size, size);
         }
         batch.end();
+        if (mWorld.getPacman().getDirection() != null)
+            movePacman();
+        //Gdx.app.log(WorldRenderer.class.getName(), mWorld.getPacman().getPosition().toString());
+    }
+
+    public void movePacman() {
+        Pacman pacman = mWorld.getPacman();
+        Vector2D newPosition;
+        switch (pacman.getDirection()) {
+            case LEFT:
+                newPosition = new Vector2D(pacman.getPosition().x - Pacman.mSpeed,
+                        pacman.getPosition().y);
+                if (mWorld.getMaze().getBlock((newPosition.x / 100),
+                        (newPosition.y / 100)) instanceof EmptyTile)
+                    pacman.setPosition(newPosition);
+                break;
+            case RIGHT:
+                newPosition = new Vector2D(pacman.getPosition().x + Pacman.mSpeed,
+                        pacman.getPosition().y);
+                if (mWorld.getMaze().getBlock((newPosition.x / 100),
+                        (newPosition.y / 100)) instanceof EmptyTile)
+                    pacman.setPosition(newPosition);
+                break;
+            case UP:
+                newPosition = new Vector2D(pacman.getPosition().x,
+                        pacman.getPosition().y - Pacman.mSpeed);
+                if (mWorld.getMaze().getBlock((newPosition.x / 100),
+                        (newPosition.y / 100)) instanceof EmptyTile)
+                    pacman.setPosition(newPosition);
+                break;
+            case DOWN:
+                newPosition = new Vector2D(pacman.getPosition().x,
+                        pacman.getPosition().y + Pacman.mSpeed);
+                if (mWorld.getMaze().getBlock((newPosition.x / 100),
+                        (newPosition.y / 100)) instanceof EmptyTile)
+                    pacman.setPosition(newPosition);
+                break;
+        }
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        Vector2D newPosition;
         Pacman pacman = mWorld.getPacman();
-        switch (keycode)
-        {
+        switch (keycode) {
             case Input.Keys.LEFT:
-                newPosition = new Vector2D(pacman.getPosition().x - 1, pacman.getPosition().y);
+                pacman.setDirection(Pacman.Direction.LEFT);
                 Gdx.app.log(WorldRenderer.class.getName(), "LEFT");
                 break;
             case Input.Keys.RIGHT:
-                newPosition = new Vector2D(pacman.getPosition().x + 1, pacman.getPosition().y);
+                pacman.setDirection(Pacman.Direction.RIGHT);
                 Gdx.app.log(WorldRenderer.class.getName(), "RIGHT");
                 break;
             case Input.Keys.UP:
-                newPosition = new Vector2D(pacman.getPosition().x, pacman.getPosition().y - 1);
+                pacman.setDirection(Pacman.Direction.UP);
                 Gdx.app.log(WorldRenderer.class.getName(), "UP");
                 break;
             case Input.Keys.DOWN:
-                newPosition = new Vector2D(pacman.getPosition().x, pacman.getPosition().y + 1);
+                pacman.setDirection(Pacman.Direction.DOWN);
                 Gdx.app.log(WorldRenderer.class.getName(), "DOWN");
                 break;
-            default:
-                newPosition = pacman.getPosition();
-                break;
-
         }
-        if (mWorld.getMaze().getBlock(newPosition.x, newPosition.y) instanceof EmptyTile)
-            pacman.setPosition(newPosition);
+
         return true;
     }
 

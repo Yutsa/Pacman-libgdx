@@ -89,6 +89,7 @@ public class Maze implements Iterable<GameElement> {
     }
 
     private void loadDemoLevel() {
+        final int coef = 100;
         setWidth(28);
         setHeight(31);
         blocks = new GameElement[width][height];
@@ -101,9 +102,9 @@ public class Maze implements Iterable<GameElement> {
                     if (c == '\n')
                         c = (char) stream.read();
                     if (c == '1')
-                        blocks[x][y] = new Block(new Vector2D(x, y), world);
+                        blocks[x][y] = new Block(new Vector2D(x * coef, y * coef), world);
                     else
-                        blocks[x][y] = new EmptyTile(new Vector2D(x, y), world);
+                        blocks[x][y] = new EmptyTile(new Vector2D(x * coef, y * coef), world);
                 }
             }
         } catch (IOException e) {
