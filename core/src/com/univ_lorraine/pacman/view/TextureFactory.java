@@ -17,7 +17,7 @@ public class TextureFactory {
     /**
      * A map that associates a GameElement to its texture.
      */
-    private Map<Class<?>, Texture> mTextureMap;
+    private Map<Class<?>, TextureWrapper> mTextureMap;
     /**
      * An instance of the TextureFactory
      */
@@ -42,10 +42,10 @@ public class TextureFactory {
         pacmanTexture = new Texture("pacmanRight.png");
         blocTexture = new Texture("bloc.png");
         emptyTexture = new Texture("dark.png");
-        mTextureMap = new HashMap<Class<?>, Texture>();
-        mTextureMap.put(Pacman.class, pacmanTexture);
-        mTextureMap.put(Block.class, blocTexture);
-        mTextureMap.put(EmptyTile.class, emptyTexture);
+        mTextureMap = new HashMap<Class<?>, TextureWrapper>();
+        mTextureMap.put(Pacman.class, new PacmanTextureWrapper(null));
+        mTextureMap.put(Block.class, new DefaultTextureWrapper(null, blocTexture));
+        mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(null, emptyTexture));
     }
 
     /**
@@ -62,6 +62,10 @@ public class TextureFactory {
     }
 
     public Texture getTexture(GameElement element) {
-        return mTextureMap.get(element.getClass());
+        TextureWrapper textureWrapper = mTextureMap.get(element.getClass());
+        if (textureWrapper.getWrappedObject() == null) {
+            textureWrapper.setWrappedObject(element);
+        }
+        return textureWrapper.getTexture();
     }
 }
