@@ -24,7 +24,7 @@ public class WorldRenderer implements InputProcessor {
     private SpriteBatch batch;
     private TextureFactory textureFactory;
     private World mWorld;
-    private double epsilon = 0.1;
+    private double epsilon = (Pacman.mSpeed / 10000f) * 2;
     /**
      * The coefficient by which the logical world is bigger than the onscreen world.
      */
