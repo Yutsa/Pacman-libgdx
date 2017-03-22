@@ -6,7 +6,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
+import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.Vector2D;
@@ -93,14 +95,17 @@ public class WorldRenderer implements InputProcessor {
     public void movePacman(float deltaTime) {
         Pacman pacman = mWorld.getPacman();
         Pacman.Direction wantedDirection = pacman.getWantedDirection();
+        GameElement nextBlock = null;
 
         checkWantedDirection(pacman, wantedDirection);
 
         switch (pacman.getCurrentDirection()) {
             case LEFT:
-                if (!(mWorld.getMaze().getBlock(
+                nextBlock = mWorld.getMaze().getBlock(
                         (int) Math.ceil((pacman.getPosition().x / ((float) mCoef)) - 1),
-                        (pacman.getPosition().y / mCoef)) instanceof Block)) {
+                        (pacman.getPosition().y / mCoef));
+
+                if (!(nextBlock instanceof Block)) {
 
                     pacman.updatePosition(deltaTime);
 
@@ -109,8 +114,10 @@ public class WorldRenderer implements InputProcessor {
                 }
                 break;
             case RIGHT:
-                if (!(mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef) + 1,
-                        (pacman.getPosition().y / mCoef)) instanceof Block)) {
+                nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef) + 1,
+                        (pacman.getPosition().y / mCoef));
+
+                if (!(nextBlock instanceof Block)) {
 
                     pacman.updatePosition(deltaTime);
 
@@ -121,9 +128,10 @@ public class WorldRenderer implements InputProcessor {
                 }
                 break;
             case UP:
-                if (!(mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
-                        (int) Math.ceil((pacman.getPosition().y / ((float) mCoef))) - 1)
-                        instanceof Block)) {
+                nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
+                        (int) Math.ceil((pacman.getPosition().y / ((float) mCoef))) - 1);
+
+                if (!(nextBlock instanceof Block)) {
                     pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / mCoef) * mCoef;
 
                     pacman.updatePosition(deltaTime);
@@ -134,8 +142,10 @@ public class WorldRenderer implements InputProcessor {
                 }
                 break;
             case DOWN:
-                if (!(mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
-                        (pacman.getPosition().y / mCoef) + 1) instanceof Block)) {
+                nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
+                        (pacman.getPosition().y / mCoef) + 1);
+
+                if (!(nextBlock instanceof Block)) {
                     pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / mCoef) * mCoef;
 
                     pacman.updatePosition(deltaTime);
@@ -147,6 +157,20 @@ public class WorldRenderer implements InputProcessor {
                 }
                 break;
         }
+
+        if (nextBlock instanceof BasicPellet) {
+            eatPellet(nextBlock);
+        }
+    }
+
+    /**
+     * Eats a pellet and change it to an empty block.
+     */
+    public void eatPellet(GameElement gameElement) {
+        Vector2D gameElementPosition = gameElement.getPosition();
+        int x = gameElementPosition.x / mCoef;
+        int y = gameElementPosition.y / mCoef;
+        mWorld.getMaze().setBlock(new EmptyTile(gameElementPosition, mWorld), x, y);
     }
 
     /**

@@ -56,6 +56,16 @@ public class Maze implements Iterable<GameElement> {
         return blocks[x][y];
     }
 
+    /**
+     * Sets the block at postion (x, y) to the gameElement passed.
+     * @param gameElement The new GameElement at this position.
+     * @param x the x-axis coordinate of the element to change.
+     * @param y the y-axis coordinate of the element to change.
+     */
+    public void setBlock(GameElement gameElement, int x, int y) {
+        blocks[x][y] = gameElement;
+    }
+
     @Override
     public Iterator<GameElement> iterator() {
         Iterator<GameElement> it = new Iterator<GameElement>() {
@@ -103,7 +113,7 @@ public class Maze implements Iterable<GameElement> {
                     if (c == '1')
                         blocks[x][y] = new Block(new Vector2D(x * coeff, y * coeff), world);
                     else
-                        blocks[x][y] = new EmptyTile(new Vector2D(x * coeff, y * coeff), world);
+                        blocks[x][y] = new BasicPellet(new Vector2D(x * coeff, y * coeff), world);
                 }
             }
         } catch (IOException e) {

@@ -1,6 +1,7 @@
 package com.univ_lorraine.pacman.view;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
@@ -24,28 +25,32 @@ public class TextureFactory {
     private static TextureFactory instance;
 
     /**
-     * The simple texture of the pacman
-     */
-    private static Texture pacmanTexture;
-
-    /**
      * The texture for the blocs
      */
     private static Texture blocTexture;
 
+    /**
+     * The texture for the empty blocks
+     */
     private static Texture emptyTexture;
+
+    /**
+     * The texture for the basic pellets
+     */
+    private static Texture basicPelletTexture;
 
     /**
      * Constructor that loads the textures.
      */
     private TextureFactory(){
-        pacmanTexture = new Texture("pacmanRight.png");
         blocTexture = new Texture("bloc.png");
         emptyTexture = new Texture("dark.png");
+        basicPelletTexture = new Texture("pellet.png");
         mTextureMap = new HashMap<Class<?>, TextureWrapper>();
         mTextureMap.put(Pacman.class, new PacmanTextureWrapper(null));
         mTextureMap.put(Block.class, new DefaultTextureWrapper(null, blocTexture));
         mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(null, emptyTexture));
+        mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(null, basicPelletTexture));
     }
 
     /**
