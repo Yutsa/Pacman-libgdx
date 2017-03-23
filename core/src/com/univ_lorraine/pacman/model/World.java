@@ -1,5 +1,7 @@
 package com.univ_lorraine.pacman.model;
 
+import com.badlogic.gdx.utils.TimeUtils;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -17,6 +19,15 @@ public class World implements Iterable<GameElement> {
      * The coefficient by which the logical world is bigger than the onscreen world.
      */
     private int mCoef = 100;
+    /**
+     * The score of the player.
+     */
+    private int score = 0;
+
+    /**
+     * The time at which the game started.
+     */
+    long startTime;
 
     /**
      * The GameElements in this world.
@@ -31,6 +42,26 @@ public class World implements Iterable<GameElement> {
         mMaze = new Maze(this);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
+        startTime = TimeUtils.millis();
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void winPoint(int wonPoint) {
+        if (wonPoint <= 0) {
+            wonPoint = 5;
+        }
+        score += wonPoint;
     }
 
     /**

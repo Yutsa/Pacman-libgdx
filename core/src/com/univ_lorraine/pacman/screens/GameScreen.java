@@ -1,7 +1,10 @@
 package com.univ_lorraine.pacman.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.univ_lorraine.pacman.controller.WorldRenderer;
 import com.univ_lorraine.pacman.model.World;
 
@@ -13,6 +16,8 @@ public class GameScreen implements Screen {
     private World mWorld;
     private WorldRenderer mWorldRenderer;
     private OrthographicCamera mCamera;
+    private BitmapFont font;
+    SpriteBatch batch;
 
 
     public GameScreen()
@@ -24,12 +29,17 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
+        font = new BitmapFont(false);
+        font.setColor(Color.GOLD);
+        batch = new SpriteBatch();
     }
 
     @Override
     public void render(float delta) {
         mWorldRenderer.render(mCamera, delta);
+        batch.begin();
+        font.draw(batch, "Score: " + mWorld.getScore(), 10, 20);
+        batch.end();
     }
 
     @Override

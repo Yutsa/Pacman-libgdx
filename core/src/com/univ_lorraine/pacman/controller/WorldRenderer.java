@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.univ_lorraine.pacman.model.BasicPellet;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
@@ -44,7 +44,7 @@ public class WorldRenderer implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         mCoef = mWorld.getCoef();
         mWorld.getMaze().loadDemoLevel(mCoef);
-        epsilon = (mWorld.getPacman().getSpeed() / 10000f) * 2;
+        epsilon = (mWorld.getPacman().getSpeed() / 6000f);
 
     }
 
@@ -79,16 +79,19 @@ public class WorldRenderer implements InputProcessor {
         }
         batch.end();
         moveElement(mWorld.getPacman(), deltaTime);
+        eatPellet(mWorld.getPacman());
     }
 
     /**
      * Eats a pellet and change it to an empty block.
      */
-    public void eatPellet(GameElement gameElement) {
-        Vector2D gameElementPosition = gameElement.getPosition();
+    public void eatPellet(Pacman pacman) {
+        Vector2D gameElementPosition = pacman.getPosition();
         int x = gameElementPosition.x / mCoef;
         int y = gameElementPosition.y / mCoef;
         mWorld.getMaze().setBlock(new EmptyTile(gameElementPosition, mWorld), x, y);
+        long timeElapsed = TimeUtils.timeSinceMillis(mWorld.getStartTime());
+        mWorld.winPoint(10 - (int) (timeElapsed / 1000));
     }
 
     /**
@@ -202,11 +205,6 @@ public class WorldRenderer implements InputProcessor {
         }
 
         fixPosition(movableGameElement);
-
-        if (nextBlock instanceof BasicPellet) {
-            eatPellet(mWorld.getMaze().getBlock(movableGameElement.getPosition().getX() / mCoef,
-                    movableGameElement.getPosition().getY() / mCoef));
-        }
     }
 
     /**
