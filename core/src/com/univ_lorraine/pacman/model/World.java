@@ -1,6 +1,9 @@
 package com.univ_lorraine.pacman.model;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import com.univ_lorraine.pacman.controller.GhostAI;
+import com.univ_lorraine.pacman.controller.RandomAI;
+import com.univ_lorraine.pacman.controller.WorldRenderer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,6 +32,7 @@ public class World implements Iterable<GameElement> {
      * The time at which the game started.
      */
     long startTime;
+    WorldRenderer mWorldRenderer;
 
     /**
      * The GameElements in this world.
@@ -40,14 +44,21 @@ public class World implements Iterable<GameElement> {
      */
     public World() {
         mPacman = new Pacman(new Vector2D(14 * mCoef, 17 * mCoef), this, 500);
-        redGhost = new Ghost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500, Ghost.Color.RED);
-        yellowGhost = new Ghost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500, Ghost.Color.YELLOW);
         mMaze = new Maze(this);
+        startTime = TimeUtils.millis();
+    }
+
+    public void createGhosts() {
+        GhostAI randomAI = new RandomAI(mWorldRenderer);
+
+        redGhost = new Ghost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
+                Ghost.Color.RED, randomAI);
+        yellowGhost = new Ghost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
+                Ghost.Color.YELLOW, randomAI);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
         mGameElements.add(redGhost);
         mGameElements.add(yellowGhost);
-        startTime = TimeUtils.millis();
     }
 
     public long getStartTime() {
@@ -124,6 +135,14 @@ public class World implements Iterable<GameElement> {
      */
     public Maze getMaze() {
         return mMaze;
+    }
+
+    public WorldRenderer getWorldRenderer() {
+        return mWorldRenderer;
+    }
+
+    public void setWorldRenderer(WorldRenderer worldRenderer) {
+        mWorldRenderer = worldRenderer;
     }
 
     /**

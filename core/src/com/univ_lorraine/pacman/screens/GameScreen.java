@@ -26,8 +26,14 @@ public class GameScreen implements Screen {
     {
         mWorld = new World();
         mWorldRenderer = new WorldRenderer(mWorld, game);
+        mWorld.setWorldRenderer(mWorldRenderer);
+        mWorld.createGhosts();
         mCamera = new OrthographicCamera();
         mGame = game;
+    }
+
+    public WorldRenderer getWorldRenderer() {
+        return mWorldRenderer;
     }
 
     @Override
