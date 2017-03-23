@@ -11,37 +11,60 @@ public class Pacman extends GameElement {
      * The direction in which the pacman is oriented/going.
      */
     private Direction mCurrentDirection;
+    /**
+     * The direction the player wants pacman to go next.
+     */
     private Direction mWantedDirection;
+    /**
+     * The speed of the pacman.
+     */
     public static final int mSpeed = 500;
+
     /**
      * Calls the GameElement constructor to create the Pacman instance.
+     *
      * @param position Position of Pacman.
-     * @param wolrd World of Pacman.
+     * @param wolrd    World of Pacman.
      */
-    public Pacman(Vector2D position, World wolrd)
-    {
+    public Pacman(Vector2D position, World wolrd) {
         super(position, wolrd);
         mCurrentDirection = Direction.RIGHT;
         mWantedDirection = Direction.RIGHT;
     }
 
+    /**
+     * Gets the pacman's current direction.
+     *
+     * @return The current Direction of pacman.
+     */
     public Direction getCurrentDirection() {
         return mCurrentDirection;
     }
 
+    /**
+     * Sets the pacman's current direction.
+     *
+     * @param currentDirection The Direction to set.
+     */
     public void setCurrentDirection(Direction currentDirection) {
         mCurrentDirection = currentDirection;
     }
 
-    public static int getSpeed() {
-        return mSpeed;
-    }
-
+    /**
+     * Gets the pacman's wanted direction.
+     *
+     * @return The wanted Direction of pacman.
+     */
     public Direction getWantedDirection() {
 
         return mWantedDirection;
     }
 
+    /**
+     * Sets the pacman's wanted direction.
+     *
+     * @param wantedDirection The Direction to set.
+     */
     public void setWantedDirection(Direction wantedDirection) {
         mWantedDirection = wantedDirection;
     }
@@ -50,8 +73,7 @@ public class Pacman extends GameElement {
      * Updates the mPosition of pacman.
      */
     public void updatePosition(float deltaTime) {
-        switch (mCurrentDirection)
-        {
+        switch (mCurrentDirection) {
             case LEFT:
                 mPosition.x -= (mSpeed * deltaTime);
                 break;

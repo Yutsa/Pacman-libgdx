@@ -10,17 +10,51 @@ import com.univ_lorraine.pacman.model.Pacman;
  */
 
 class PacmanTextureWrapper extends TextureWrapper {
+    /**
+     * The texture for the pacman up and open.
+     */
     private Texture pacmanUpOpen;
+    /**
+     * The texture for the pacman right and open.
+     */
     private Texture pacmanRightOpen;
+    /**
+     * The texture for the pacman down and open.
+     */
     private Texture pacmanDownOpen;
+    /**
+     * The texture for the pacman left and open.
+     */
     private Texture pacmanLeftOpen;
+    /**
+     * The texture for the pacman up and closed.
+     */
     private Texture pacmanUpClosed;
+    /**
+     * The texture for the pacman right and closed.
+     */
     private Texture pacmanRightClosed;
+    /**
+     * The texture for the pacman down and closed.
+     */
     private Texture pacmanDownClosed;
+    /**
+     * The texture for the pacman left and closed.
+     */
     private Texture pacmanLeftClosed;
+    /**
+     * The counter for the open/close animation.
+     */
     private int animationCounter = 0;
+    /**
+     * The time limit to change the sprite, and do the animation.
+     */
     private int animationLimit;
 
+    /**
+     * Creates the wrapper.
+     * @param wrappedObject The object to be wrapped.
+     */
     public PacmanTextureWrapper(GameElement wrappedObject) {
         super(wrappedObject);
 

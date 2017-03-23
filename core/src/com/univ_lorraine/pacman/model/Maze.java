@@ -12,20 +12,46 @@ import java.util.Iterator;
  */
 
 public class Maze implements Iterable<GameElement> {
+    /**
+     * The width of the maze.
+     */
     private int width;
+    /**
+     * The height of the maze.
+     */
     private int height;
+    /**
+     * The world the maze is in.
+     */
     private World world;
+    /**
+     * The blocks GameElement composing the maze.
+     */
     private GameElement[][] blocks;
 
+    /**
+     * Creates the maze and assigns its world.
+     *
+     * @param world The world to assign to the maze.
+     */
     public Maze(World world) {
         setWorld(world);
-//        loadDemoLevel();
     }
 
+    /**
+     * Gets the width of the maze
+     *
+     * @return The width of the maze.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Sets the width of the maze.
+     *
+     * @param width The width of the maze.
+     */
     public void setWidth(int width) {
         if (width <= 0) {
             throw new IllegalArgumentException("The width of the maze cannot be negative.");
@@ -33,10 +59,20 @@ public class Maze implements Iterable<GameElement> {
         this.width = width;
     }
 
+    /**
+     * Gets the height of the maze
+     *
+     * @return The height of the maze.
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Sets the height of the maze
+     *
+     * @param height The height of the maze.
+     */
     public void setHeight(int height) {
         if (height <= 0) {
             throw new IllegalArgumentException("The height of the maze cannot be negative.");
@@ -45,6 +81,11 @@ public class Maze implements Iterable<GameElement> {
         this.height = height;
     }
 
+    /**
+     * Sets the world of the maze
+     *
+     * @param world The world of the maze.
+     */
     public void setWorld(World world) {
         if (world == null) {
             throw new IllegalArgumentException("The mWorld cannot be empty.");
@@ -52,20 +93,33 @@ public class Maze implements Iterable<GameElement> {
         this.world = world;
     }
 
+    /**
+     * Gets the block at the coordinates given.
+     *
+     * @param x The x-axis coordinate of the block to get.
+     * @param y The y-axis coordinate of the block to get.
+     * @return Gets the block at the coordinates given.
+     */
     public GameElement getBlock(int x, int y) {
         return blocks[x][y];
     }
 
     /**
      * Sets the block at postion (x, y) to the gameElement passed.
+     *
      * @param gameElement The new GameElement at this position.
-     * @param x the x-axis coordinate of the element to change.
-     * @param y the y-axis coordinate of the element to change.
+     * @param x           the x-axis coordinate of the element to change.
+     * @param y           the y-axis coordinate of the element to change.
      */
     public void setBlock(GameElement gameElement, int x, int y) {
         blocks[x][y] = gameElement;
     }
 
+    /**
+     * Returns an iterator to iterate through the maze
+     *
+     * @return An iterator to iterate through the maze
+     */
     @Override
     public Iterator<GameElement> iterator() {
         Iterator<GameElement> it = new Iterator<GameElement>() {
@@ -98,6 +152,11 @@ public class Maze implements Iterable<GameElement> {
         return it;
     }
 
+    /**
+     * Loads a level to play.
+     *
+     * @param coeff The coeff between the logical positions and the real on-screen positions.
+     */
     public void loadDemoLevel(int coeff) {
         setWidth(28);
         setHeight(31);

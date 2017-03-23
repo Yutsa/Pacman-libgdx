@@ -23,17 +23,14 @@ public class TextureFactory {
      * An instance of the TextureFactory
      */
     private static TextureFactory instance;
-
     /**
      * The texture for the blocs
      */
     private static Texture blocTexture;
-
     /**
      * The texture for the empty blocks
      */
     private static Texture emptyTexture;
-
     /**
      * The texture for the basic pellets
      */
@@ -42,7 +39,7 @@ public class TextureFactory {
     /**
      * Constructor that loads the textures.
      */
-    private TextureFactory(){
+    private TextureFactory() {
         blocTexture = new Texture("bloc.png");
         emptyTexture = new Texture("dark.png");
         basicPelletTexture = new Texture("pellet.png");
@@ -56,16 +53,21 @@ public class TextureFactory {
     /**
      * Checks if an instance of the TextureFactory already exists, if it does
      * it returns it, otherwise it creates the TextureFactory.
+     *
      * @return TextureFactory The instance of the TextureFactory.
      */
     public static TextureFactory getInstance() {
-        if (instance == null)
-        {
+        if (instance == null) {
             instance = new TextureFactory();
         }
         return instance;
     }
 
+    /**
+     * Gets the Texture for the given GameElement.
+     * @param element The GameElement to get the Texture.
+     * @return The Texture for the given GameElement.
+     */
     public Texture getTexture(GameElement element) {
         TextureWrapper textureWrapper = mTextureMap.get(element.getClass());
         if (textureWrapper.getWrappedObject() == null) {

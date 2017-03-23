@@ -8,17 +8,27 @@ import com.univ_lorraine.pacman.model.GameElement;
  */
 
 class DefaultTextureWrapper extends TextureWrapper {
+    /**
+     * The default texture for the wrapped GameElement.
+     */
     private Texture mDefaultTexture;
 
+    /**
+     * Creates the wrapper.
+     *
+     * @param wrappedObject  The object to be wrapped.
+     * @param defaultTexture The default texture for the wrapped object.
+     */
     public DefaultTextureWrapper(GameElement wrappedObject, Texture defaultTexture) {
         super(wrappedObject);
         setDefaultTexture(defaultTexture);
     }
 
-    public Texture getDefaultTexture() {
-        return mDefaultTexture;
-    }
-
+    /**
+     * Sets the default Texture.
+     *
+     * @param defaultTexture The default Texture.
+     */
     public void setDefaultTexture(Texture defaultTexture) {
         if (defaultTexture == null) {
             throw new IllegalArgumentException("defaultTexture can't be null");

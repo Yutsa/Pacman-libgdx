@@ -8,6 +8,7 @@ public abstract class GameElement {
      * The mPosition of the GameElement on the map.
      */
     protected Vector2D mPosition;
+
     /**
      * The World in which the element is.
      */
@@ -15,8 +16,9 @@ public abstract class GameElement {
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
+     *
      * @param position The mPosition of the element.
-     * @param world The mWorld of the element.
+     * @param world    The mWorld of the element.
      */
     protected GameElement(Vector2D position, World world) {
         setPosition(position);
@@ -25,15 +27,16 @@ public abstract class GameElement {
 
     /**
      * Returns the mPosition of the element.
+     *
      * @return Vector2 The mPosition of the element.
      */
     public Vector2D getPosition() {
         return mPosition;
     }
 
-
     /**
      * Sets the mPosition of the element.
+     *
      * @param position The mPosition of the element.
      */
     public void setPosition(Vector2D position) {
@@ -44,6 +47,7 @@ public abstract class GameElement {
 
     /**
      * Sets the mWorld of the element.
+     *
      * @param world The mWorld of the element.
      */
     public void setWorld(World world) {
