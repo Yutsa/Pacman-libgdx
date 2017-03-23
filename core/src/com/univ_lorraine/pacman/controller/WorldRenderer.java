@@ -93,11 +93,13 @@ public class WorldRenderer implements InputProcessor {
 
     /**
      * Gets the next block given a position and a direction.
-     * @param position The initial position of the element who wants to know the next block.
+     *
+     * @param position  The initial position of the element who wants to know the next block.
      * @param direction The direction of the element who wants to know the next block.
      * @return The next GameElement on the map.
      */
     private GameElement getNextElement(Vector2D position, Pacman.Direction direction) {
+        int x, y;
         switch (direction) {
             case LEFT:
                 return mWorld.getMaze().getBlock(
@@ -110,7 +112,7 @@ public class WorldRenderer implements InputProcessor {
             case UP:
                 return mWorld.getMaze().getBlock(
                         position.getX() / mCoef,
-                        (int) Math.ceil((position.getY()/ ((float) mCoef))) - 1);
+                        (int) Math.ceil((position.getY() / ((float) mCoef))) - 1);
             case DOWN:
                 return mWorld.getMaze().getBlock(
                         position.getX() / mCoef,
@@ -122,10 +124,10 @@ public class WorldRenderer implements InputProcessor {
 
     /**
      * Fix the position of the element. If he went a little too far it repositions it.
+     *
      * @param element The elemen to fix the position.
      */
-    private void fixPosition(MovableGameElement element)
-    {
+    private void fixPosition(MovableGameElement element) {
         switch (element.getCurrentDirection()) {
             case LEFT:
                 if (element.getPosition().getX() / ((float) mCoef)
@@ -207,15 +209,20 @@ public class WorldRenderer implements InputProcessor {
         }
     }
 
-    private void checkTunnel(MovableGameElement pacman) {
+    /**
+     * Checks if we are going through the tunnel and teleports the {@link MovableGameElement}
+     *
+     * @param movableGameElement The {@link MovableGameElement} that is going through th tunnel.
+     */
+    private void checkTunnel(MovableGameElement movableGameElement) {
     /* Handles TP */
-        if ((pacman.getPosition().x / mCoef) == mWorld.getWidth() - 1) {
-            pacman.setPosition(new Vector2D(0, pacman.getPosition().y));
+        if ((movableGameElement.getPosition().x / mCoef) == mWorld.getWidth() - 1) {
+            movableGameElement.setPosition(new Vector2D(0, movableGameElement.getPosition().y));
         }
 
-        if ((pacman.getPosition().x / mCoef) == 0
-                && pacman.getCurrentDirection() == Pacman.Direction.LEFT) {
-            pacman.setPosition(new Vector2D(27 * mCoef, pacman.getPosition().y));
+        if ((movableGameElement.getPosition().x / mCoef) == 0
+                && movableGameElement.getCurrentDirection() == Pacman.Direction.LEFT) {
+            movableGameElement.setPosition(new Vector2D(27 * mCoef, movableGameElement.getPosition().y));
         }
     }
 
@@ -225,19 +232,15 @@ public class WorldRenderer implements InputProcessor {
         switch (keycode) {
             case Input.Keys.LEFT:
                 pacman.setWantedDirection(Pacman.Direction.LEFT);
-                Gdx.app.log(WorldRenderer.class.getName(), "LEFT");
                 break;
             case Input.Keys.RIGHT:
                 pacman.setWantedDirection(Pacman.Direction.RIGHT);
-                Gdx.app.log(WorldRenderer.class.getName(), "RIGHT");
                 break;
             case Input.Keys.UP:
                 pacman.setWantedDirection(Pacman.Direction.UP);
-                Gdx.app.log(WorldRenderer.class.getName(), "UP");
                 break;
             case Input.Keys.DOWN:
                 pacman.setWantedDirection(Pacman.Direction.DOWN);
-                Gdx.app.log(WorldRenderer.class.getName(), "DOWN");
                 break;
         }
 

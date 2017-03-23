@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Pacman;
@@ -76,7 +77,9 @@ public class PacmanTextureWrapper extends TextureWrapper {
                     " be a pacman.");
         }
 
-        animationLimit = (1000 / ((Pacman) wrappedObject).getSpeed()) * 5;
+        animationLimit = ((1000 / ((Pacman) wrappedObject).getSpeed()) * 5) + 1;
+        Gdx.app.log(PacmanTextureWrapper.class.getSimpleName(), "Animation limit = "
+                + animationLimit);
     }
 
     @Override

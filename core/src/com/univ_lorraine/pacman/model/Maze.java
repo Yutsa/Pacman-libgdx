@@ -101,6 +101,20 @@ public class Maze implements Iterable<GameElement> {
      * @return Gets the block at the coordinates given.
      */
     public GameElement getBlock(int x, int y) {
+        if (x >= width) {
+            x = width - 1;
+            Gdx.app.log(Maze.class.getSimpleName(), "Changed x to " + x);
+        }
+        else if (x < 0) {
+            x = 0;
+        }
+        if (x >= height) {
+            y = height - 1;
+            Gdx.app.log(Maze.class.getSimpleName(), "Changed y to " + y);
+        }
+        else if (x < 0) {
+            y = 0;
+        }
         return blocks[x][y];
     }
 
