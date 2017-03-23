@@ -93,6 +93,8 @@ public class WorldRenderer implements InputProcessor {
         }
         batch.end();
         moveElement(mWorld.getPacman(), deltaTime);
+        mWorld.getRedGhost().useAI();
+        moveElement(mWorld.getRedGhost(), deltaTime);
     }
 
     /**

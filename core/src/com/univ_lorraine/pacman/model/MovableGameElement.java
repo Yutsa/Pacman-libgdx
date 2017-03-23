@@ -1,5 +1,10 @@
 package com.univ_lorraine.pacman.model;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 /**
  * @author Édouard WILLISSECK
  */
@@ -13,7 +18,18 @@ public class MovableGameElement extends GameElement {
     /**
      * An enum for the directions.
      */
-    public enum Direction {LEFT, UP, RIGHT, DOWN}
+    public enum Direction {
+        LEFT, UP, RIGHT, DOWN;
+
+        private static final List<Direction> VALUES =
+                Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
+
+        public static Direction randomDirection()  {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
+    }
 
     /**
      * The direction in which the pacman is oriented/going.

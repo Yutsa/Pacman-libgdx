@@ -23,6 +23,7 @@ public class Ghost extends MovableGameElement {
     protected Ghost(Vector2D position, World world, int speed, Color color, GhostAI ai) {
         super(position, world, speed);
         mColor = color;
+        setAi(ai);
     }
 
     public Color getColor() {
@@ -38,5 +39,9 @@ public class Ghost extends MovableGameElement {
             throw new IllegalArgumentException("The AI can't be null");
         }
         this.ai = ai;
+    }
+
+    public void useAI() {
+        ai.setDirection(this);
     }
 }

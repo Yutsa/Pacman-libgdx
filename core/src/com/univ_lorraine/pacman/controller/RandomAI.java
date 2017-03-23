@@ -12,7 +12,10 @@ public class RandomAI extends GhostAI {
     }
 
     @Override
-    void setDirection(MovableGameElement movableGameElement) {
-
+    public void setDirection(MovableGameElement movableGameElement) {
+        if (mWorldRenderer.isAtIntersection(movableGameElement.getPosition(),
+                movableGameElement.getCurrentDirection())) {
+            movableGameElement.setWantedDirection(MovableGameElement.Direction.randomDirection());
+        }
     }
 }

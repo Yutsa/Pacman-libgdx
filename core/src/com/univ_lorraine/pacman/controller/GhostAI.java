@@ -8,7 +8,7 @@ import com.univ_lorraine.pacman.model.MovableGameElement;
  */
 
 public abstract class GhostAI {
-    private WorldRenderer mWorldRenderer;
+    protected WorldRenderer mWorldRenderer;
 
     public GhostAI(WorldRenderer worldRenderer) {
         setWorldRenderer(worldRenderer);
@@ -21,5 +21,9 @@ public abstract class GhostAI {
         mWorldRenderer = worldRenderer;
     }
 
-    abstract void setDirection(MovableGameElement movableGameElement);
+    public WorldRenderer getWorldRenderer() {
+        return mWorldRenderer;
+    }
+
+    public abstract void setDirection(MovableGameElement movableGameElement);
 }
