@@ -247,18 +247,13 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time elapsed between two renders.
      */
     public void moveElement(MovableGameElement movableGameElement, float deltaTime) {
-        if (isAtIntersection(movableGameElement.getPosition(),
-                movableGameElement.getCurrentDirection())) {
-            Gdx.app.log(WorldRenderer.class.getSimpleName(), ""+ movableGameElement.getPosition());
-        }
-        
         checkTunnel(movableGameElement);
         Vector2D currentPosition;
         GameElement currentGameElement;
 
-        GameElement nextBlock = getNextElement(movableGameElement.getPosition(), movableGameElement.getCurrentDirection());
-
         checkWantedDirection(movableGameElement, movableGameElement.getWantedDirection());
+
+        GameElement nextBlock = getNextElement(movableGameElement.getPosition(), movableGameElement.getCurrentDirection());
 
         if (!(nextBlock instanceof Block)) {
             movableGameElement.updatePosition(deltaTime);
@@ -270,7 +265,7 @@ public class WorldRenderer implements InputProcessor {
                 (currentPosition.getX() + 50) / mCoef,
                 (currentPosition.getY() + 50) / mCoef);
 
-        if (currentGameElement instanceof BasicPellet) {
+        if (currentGameElement instanceof BasicPellet && movableGameElement instanceof Pacman) {
             eatPellet(currentGameElement);
         }
 
