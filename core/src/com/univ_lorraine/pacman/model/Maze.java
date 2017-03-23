@@ -169,10 +169,17 @@ public class Maze implements Iterable<GameElement> {
                     char c = (char) stream.read();
                     if (c == '\n')
                         c = (char) stream.read();
-                    if (c == '1')
+
+                    if (c == '0')
                         blocks[x][y] = new Block(new Vector2D(x * coeff, y * coeff), world);
-                    else
+                    else if (c == '1')
+                        blocks[x][y] = new EmptyTile(new Vector2D(x * coeff, y * coeff), world);
+                    else if (c == '2')
                         blocks[x][y] = new BasicPellet(new Vector2D(x * coeff, y * coeff), world);
+                    else if (c == '3')
+                        blocks[x][y] = new BasicPellet(new Vector2D(x * coeff, y * coeff), world);
+                    else
+                        blocks[x][y] = new EmptyTile(new Vector2D(x * coeff, y * coeff), world);
                 }
             }
         } catch (IOException e) {
