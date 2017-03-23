@@ -137,7 +137,7 @@ public class Maze implements Iterable<GameElement> {
         return pelletNumber;
     }
 
-    public void decreasePelleNumber() {
+    public void decreasePelletNumber() {
         if (pelletNumber > 0)
             pelletNumber--;
     }
@@ -188,7 +188,7 @@ public class Maze implements Iterable<GameElement> {
         setWidth(28);
         setHeight(31);
         blocks = new GameElement[width][height];
-        FileHandle handle = Gdx.files.internal("levels/testEndLvl.txt");
+        FileHandle handle = Gdx.files.internal("levels/base_lvl.txt");
         InputStream stream = handle.read();
         try {
             for (int y = 0; y < height; y++) {

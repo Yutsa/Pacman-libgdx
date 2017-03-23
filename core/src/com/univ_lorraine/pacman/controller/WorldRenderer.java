@@ -106,7 +106,13 @@ public class WorldRenderer implements InputProcessor {
                 position.getX(), position.getY());
         long timeElapsed = TimeUtils.timeSinceMillis(mWorld.getStartTime());
         mWorld.winPoint(10 - (int) (timeElapsed / 1000));
-        mWorld.getMaze().decreasePelleNumber();
+        mWorld.getMaze().decreasePelletNumber();
+    }
+
+    public GameElement getNextUpElement(Vector2D position) {
+        return mWorld.getMaze().getBlock(
+                position.getX() / mCoef,
+                (int) Math.ceil((position.getY() / ((float) mCoef))) - 1);
     }
 
     /**
@@ -117,27 +123,36 @@ public class WorldRenderer implements InputProcessor {
      * @return The next GameElement on the map.
      */
     private GameElement getNextElement(Vector2D position, Pacman.Direction direction) {
-        int x, y;
         switch (direction) {
             case LEFT:
-                return mWorld.getMaze().getBlock(
-                        (int) Math.ceil((position.getX() / ((float) mCoef)) - 1),
-                        position.getY() / mCoef);
+                return getNextLeftElement(position);
             case RIGHT:
-                return mWorld.getMaze().getBlock(
-                        (position.getX() / mCoef) + 1,
-                        position.getY() / mCoef);
+                return getNextRightElement(position);
             case UP:
-                return mWorld.getMaze().getBlock(
-                        position.getX() / mCoef,
-                        (int) Math.ceil((position.getY() / ((float) mCoef))) - 1);
+                return getNextUpElement(position);
             case DOWN:
-                return mWorld.getMaze().getBlock(
-                        position.getX() / mCoef,
-                        (position.getY() / mCoef) + 1);
+                return getNextDownElement(position);
         }
 
         throw new IllegalArgumentException("Unrecognized Direction.");
+    }
+
+    private GameElement getNextDownElement(Vector2D position) {
+        return mWorld.getMaze().getBlock(
+                position.getX() / mCoef,
+                (position.getY() / mCoef) + 1);
+    }
+
+    private GameElement getNextRightElement(Vector2D position) {
+        return mWorld.getMaze().getBlock(
+                (position.getX() / mCoef) + 1,
+                position.getY() / mCoef);
+    }
+
+    private GameElement getNextLeftElement(Vector2D position) {
+        return mWorld.getMaze().getBlock(
+                (int) Math.ceil((position.getX() / ((float) mCoef)) - 1),
+                position.getY() / mCoef);
     }
 
     /**
