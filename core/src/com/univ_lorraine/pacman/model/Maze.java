@@ -28,6 +28,10 @@ public class Maze implements Iterable<GameElement> {
      * The blocks GameElement composing the maze.
      */
     private GameElement[][] blocks;
+    /**
+     * The number of pellets on the map.
+     */
+    private int pelletNumber = 0;
 
     /**
      * Creates the maze and assigns its world.
@@ -129,6 +133,15 @@ public class Maze implements Iterable<GameElement> {
         blocks[x][y] = gameElement;
     }
 
+    public int getPelletNumber() {
+        return pelletNumber;
+    }
+
+    public void decreasePelleNumber() {
+        if (pelletNumber > 0)
+            pelletNumber--;
+    }
+
     /**
      * Returns an iterator to iterate through the maze
      *
@@ -188,10 +201,14 @@ public class Maze implements Iterable<GameElement> {
                         blocks[x][y] = new Block(new Vector2D(x * coeff, y * coeff), world);
                     else if (c == '1')
                         blocks[x][y] = new EmptyTile(new Vector2D(x * coeff, y * coeff), world);
-                    else if (c == '2')
+                    else if (c == '2') {
                         blocks[x][y] = new BasicPellet(new Vector2D(x * coeff, y * coeff), world);
-                    else if (c == '3')
+                        pelletNumber++;
+                    }
+                    else if (c == '3') {
                         blocks[x][y] = new BasicPellet(new Vector2D(x * coeff, y * coeff), world);
+                        pelletNumber++;
+                    }
                     else
                         blocks[x][y] = new EmptyTile(new Vector2D(x * coeff, y * coeff), world);
                 }

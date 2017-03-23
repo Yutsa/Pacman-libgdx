@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
@@ -64,6 +65,7 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time passed between two renders.
      */
     public void render(OrthographicCamera camera, float deltaTime) {
+        Pacman pacman = mWorld.getPacman();
         batch.begin();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -79,19 +81,27 @@ public class WorldRenderer implements InputProcessor {
         }
         batch.end();
         moveElement(mWorld.getPacman(), deltaTime);
-        eatPellet(mWorld.getPacman());
     }
 
     /**
      * Eats a pellet and change it to an empty block.
      */
-    public void eatPellet(Pacman pacman) {
-        Vector2D gameElementPosition = pacman.getPosition();
+    public void eatPellet(GameElement gameElement) {
+        Vector2D position = new Vector2D(gameElement.getPosition().getX() / mCoef,
+                gameElement.getPosition().getY() / mCoef);
+
+        Vector2D gameElementPosition = gameElement.getPosition();
         int x = gameElementPosition.x / mCoef;
         int y = gameElementPosition.y / mCoef;
-        mWorld.getMaze().setBlock(new EmptyTile(gameElementPosition, mWorld), x, y);
+        mWorld.getMaze().setBlock(new EmptyTile(gameElementPosition, mWorld),
+                position.getX(), position.getY());
         long timeElapsed = TimeUtils.timeSinceMillis(mWorld.getStartTime());
         mWorld.winPoint(10 - (int) (timeElapsed / 1000));
+        mWorld.getMaze().decreasePelleNumber();
+        if (mWorld.getMaze().getPelletNumber() == 0) {
+            // TODO: 23/03/17 Call method to display end screen.
+            Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
+        }
     }
 
     /**
@@ -195,6 +205,8 @@ public class WorldRenderer implements InputProcessor {
      */
     public void moveElement(MovableGameElement movableGameElement, float deltaTime) {
         checkTunnel(movableGameElement);
+        Vector2D currentPosition;
+        GameElement currentGameElement;
 
         GameElement nextBlock = getNextElement(movableGameElement.getPosition(), movableGameElement.getCurrentDirection());
 
@@ -205,6 +217,15 @@ public class WorldRenderer implements InputProcessor {
         }
 
         fixPosition(movableGameElement);
+        currentPosition = movableGameElement.getPosition();
+        currentGameElement = mWorld.getMaze().getBlock(
+                currentPosition.getX() / mCoef,
+                currentPosition.getY() / mCoef);
+
+        if (currentGameElement instanceof BasicPellet) {
+            eatPellet(currentGameElement);
+        }
+
     }
 
     /**
