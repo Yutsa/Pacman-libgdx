@@ -5,6 +5,7 @@ import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.Pacman;
 
 import java.util.HashMap;
@@ -45,6 +46,7 @@ public class TextureFactory {
         basicPelletTexture = new Texture("pellet.png");
         mTextureMap = new HashMap<Class<?>, TextureWrapper>();
         mTextureMap.put(Pacman.class, new PacmanTextureWrapper(null));
+        mTextureMap.put(Ghost.class, new GhostTextureWrapper(null));
         mTextureMap.put(Block.class, new DefaultTextureWrapper(null, blocTexture));
         mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(null, emptyTexture));
         mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(null, basicPelletTexture));
@@ -70,9 +72,7 @@ public class TextureFactory {
      */
     public Texture getTexture(GameElement element) {
         TextureWrapper textureWrapper = mTextureMap.get(element.getClass());
-        if (textureWrapper.getWrappedObject() == null) {
-            textureWrapper.setWrappedObject(element);
-        }
+        textureWrapper.setWrappedObject(element);
         return textureWrapper.getTexture();
     }
 }

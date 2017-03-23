@@ -85,7 +85,8 @@ public class WorldRenderer implements InputProcessor {
             Vector2D position = e.getPosition();
             batch.draw(textureFactory.getTexture(e),
                     ((position.x / ((float) mCoef)) - mWorld.getWidth() / 2f) * size,
-                    ((position.y / ((float) mCoef)) - mWorld.getHeight() / 2f) * size, size, size);
+                    ((position.y / ((float) mCoef)) - mWorld.getHeight() / 2f) * size, size, size,
+                    0, 0, (int) size, (int) size, false, true);
         }
         batch.end();
         moveElement(mWorld.getPacman(), deltaTime);

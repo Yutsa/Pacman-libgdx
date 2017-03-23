@@ -31,11 +31,11 @@ public class MovableGameElement extends GameElement {
      * @param position The mPosition of the element.
      * @param world    The mWorld of the element.
      */
-    protected MovableGameElement(Vector2D position, World world) {
+    protected MovableGameElement(Vector2D position, World world, int speed) {
         super(position, world);
         mCurrentDirection = Direction.RIGHT;
         mWantedDirection = Direction.RIGHT;
-        mSpeed = 500;
+        setSpeed(speed);
     }
 
     /**

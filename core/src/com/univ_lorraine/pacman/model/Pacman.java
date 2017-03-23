@@ -13,7 +13,6 @@ public class Pacman extends MovableGameElement {
      * @param world    World of Pacman.
      */
     public Pacman(Vector2D position, World world, int speed) {
-        super(position, world);
-        setSpeed(speed);
+        super(position, world, speed);
     }
 }

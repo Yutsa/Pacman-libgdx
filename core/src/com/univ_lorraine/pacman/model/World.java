@@ -11,6 +11,8 @@ public class World implements Iterable<GameElement> {
      * The Pacman of this world.
      */
     private Pacman mPacman;
+    private Ghost redGhost;
+    private Ghost yellowGhost;
     /**
      * The Maze of this world.
      */
@@ -23,7 +25,6 @@ public class World implements Iterable<GameElement> {
      * The score of the player.
      */
     private int score = 0;
-
     /**
      * The time at which the game started.
      */
@@ -39,9 +40,13 @@ public class World implements Iterable<GameElement> {
      */
     public World() {
         mPacman = new Pacman(new Vector2D(14 * mCoef, 17 * mCoef), this, 500);
+        redGhost = new Ghost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500, Ghost.Color.RED);
+        yellowGhost = new Ghost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500, Ghost.Color.YELLOW);
         mMaze = new Maze(this);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
+        mGameElements.add(redGhost);
+        mGameElements.add(yellowGhost);
         startTime = TimeUtils.millis();
     }
 
@@ -102,6 +107,14 @@ public class World implements Iterable<GameElement> {
      */
     public Pacman getPacman() {
         return mPacman;
+    }
+
+    public Ghost getRedGhost() {
+        return redGhost;
+    }
+
+    public Ghost getYellowGhost() {
+        return yellowGhost;
     }
 
     /**

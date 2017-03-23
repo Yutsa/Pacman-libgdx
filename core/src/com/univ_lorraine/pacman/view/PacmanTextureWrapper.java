@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Pacman;
@@ -78,8 +77,6 @@ public class PacmanTextureWrapper extends TextureWrapper {
         }
 
         animationLimit = ((1000 / ((Pacman) wrappedObject).getSpeed()) * 5) + 1;
-        Gdx.app.log(PacmanTextureWrapper.class.getSimpleName(), "Animation limit = "
-                + animationLimit);
     }
 
     @Override
@@ -93,10 +90,10 @@ public class PacmanTextureWrapper extends TextureWrapper {
         switch (pacman.getCurrentDirection()) {
             case UP:
                 if (animationCounter < animationLimit) {
-                    return pacmanDownClosed;
+                    return pacmanUpClosed;
                 }
                 else {
-                    return pacmanDownOpen;
+                    return pacmanUpOpen;
                 }
             case RIGHT:
                 if (animationCounter < animationLimit) {
@@ -106,9 +103,9 @@ public class PacmanTextureWrapper extends TextureWrapper {
                 }
             case DOWN:
                 if (animationCounter < animationLimit) {
-                    return pacmanUpClosed;
+                    return pacmanDownClosed;
                 } else {
-                    return pacmanUpOpen;
+                    return pacmanDownOpen;
                 }
             case LEFT:
                 if (animationCounter < animationLimit) {
