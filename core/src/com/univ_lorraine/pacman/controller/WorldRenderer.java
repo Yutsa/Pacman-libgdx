@@ -10,6 +10,7 @@ import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.MoveableGameElement;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
@@ -24,7 +25,7 @@ public class WorldRenderer implements InputProcessor {
     private SpriteBatch batch;
     private TextureFactory textureFactory;
     private World mWorld;
-    private double epsilon = (Pacman.mSpeed / 10000f) * 2;
+    private double epsilon;
     /**
      * The coefficient by which the logical world is bigger than the onscreen world.
      */
@@ -42,6 +43,8 @@ public class WorldRenderer implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         mCoef = mWorld.getCoef();
         mWorld.getMaze().loadDemoLevel(mCoef);
+        epsilon = (mWorld.getPacman().getSpeed() / 10000f) * 2;
+
     }
 
     /**
@@ -88,8 +91,13 @@ public class WorldRenderer implements InputProcessor {
         mWorld.getMaze().setBlock(new EmptyTile(gameElementPosition, mWorld), x, y);
     }
 
-    // TODO: 23/03/17 Make a "getNextBlock()" method.
-    private GameElement getNextBlock(Vector2D position, Pacman.Direction direction) {
+    /**
+     * Gets the next block given a position and a direction.
+     * @param position The initial position of the element who wants to know the next block.
+     * @param direction The direction of the element who wants to know the next block.
+     * @return The next GameElement on the map.
+     */
+    private GameElement getNextElement(Vector2D position, Pacman.Direction direction) {
         switch (direction) {
             case LEFT:
                 return mWorld.getMaze().getBlock(
@@ -111,6 +119,41 @@ public class WorldRenderer implements InputProcessor {
 
         throw new IllegalArgumentException("Unrecognized Direction.");
     }
+
+    /**
+     * Fix the position of the element. If he went a little too far it repositions it.
+     * @param element The elemen to fix the position.
+     */
+    private void fixPosition(MoveableGameElement element)
+    {
+        switch (element.getCurrentDirection()) {
+            case LEFT:
+                if (element.getPosition().getX() / ((float) mCoef)
+                        - (element.getPosition().getX() / mCoef) < epsilon) {
+                    element.getPosition().setX(element.getPosition().getX() / mCoef * mCoef);
+                }
+                break;
+            case RIGHT:
+                if ((element.getPosition().getX() / mCoef) + 1
+                        - element.getPosition().getX() / ((float) mCoef) < epsilon) {
+                    element.getPosition().setX(((element.getPosition().x / mCoef) + 1) * mCoef);
+                }
+                break;
+            case UP:
+                if (element.getPosition().y / ((float) mCoef)
+                        - (element.getPosition().y / mCoef) < epsilon) {
+                    element.getPosition().setY((element.getPosition().y / mCoef) * mCoef);
+                }
+                break;
+            case DOWN:
+                if ((element.getPosition().y / mCoef) + 1
+                        - element.getPosition().y / ((float) mCoef) < epsilon) {
+                    element.getPosition().setY(((element.getPosition().y / mCoef) + 1) * mCoef);
+                }
+                break;
+        }
+    }
+
     /**
      * Checks if the pacman can go to the wanted direction or not.
      *
@@ -118,47 +161,20 @@ public class WorldRenderer implements InputProcessor {
      * @param wantedDirection The direction the {@link Pacman} wants to go.
      */
     private void checkWantedDirection(Pacman pacman, Pacman.Direction wantedDirection) {
-        GameElement nextBlock;
-
-        /* Handles TP */
-        if ((pacman.getPosition().x / mCoef) == mWorld.getWidth() - 1) {
-            pacman.setPosition(new Vector2D(0, pacman.getPosition().y));
-        }
-
-        if ((pacman.getPosition().x / mCoef) == 0
-                && pacman.getCurrentDirection() == Pacman.Direction.LEFT) {
-            pacman.setPosition(new Vector2D(27 * mCoef, pacman.getPosition().y));
-        }
+        GameElement nextBlock = getNextElement(pacman.getPosition(), pacman.getWantedDirection());
 
         switch (wantedDirection) {
             case LEFT:
-                if (!((nextBlock = mWorld.getMaze().getBlock((int) Math.ceil((pacman.getPosition().x / ((float) mCoef)) - 1),
-                        (pacman.getPosition().y / mCoef))) instanceof Block)) {
-                    if (pacman.getPosition().y == nextBlock.getPosition().y) {
-                        pacman.setCurrentDirection(wantedDirection);
-                    }
-                }
-                break;
             case RIGHT:
-                if (!((nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef) + 1,
-                        (pacman.getPosition().y / mCoef))) instanceof Block)) {
+                if (!(nextBlock instanceof Block)) {
                     if (pacman.getPosition().y == nextBlock.getPosition().y) {
                         pacman.setCurrentDirection(wantedDirection);
                     }
                 }
                 break;
             case UP:
-                if (!((nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
-                        (int) Math.ceil((pacman.getPosition().y / ((float) mCoef))) - 1))
-                        instanceof Block)) {
-                    if (pacman.getPosition().x == nextBlock.getPosition().x) {
-                        pacman.setCurrentDirection(wantedDirection);
-                    }
-                }
-                break;
             case DOWN:
-                if (!((nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
-                        (pacman.getPosition().y / mCoef) + 1)) instanceof Block)) {
+                if (!(nextBlock instanceof Block)) {
                     if (pacman.getPosition().x == nextBlock.getPosition().x) {
                         pacman.setCurrentDirection(wantedDirection);
                     }
@@ -174,69 +190,34 @@ public class WorldRenderer implements InputProcessor {
      */
     public void movePacman(float deltaTime) {
         Pacman pacman = mWorld.getPacman();
-        GameElement nextBlock = getNextBlock(pacman.getPosition(), pacman.getCurrentDirection());
+
+        checkTunnel(pacman);
+
+        GameElement nextBlock = getNextElement(pacman.getPosition(), pacman.getCurrentDirection());
 
         checkWantedDirection(pacman, pacman.getWantedDirection());
 
-        switch (pacman.getCurrentDirection()) {
-            case LEFT:
-
-
-                if (!(nextBlock instanceof Block)) {
-
-                    pacman.updatePosition(deltaTime);
-
-                    if (pacman.getPosition().x / ((float) mCoef) - (pacman.getPosition().x / mCoef) < epsilon)
-                        pacman.getPosition().x = (pacman.getPosition().x / mCoef) * mCoef;
-                }
-                break;
-            case RIGHT:
-                nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef) + 1,
-                        (pacman.getPosition().y / mCoef));
-
-                if (!(nextBlock instanceof Block)) {
-
-                    pacman.updatePosition(deltaTime);
-
-                    if ((pacman.getPosition().x / mCoef) + 1
-                            - pacman.getPosition().x / ((float) mCoef) < epsilon) {
-                        pacman.getPosition().x = ((pacman.getPosition().x / mCoef) + 1) * mCoef;
-                    }
-                }
-                break;
-            case UP:
-                nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
-                        (int) Math.ceil((pacman.getPosition().y / ((float) mCoef))) - 1);
-
-                if (!(nextBlock instanceof Block)) {
-                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / mCoef) * mCoef;
-
-                    pacman.updatePosition(deltaTime);
-
-                    if (pacman.getPosition().y / ((float) mCoef) - (pacman.getPosition().y / mCoef) < epsilon)
-                        pacman.getPosition().y = (pacman.getPosition().y / mCoef) * mCoef;
-
-                }
-                break;
-            case DOWN:
-                nextBlock = mWorld.getMaze().getBlock((pacman.getPosition().x / mCoef),
-                        (pacman.getPosition().y / mCoef) + 1);
-
-                if (!(nextBlock instanceof Block)) {
-                    pacman.getPosition().x = (int) Math.floor(pacman.getPosition().x / mCoef) * mCoef;
-
-                    pacman.updatePosition(deltaTime);
-
-                    if ((pacman.getPosition().y / mCoef) + 1
-                            - pacman.getPosition().y / ((float) mCoef) < epsilon) {
-                        pacman.getPosition().y = ((pacman.getPosition().y / mCoef) + 1) * mCoef;
-                    }
-                }
-                break;
+        if (!(nextBlock instanceof Block)) {
+            pacman.updatePosition(deltaTime);
         }
 
+        fixPosition(pacman);
+
         if (nextBlock instanceof BasicPellet) {
-            eatPellet(nextBlock);
+            eatPellet(mWorld.getMaze().getBlock(pacman.getPosition().getX() / mCoef,
+                    pacman.getPosition().getY() / mCoef));
+        }
+    }
+
+    private void checkTunnel(Pacman pacman) {
+    /* Handles TP */
+        if ((pacman.getPosition().x / mCoef) == mWorld.getWidth() - 1) {
+            pacman.setPosition(new Vector2D(0, pacman.getPosition().y));
+        }
+
+        if ((pacman.getPosition().x / mCoef) == 0
+                && pacman.getCurrentDirection() == Pacman.Direction.LEFT) {
+            pacman.setPosition(new Vector2D(27 * mCoef, pacman.getPosition().y));
         }
     }
 

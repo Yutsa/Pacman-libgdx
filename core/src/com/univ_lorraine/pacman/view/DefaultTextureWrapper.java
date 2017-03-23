@@ -7,7 +7,7 @@ import com.univ_lorraine.pacman.model.GameElement;
  * @author Édouard WILLISSECK
  */
 
-class DefaultTextureWrapper extends TextureWrapper {
+public class DefaultTextureWrapper extends TextureWrapper {
     /**
      * The default texture for the wrapped GameElement.
      */
