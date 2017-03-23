@@ -10,7 +10,8 @@ import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
-import com.univ_lorraine.pacman.model.MoveableGameElement;
+import com.univ_lorraine.pacman.model.Maze;
+import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
@@ -77,8 +78,7 @@ public class WorldRenderer implements InputProcessor {
                     ((position.y / ((float) mCoef)) - mWorld.getHeight() / 2f) * size, size, size);
         }
         batch.end();
-        movePacman(deltaTime);
-//        Gdx.app.log(WorldRenderer.class.getName(), mWorld.getPacman().getPosition().toString());
+        moveElement(mWorld.getPacman(), deltaTime);
     }
 
     /**
@@ -124,7 +124,7 @@ public class WorldRenderer implements InputProcessor {
      * Fix the position of the element. If he went a little too far it repositions it.
      * @param element The elemen to fix the position.
      */
-    private void fixPosition(MoveableGameElement element)
+    private void fixPosition(MovableGameElement element)
     {
         switch (element.getCurrentDirection()) {
             case LEFT:
@@ -160,7 +160,7 @@ public class WorldRenderer implements InputProcessor {
      * @param pacman          The {@link Pacman} that is moving.
      * @param wantedDirection The direction the {@link Pacman} wants to go.
      */
-    private void checkWantedDirection(Pacman pacman, Pacman.Direction wantedDirection) {
+    private void checkWantedDirection(MovableGameElement pacman, Pacman.Direction wantedDirection) {
         GameElement nextBlock = getNextElement(pacman.getPosition(), pacman.getWantedDirection());
 
         switch (wantedDirection) {
@@ -184,32 +184,30 @@ public class WorldRenderer implements InputProcessor {
     }
 
     /**
-     * Moves the pacman on the {@link com.univ_lorraine.pacman.model.Maze}
+     * Moves the pacman on the {@link Maze}
      *
      * @param deltaTime The time elapsed between two renders.
      */
-    public void movePacman(float deltaTime) {
-        Pacman pacman = mWorld.getPacman();
+    public void moveElement(MovableGameElement movableGameElement, float deltaTime) {
+        checkTunnel(movableGameElement);
 
-        checkTunnel(pacman);
+        GameElement nextBlock = getNextElement(movableGameElement.getPosition(), movableGameElement.getCurrentDirection());
 
-        GameElement nextBlock = getNextElement(pacman.getPosition(), pacman.getCurrentDirection());
-
-        checkWantedDirection(pacman, pacman.getWantedDirection());
+        checkWantedDirection(movableGameElement, movableGameElement.getWantedDirection());
 
         if (!(nextBlock instanceof Block)) {
-            pacman.updatePosition(deltaTime);
+            movableGameElement.updatePosition(deltaTime);
         }
 
-        fixPosition(pacman);
+        fixPosition(movableGameElement);
 
         if (nextBlock instanceof BasicPellet) {
-            eatPellet(mWorld.getMaze().getBlock(pacman.getPosition().getX() / mCoef,
-                    pacman.getPosition().getY() / mCoef));
+            eatPellet(mWorld.getMaze().getBlock(movableGameElement.getPosition().getX() / mCoef,
+                    movableGameElement.getPosition().getY() / mCoef));
         }
     }
 
-    private void checkTunnel(Pacman pacman) {
+    private void checkTunnel(MovableGameElement pacman) {
     /* Handles TP */
         if ((pacman.getPosition().x / mCoef) == mWorld.getWidth() - 1) {
             pacman.setPosition(new Vector2D(0, pacman.getPosition().y));

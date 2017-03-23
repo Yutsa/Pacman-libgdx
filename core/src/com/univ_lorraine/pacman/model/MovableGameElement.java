@@ -4,7 +4,12 @@ package com.univ_lorraine.pacman.model;
  * @author Édouard WILLISSECK
  */
 
-public class MoveableGameElement extends GameElement {
+public class MovableGameElement extends GameElement {
+    /**
+     * The direction the player wants pacman to go next.
+     */
+    private Direction mWantedDirection;
+
     /**
      * An enum for the directions.
      */
@@ -26,9 +31,10 @@ public class MoveableGameElement extends GameElement {
      * @param position The mPosition of the element.
      * @param world    The mWorld of the element.
      */
-    protected MoveableGameElement(Vector2D position, World world) {
+    protected MovableGameElement(Vector2D position, World world) {
         super(position, world);
         mCurrentDirection = Direction.RIGHT;
+        mWantedDirection = Direction.RIGHT;
         mSpeed = 500;
     }
 
@@ -48,6 +54,25 @@ public class MoveableGameElement extends GameElement {
      */
     public void setCurrentDirection(Direction currentDirection) {
         mCurrentDirection = currentDirection;
+    }
+
+    /**
+     * Gets the pacman's wanted direction.
+     *
+     * @return The wanted Direction of pacman.
+     */
+    public Direction getWantedDirection() {
+
+        return mWantedDirection;
+    }
+
+    /**
+     * Sets the pacman's wanted direction.
+     *
+     * @param wantedDirection The Direction to set.
+     */
+    public void setWantedDirection(Direction wantedDirection) {
+        mWantedDirection = wantedDirection;
     }
 
     public int getSpeed() {
