@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.model.BasicPellet;
@@ -83,10 +84,12 @@ public class WorldRenderer implements InputProcessor {
         /* Iterates through the maze and renders the block */
         for (GameElement e : mWorld) {
             Vector2D position = e.getPosition();
-            batch.draw(textureFactory.getTexture(e),
+            Texture texture = textureFactory.getTexture(e);
+            batch.draw(texture,
                     ((position.x / ((float) mCoef)) - mWorld.getWidth() / 2f) * size,
                     ((position.y / ((float) mCoef)) - mWorld.getHeight() / 2f) * size, size, size,
-                    0, 0, (int) size, (int) size, false, true);
+                    0, 0,
+                    texture.getWidth(), texture.getHeight(), false, true);
         }
         batch.end();
         moveElement(mWorld.getPacman(), deltaTime);
