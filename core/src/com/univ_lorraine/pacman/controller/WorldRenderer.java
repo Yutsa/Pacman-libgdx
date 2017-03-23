@@ -106,11 +106,6 @@ public class WorldRenderer implements InputProcessor {
         long timeElapsed = TimeUtils.timeSinceMillis(mWorld.getStartTime());
         mWorld.winPoint(10 - (int) (timeElapsed / 1000));
         mWorld.getMaze().decreasePelleNumber();
-
-//        if (mWorld.getMaze().getPelletNumber() == 0) {
-//            Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
-//            mGame.setScreen(new WinScreen());
-//        }
     }
 
     /**

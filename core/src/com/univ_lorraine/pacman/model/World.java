@@ -38,7 +38,7 @@ public class World implements Iterable<GameElement> {
      * Creates the World, the Pacman and the Maze.
      */
     public World() {
-        mPacman = new Pacman(new Vector2D(14 * mCoef, 13 * mCoef), this, 500);
+        mPacman = new Pacman(new Vector2D(14 * mCoef, 17 * mCoef), this, 500);
         mMaze = new Maze(this);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
