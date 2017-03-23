@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,14 +18,16 @@ public class GameScreen implements Screen {
     private WorldRenderer mWorldRenderer;
     private OrthographicCamera mCamera;
     private BitmapFont font;
-    SpriteBatch batch;
+    private SpriteBatch batch;
+    private Game mGame;
 
 
-    public GameScreen()
+    public GameScreen(Game game)
     {
         mWorld = new World();
-        mWorldRenderer = new WorldRenderer(mWorld);
+        mWorldRenderer = new WorldRenderer(mWorld, game);
         mCamera = new OrthographicCamera();
+        mGame = game;
     }
 
     @Override

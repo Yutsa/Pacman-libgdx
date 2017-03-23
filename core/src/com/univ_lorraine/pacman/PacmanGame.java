@@ -8,6 +8,6 @@ public class PacmanGame extends Game implements ApplicationListener {
 
     @Override
     public void create () {
-        setScreen(new GameScreen());
+        setScreen(new GameScreen(this));
     }
 }

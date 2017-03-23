@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -16,6 +17,7 @@ import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
+import com.univ_lorraine.pacman.screens.WinScreen;
 import com.univ_lorraine.pacman.view.TextureFactory;
 
 /**
@@ -28,6 +30,7 @@ public class WorldRenderer implements InputProcessor {
     private TextureFactory textureFactory;
     private World mWorld;
     private double epsilon;
+    private Game mGame;
     /**
      * The coefficient by which the logical world is bigger than the onscreen world.
      */
@@ -38,7 +41,7 @@ public class WorldRenderer implements InputProcessor {
      *
      * @param world The world being controlled by the {@link WorldRenderer}
      */
-    public WorldRenderer(World world) {
+    public WorldRenderer(World world, Game game) {
         textureFactory = TextureFactory.getInstance();
         batch = new SpriteBatch();
         mWorld = world;
@@ -46,6 +49,7 @@ public class WorldRenderer implements InputProcessor {
         mCoef = mWorld.getCoef();
         mWorld.getMaze().loadDemoLevel(mCoef);
         epsilon = (mWorld.getPacman().getSpeed() / 6000f);
+        mGame = game;
 
     }
 
@@ -65,6 +69,10 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time passed between two renders.
      */
     public void render(OrthographicCamera camera, float deltaTime) {
+        if (mWorld.getMaze().getPelletNumber() == 0) {
+            Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
+            mGame.setScreen(new WinScreen());
+        }
         Pacman pacman = mWorld.getPacman();
         batch.begin();
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -98,10 +106,11 @@ public class WorldRenderer implements InputProcessor {
         long timeElapsed = TimeUtils.timeSinceMillis(mWorld.getStartTime());
         mWorld.winPoint(10 - (int) (timeElapsed / 1000));
         mWorld.getMaze().decreasePelleNumber();
-        if (mWorld.getMaze().getPelletNumber() == 0) {
-            // TODO: 23/03/17 Call method to display end screen.
-            Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
-        }
+
+//        if (mWorld.getMaze().getPelletNumber() == 0) {
+//            Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
+//            mGame.setScreen(new WinScreen());
+//        }
     }
 
     /**
@@ -219,8 +228,8 @@ public class WorldRenderer implements InputProcessor {
         fixPosition(movableGameElement);
         currentPosition = movableGameElement.getPosition();
         currentGameElement = mWorld.getMaze().getBlock(
-                currentPosition.getX() / mCoef,
-                currentPosition.getY() / mCoef);
+                (currentPosition.getX() + 50) / mCoef,
+                (currentPosition.getY() + 50) / mCoef);
 
         if (currentGameElement instanceof BasicPellet) {
             eatPellet(currentGameElement);

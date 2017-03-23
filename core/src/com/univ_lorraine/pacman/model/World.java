@@ -49,6 +49,10 @@ public class World implements Iterable<GameElement> {
         return startTime;
     }
 
+    public void resetStartTime() {
+        startTime = TimeUtils.millis();
+    }
+
     public int getScore() {
         return score;
     }
