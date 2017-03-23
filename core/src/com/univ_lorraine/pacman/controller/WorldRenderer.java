@@ -112,8 +112,7 @@ public class WorldRenderer implements InputProcessor {
         mWorld.getMaze().decreasePelletNumber();
     }
 
-    // FIXME: 23/03/17 Has some issues to detect intersections.
-    boolean isAtIntersection(Vector2D position) {
+    boolean isAtIntersection(Vector2D position, MovableGameElement.Direction direction) {
         int emptyBlockCounter = 0;
         if (!(getNextUpElement(position) instanceof Block)) {
             emptyBlockCounter++;
@@ -128,7 +127,7 @@ public class WorldRenderer implements InputProcessor {
             emptyBlockCounter++;
         }
 
-        return emptyBlockCounter >= 3;
+        return (emptyBlockCounter >= 3 || (getNextElement(position, direction) instanceof Block));
     }
 
     /**
@@ -138,7 +137,7 @@ public class WorldRenderer implements InputProcessor {
      * @param direction The direction of the element who wants to know the next block.
      * @return The next GameElement on the map.
      */
-    private GameElement getNextElement(Vector2D position, Pacman.Direction direction) {
+    private GameElement getNextElement(Vector2D position, MovableGameElement.Direction direction) {
         switch (direction) {
             case LEFT:
                 return getNextLeftElement(position);
@@ -246,9 +245,11 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time elapsed between two renders.
      */
     public void moveElement(MovableGameElement movableGameElement, float deltaTime) {
-        if (isAtIntersection(movableGameElement.getPosition())) {
-            Gdx.app.log(WorldRenderer.class.getSimpleName(), "INTERSECTION");
+        if (isAtIntersection(movableGameElement.getPosition(),
+                movableGameElement.getCurrentDirection())) {
+            Gdx.app.log(WorldRenderer.class.getSimpleName(), ""+ movableGameElement.getPosition());
         }
+        
         checkTunnel(movableGameElement);
         Vector2D currentPosition;
         GameElement currentGameElement;
