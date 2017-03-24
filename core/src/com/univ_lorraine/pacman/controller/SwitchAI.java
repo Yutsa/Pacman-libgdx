@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 
@@ -29,13 +28,15 @@ public class SwitchAI extends GhostAI {
 
     @Override
     public void setDirection(MovableGameElement movableGameElement) {
-        Gdx.app.log(SwitchAI.class.getSimpleName(), "AI: " + usedAI.getClass().getSimpleName());
-        usedAI.setDirection(movableGameElement);
-        if (usedAI instanceof SearchPacmanAI) {
-            usedAI = randomAI;
-        }
-        else {
-            usedAI = searchAI;
+        if (mWorldRenderer.isAtIntersection(movableGameElement.getPosition(),
+                movableGameElement.getCurrentDirection())) {
+            usedAI.setDirection(movableGameElement);
+            if (usedAI instanceof SearchPacmanAI) {
+                usedAI = randomAI;
+            }
+            else {
+                usedAI = searchAI;
+            }
         }
     }
 }
