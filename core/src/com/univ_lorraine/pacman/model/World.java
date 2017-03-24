@@ -13,8 +13,8 @@ public class World implements Iterable<GameElement> {
      * The Pacman of this world.
      */
     private Pacman mPacman;
-    private Ghost redGhost;
-    private Ghost yellowGhost;
+    private RedGhost redGhost;
+    private YellowGhost yellowGhost;
     /**
      * The Maze of this world.
      */
@@ -48,9 +48,9 @@ public class World implements Iterable<GameElement> {
     }
 
     public void createGhosts() {
-        redGhost = new Ghost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
+        redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
                 Ghost.Color.RED, new OutOfHouseAI(mWorldRenderer));
-        yellowGhost = new Ghost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
+        yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
                 Ghost.Color.YELLOW, new OutOfHouseAI(mWorldRenderer));
         redGhost.getAi().setGhost(redGhost);
         yellowGhost.getAi().setGhost(yellowGhost);
