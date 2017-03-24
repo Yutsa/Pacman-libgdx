@@ -13,6 +13,7 @@ import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
@@ -97,12 +98,10 @@ public class WorldRenderer implements InputProcessor {
         }
         batch.end();
         moveElement(mWorld.getPacman(), deltaTime);
-        mWorld.getRedGhost().useAI();
-        moveElement(mWorld.getRedGhost(), deltaTime);
-        mWorld.getYellowGhost().useAI();
-        moveElement(mWorld.getYellowGhost(), deltaTime);
-        mWorld.getPinkGhost().useAI();
-        moveElement(mWorld.getPinkGhost(), deltaTime);
+        for (Ghost ghost : mWorld.getGhosts()) {
+            moveElement(ghost, deltaTime);
+            ghost.useAI();
+        }
     }
 
     /**

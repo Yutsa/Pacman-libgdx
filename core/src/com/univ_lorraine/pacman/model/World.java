@@ -16,6 +16,7 @@ public class World implements Iterable<GameElement> {
     private RedGhost redGhost;
     private YellowGhost yellowGhost;
     private PinkGhost pinkGhost;
+    private ArrayList<Ghost> mGhosts = new ArrayList<Ghost>();
     /**
      * The Maze of this world.
      */
@@ -63,8 +64,15 @@ public class World implements Iterable<GameElement> {
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
         mGameElements.add(redGhost);
+        mGhosts.add(redGhost);
         mGameElements.add(yellowGhost);
+        mGhosts.add(yellowGhost);
         mGameElements.add(pinkGhost);
+        mGhosts.add(pinkGhost);
+    }
+
+    public ArrayList<Ghost> getGhosts() {
+        return mGhosts;
     }
 
     public long getStartTime() {

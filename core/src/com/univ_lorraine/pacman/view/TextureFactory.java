@@ -46,6 +46,9 @@ public class TextureFactory {
     private static Texture yellowGhost;
     private static Texture pinkGhost;
 
+    private float time = 0;
+    private int state = 0;
+
     /**
      * Constructor that loads the textures.
      */
@@ -82,6 +85,9 @@ public class TextureFactory {
         return instance;
     }
 
+    public void update(float deltaTime) {
+        time += deltaTime;
+    }
     /**
      * Gets the Texture for the given GameElement.
      * @param element The GameElement to get the Texture.
