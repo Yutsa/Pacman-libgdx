@@ -26,13 +26,8 @@ public class WorldRenderer implements InputProcessor {
     private SpriteBatch batch;
     private TextureFactory textureFactory;
     private World mWorld;
-    private double epsilon;
     private Game mGame;
     private MovementController mMovementController;
-    /**
-     * The coefficient by which the logical world is bigger than the onscreen world.
-     */
-    private int mCoef;
 
     /**
      * Creates the WorldRenderer.
@@ -46,9 +41,7 @@ public class WorldRenderer implements InputProcessor {
         batch = new SpriteBatch();
         mWorld = world;
         Gdx.input.setInputProcessor(this);
-        mCoef = mWorld.getCoef();
-        mWorld.getMaze().loadDemoLevel(mCoef);
-        epsilon = (mWorld.getPacman().getSpeed() / 6000f);
+        mWorld.getMaze().loadDemoLevel(movementController.getCoef());
         mGame = game;
 
     }
@@ -97,8 +90,8 @@ public class WorldRenderer implements InputProcessor {
             Vector2D position = e.getPosition();
             Texture texture = textureFactory.getTexture(e);
             batch.draw(texture,
-                    ((position.x / ((float) mCoef)) - mWorld.getWidth() / 2f) * size,
-                    ((position.y / ((float) mCoef)) - mWorld.getHeight() / 2f) * size, size, size,
+                    ((position.x / ((float) mMovementController.getCoef())) - mWorld.getWidth() / 2f) * size,
+                    ((position.y / ((float) mMovementController.getCoef())) - mWorld.getHeight() / 2f) * size, size, size,
                     0, 0,
                     texture.getWidth(), texture.getHeight(), false, true);
         }
@@ -116,7 +109,7 @@ public class WorldRenderer implements InputProcessor {
             mMovementController.moveElement(ghost, deltaTime);
         }
     }
-    
+
     public World getWorld() {
         return mWorld;
     }

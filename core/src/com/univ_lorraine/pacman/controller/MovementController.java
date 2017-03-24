@@ -45,6 +45,10 @@ public class MovementController {
         mCoef = coef;
     }
 
+    public int getCoef() {
+        return mCoef;
+    }
+
     /**
      * Gets the next block given a position and a direction.
      *
