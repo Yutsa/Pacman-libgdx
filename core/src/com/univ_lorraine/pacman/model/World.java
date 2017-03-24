@@ -15,6 +15,7 @@ public class World implements Iterable<GameElement> {
     private Pacman mPacman;
     private RedGhost redGhost;
     private YellowGhost yellowGhost;
+    private PinkGhost pinkGhost;
     /**
      * The Maze of this world.
      */
@@ -52,12 +53,18 @@ public class World implements Iterable<GameElement> {
                 Ghost.Color.RED, new OutOfHouseAI(mWorldRenderer));
         yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
                 Ghost.Color.YELLOW, new OutOfHouseAI(mWorldRenderer));
+        pinkGhost = new PinkGhost(new Vector2D(12 * mCoef, 13 * mCoef), this, 500,
+                Ghost.Color.PINK, new OutOfHouseAI(mWorldRenderer));
+
         redGhost.getAi().setGhost(redGhost);
         yellowGhost.getAi().setGhost(yellowGhost);
+        pinkGhost.getAi().setGhost(pinkGhost);
+
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
         mGameElements.add(redGhost);
         mGameElements.add(yellowGhost);
+        mGameElements.add(pinkGhost);
     }
 
     public long getStartTime() {
@@ -125,6 +132,14 @@ public class World implements Iterable<GameElement> {
 
     public YellowGhost getYellowGhost() {
         return yellowGhost;
+    }
+
+    public PinkGhost getPinkGhost() {
+        return pinkGhost;
+    }
+
+    public void setPinkGhost(PinkGhost pinkGhost) {
+        this.pinkGhost = pinkGhost;
     }
 
     /**
