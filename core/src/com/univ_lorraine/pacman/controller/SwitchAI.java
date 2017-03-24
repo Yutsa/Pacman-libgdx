@@ -29,7 +29,7 @@ public class SwitchAI extends GhostAI {
 
     @Override
     public void setDirection(MovableGameElement movableGameElement) {
-        Gdx.app.log("", "Changed AI");
+        Gdx.app.log(SwitchAI.class.getSimpleName(), "AI: " + usedAI.getClass().getSimpleName());
         usedAI.setDirection(movableGameElement);
         if (usedAI instanceof SearchPacmanAI) {
             usedAI = randomAI;

@@ -123,21 +123,31 @@ public class WorldRenderer implements InputProcessor {
     }
 
     boolean isAtIntersection(Vector2D position, Direction direction) {
-        int emptyBlockCounter = 0;
-        if (!(getNextUpElement(position) instanceof Block)) {
-            emptyBlockCounter++;
-        }
-        if (!(getNextDownElement(position) instanceof Block)) {
-            emptyBlockCounter++;
-        }
-        if (!(getNextRightElement(position) instanceof Block)) {
-            emptyBlockCounter++;
-        }
-        if (!(getNextLeftElement(position) instanceof Block)) {
-            emptyBlockCounter++;
+        if (isExactlyOnTile(position)) {
+            int emptyBlockCounter = 0;
+            if (!(getNextUpElement(position) instanceof Block)) {
+                emptyBlockCounter++;
+            }
+            if (!(getNextDownElement(position) instanceof Block)) {
+                emptyBlockCounter++;
+            }
+            if (!(getNextRightElement(position) instanceof Block)) {
+                emptyBlockCounter++;
+            }
+            if (!(getNextLeftElement(position) instanceof Block)) {
+                emptyBlockCounter++;
+            }
+
+            return (emptyBlockCounter >= 3 || (getNextElement(position, direction) instanceof Block));
         }
 
-        return (emptyBlockCounter >= 3 || (getNextElement(position, direction) instanceof Block));
+        else {
+            return false;
+        }
+    }
+
+    public boolean isExactlyOnTile(Vector2D position) {
+        return position.getX() % 100 == 0 && position.getY() % 100 == 0;
     }
 
     /**
