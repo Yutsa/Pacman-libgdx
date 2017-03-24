@@ -9,11 +9,10 @@ import com.univ_lorraine.pacman.controller.GhostAI;
 public class BlueGhost extends Ghost {
     /**
      * Creates a GameElement with a mPosition and a mWorld.
-     *
-     * @param position The mPosition of the element.
+     *  @param position The mPosition of the element.
      * @param world    The mWorld of the element.
      */
-    protected BlueGhost(Vector2D position, World world, int speed, Color color, GhostAI ai) {
-        super(position, world, speed, color, ai);
+    protected BlueGhost(Vector2D position, World world, int speed, GhostAI ai) {
+        super(position, world, speed, ai);
     }
 }

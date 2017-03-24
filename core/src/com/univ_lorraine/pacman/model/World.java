@@ -50,11 +50,11 @@ public class World implements Iterable<GameElement> {
 
     public void createGhosts() {
         redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
-                Ghost.Color.RED, new OutOfHouseAI(mWorldRenderer));
+                new OutOfHouseAI(mWorldRenderer));
         yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
-                Ghost.Color.YELLOW, new OutOfHouseAI(mWorldRenderer));
+                new OutOfHouseAI(mWorldRenderer));
         pinkGhost = new PinkGhost(new Vector2D(12 * mCoef, 13 * mCoef), this, 500,
-                Ghost.Color.PINK, new OutOfHouseAI(mWorldRenderer));
+                new OutOfHouseAI(mWorldRenderer));
 
         redGhost.getAi().setGhost(redGhost);
         yellowGhost.getAi().setGhost(yellowGhost);

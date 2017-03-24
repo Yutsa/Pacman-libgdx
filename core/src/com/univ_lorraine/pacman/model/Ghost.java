@@ -7,28 +7,22 @@ import com.univ_lorraine.pacman.controller.GhostAI;
  */
 
 public abstract class Ghost extends MovableGameElement {
-    public enum Color {RED, BLUE, PINK, YELLOW}
 
     /**
      * The color of the ghost.
      */
-    private Color mColor;
     private GhostAI ai = null;
+
+    boolean alive = true;
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
-     *
-     * @param position The mPosition of the element.
+     *  @param position The mPosition of the element.
      * @param world    The mWorld of the element.
      */
-    protected Ghost(Vector2D position, World world, int speed, Color color, GhostAI ai) {
+    protected Ghost(Vector2D position, World world, int speed, GhostAI ai) {
         super(position, world, speed);
-        mColor = color;
         setAi(ai);
-    }
-
-    public Color getColor() {
-        return mColor;
     }
 
     public GhostAI getAi() {
@@ -44,5 +38,13 @@ public abstract class Ghost extends MovableGameElement {
 
     public void useAI() {
         ai.setDirection(this);
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }
