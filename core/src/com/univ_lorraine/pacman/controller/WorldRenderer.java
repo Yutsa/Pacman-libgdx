@@ -13,6 +13,7 @@ import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
@@ -189,22 +190,26 @@ public class WorldRenderer implements InputProcessor {
                 = new HashMap<Direction, GameElement>();
 
         GameElement element = getNextLeftElement(position);
-        if (!(element instanceof Block) && direction != Direction.RIGHT) {
+        if (!(element instanceof Block) && direction != Direction.RIGHT
+                && !(element instanceof GhostHouseTile)) {
             possibleDirections.put(Direction.LEFT, element);
         }
 
         element = getNextRightElement(position);
-        if (!(element instanceof Block) && direction != Direction.LEFT) {
+        if (!(element instanceof Block) && direction != Direction.LEFT
+                && !(element instanceof GhostHouseTile)) {
             possibleDirections.put(Direction.RIGHT, element);
         }
 
         element = getNextUpElement(position);
-        if (!(element instanceof Block)  && direction != Direction.DOWN) {
+        if (!(element instanceof Block)  && direction != Direction.DOWN
+                && !(element instanceof GhostHouseTile)) {
             possibleDirections.put(Direction.UP, element);
         }
 
         element = getNextDownElement(position);
-        if (!(element instanceof Block) && direction != Direction.UP) {
+        if (!(element instanceof Block) && direction != Direction.UP
+                && !(element instanceof GhostHouseTile)) {
             possibleDirections.put(Direction.DOWN, element);
         }
 
@@ -295,7 +300,9 @@ public class WorldRenderer implements InputProcessor {
         GameElement nextBlock = getNextElement(movableGameElement.getPosition(),
                 movableGameElement.getCurrentDirection());
 
-        if (!(nextBlock instanceof Block)) {
+        if (!(nextBlock instanceof Block) &&
+                !((movableGameElement.getCurrentDirection() == Direction.DOWN)
+                        && (nextBlock instanceof GhostHouseTile))) {
             movableGameElement.updatePosition(deltaTime);
         }
 
