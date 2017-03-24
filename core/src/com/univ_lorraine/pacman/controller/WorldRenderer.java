@@ -75,18 +75,23 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time passed between two renders.
      */
     public void render(OrthographicCamera camera, float deltaTime) {
+        checkWin();
+        batch.setProjectionMatrix(camera.combined);
+        drawWorld();
+        moveGameElements(deltaTime);
+    }
+
+    public void checkWin() {
         if (mWorld.getMaze().getPelletNumber() == 0) {
             Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
             mGame.setScreen(new WinScreen());
         }
-        Pacman pacman = mWorld.getPacman();
+    }
+
+    public void drawWorld() {
         batch.begin();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.setProjectionMatrix(camera.combined);
-
-        /* Iterates through the maze and renders the block */
         for (GameElement e : mWorld) {
             Vector2D position = e.getPosition();
             Texture texture = textureFactory.getTexture(e);
@@ -97,6 +102,13 @@ public class WorldRenderer implements InputProcessor {
                     texture.getWidth(), texture.getHeight(), false, true);
         }
         batch.end();
+    }
+
+    /**
+     * Move the pacman and the ghosts of the world.
+     * @param deltaTime The time elapsed between this render and the last one.
+     */
+    public void moveGameElements(float deltaTime) {
         moveElement(mWorld.getPacman(), deltaTime);
         for (Ghost ghost : mWorld.getGhosts()) {
             moveElement(ghost, deltaTime);
