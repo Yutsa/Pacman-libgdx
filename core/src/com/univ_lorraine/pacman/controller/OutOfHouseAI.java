@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
@@ -19,13 +20,16 @@ public class OutOfHouseAI extends GhostAI {
     public void setDirection(MovableGameElement movableGameElement) {
         if (mWorldRenderer.getElementAtPosition(movableGameElement) instanceof GhostHouseTile) {
             movableGameElement.setWantedDirection(Direction.UP);
+            Gdx.app.log(OutOfHouseAI.class.getSimpleName(), "Ghost:" + mGhost.getColor());
         }
         else {
             if (movableGameElement instanceof RedGhost) {
                 ((RedGhost) movableGameElement).setAi(new RandomAI(mWorldRenderer));
+                Gdx.app.log(OutOfHouseAI.class.getSimpleName(), "RedGhost changing AI");
             }
             else if (movableGameElement instanceof YellowGhost) {
                 ((YellowGhost) movableGameElement).setAi(new SearchPacmanAI(mWorldRenderer));
+                Gdx.app.log(OutOfHouseAI.class.getSimpleName(), "YellowGhost changing AI");
             }
         }
     }

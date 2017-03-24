@@ -119,11 +119,11 @@ public class World implements Iterable<GameElement> {
         return mPacman;
     }
 
-    public Ghost getRedGhost() {
+    public RedGhost getRedGhost() {
         return redGhost;
     }
 
-    public Ghost getYellowGhost() {
+    public YellowGhost getYellowGhost() {
         return yellowGhost;
     }
 
