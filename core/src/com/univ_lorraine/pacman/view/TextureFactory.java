@@ -59,10 +59,10 @@ public class TextureFactory {
         yellowGhost = new Texture("ghost4.png");
         mTextureMap = new HashMap<Class<?>, TextureWrapper>();
         mTextureMap.put(Pacman.class, new PacmanTextureWrapper(null));
-        mTextureMap.put(RedGhost.class, new DefaultTextureWrapper(null, redGhost));
-        mTextureMap.put(PinkGhost.class, new DefaultTextureWrapper(null, pinkGhost));
-        mTextureMap.put(BlueGhost.class, new DefaultTextureWrapper(null, blueGhost));
-        mTextureMap.put(YellowGhost.class, new DefaultTextureWrapper(null, yellowGhost));
+        mTextureMap.put(RedGhost.class, new GhostTextureWrapper(null, redGhost));
+        mTextureMap.put(PinkGhost.class, new GhostTextureWrapper(null, pinkGhost));
+        mTextureMap.put(BlueGhost.class, new GhostTextureWrapper(null, blueGhost));
+        mTextureMap.put(YellowGhost.class, new GhostTextureWrapper(null, yellowGhost));
         mTextureMap.put(Block.class, new DefaultTextureWrapper(null, blocTexture));
         mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(null, emptyTexture));
         mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(null, basicPelletTexture));
@@ -89,7 +89,9 @@ public class TextureFactory {
      */
     public Texture getTexture(GameElement element) {
         TextureWrapper textureWrapper = mTextureMap.get(element.getClass());
-        textureWrapper.setWrappedObject(element);
+        if (textureWrapper.getWrappedObject() == null) {
+            textureWrapper.setWrappedObject(element);
+        }
         return textureWrapper.getTexture();
     }
 }

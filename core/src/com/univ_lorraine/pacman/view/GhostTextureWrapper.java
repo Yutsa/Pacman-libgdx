@@ -18,8 +18,16 @@ public class GhostTextureWrapper extends TextureWrapper {
      *
      * @param wrappedObject The GameElement to be wrapped.
      */
-    public GhostTextureWrapper(GameElement wrappedObject) {
+    public GhostTextureWrapper(GameElement wrappedObject, Texture defaultTexture) {
         super(wrappedObject);
+        setNormalTexture(defaultTexture);
+    }
+
+    public void setNormalTexture(Texture normalTexture) {
+        if (normalTexture == null) {
+            throw new IllegalArgumentException("NULL texture");
+        }
+        this.normalTexture = normalTexture;
     }
 
     @Override
@@ -29,21 +37,6 @@ public class GhostTextureWrapper extends TextureWrapper {
         if (!(wrappedObject instanceof Ghost)) {
             throw new IllegalArgumentException("GhostTextureWrapper's wrapped object should" +
                     " be a ghost.");
-        }
-
-        switch (((Ghost) wrappedObject).getColor()) {
-            case RED:
-                normalTexture = new Texture("ghost1.png");
-                break;
-            case PINK:
-                normalTexture = new Texture("ghost2.png");
-                break;
-            case BLUE:
-                normalTexture = new Texture("ghost3.png");
-                break;
-            case YELLOW:
-                normalTexture = new Texture("ghost4.png");
-                break;
         }
     }
 
