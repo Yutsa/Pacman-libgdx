@@ -311,6 +311,11 @@ public class WorldRenderer implements InputProcessor {
 
     }
 
+    public GameElement getElementAtPosition(GameElement element) {
+        int x = element.getPosition().getX() / mCoef;
+        int y = element.getPosition().getY() / mCoef;
+        return mWorld.getMaze().getBlock(x, y);
+    }
     /**
      * Checks if we are going through the tunnel and teleports the {@link MovableGameElement}
      *

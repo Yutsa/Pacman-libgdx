@@ -1,9 +1,7 @@
 package com.univ_lorraine.pacman.model;
 
 import com.badlogic.gdx.utils.TimeUtils;
-import com.univ_lorraine.pacman.controller.GhostAI;
-import com.univ_lorraine.pacman.controller.RandomAI;
-import com.univ_lorraine.pacman.controller.SearchPacmanAI;
+import com.univ_lorraine.pacman.controller.OutOfHouseAI;
 import com.univ_lorraine.pacman.controller.WorldRenderer;
 
 import java.util.ArrayList;
@@ -50,13 +48,12 @@ public class World implements Iterable<GameElement> {
     }
 
     public void createGhosts() {
-        GhostAI randomAI = new RandomAI(mWorldRenderer);
-        GhostAI searchAI = new SearchPacmanAI(mWorldRenderer);
-
         redGhost = new Ghost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
-                Ghost.Color.RED, randomAI);
+                Ghost.Color.RED, new OutOfHouseAI(mWorldRenderer));
         yellowGhost = new Ghost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
-                Ghost.Color.YELLOW, searchAI);
+                Ghost.Color.YELLOW, new OutOfHouseAI(mWorldRenderer));
+        redGhost.getAi().setGhost(redGhost);
+        yellowGhost.getAi().setGhost(yellowGhost);
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
         mGameElements.add(redGhost);
