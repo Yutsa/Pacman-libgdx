@@ -15,11 +15,14 @@ import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
+import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
 import com.univ_lorraine.pacman.screens.WinScreen;
 import com.univ_lorraine.pacman.view.TextureFactory;
+
+import java.util.HashMap;
 
 /**
  * @author Édouard WILLISSECK
@@ -95,6 +98,8 @@ public class WorldRenderer implements InputProcessor {
         moveElement(mWorld.getPacman(), deltaTime);
         mWorld.getRedGhost().useAI();
         moveElement(mWorld.getRedGhost(), deltaTime);
+        mWorld.getYellowGhost().useAI();
+        moveElement(mWorld.getYellowGhost(), deltaTime);
     }
 
     /**
@@ -114,7 +119,7 @@ public class WorldRenderer implements InputProcessor {
         mWorld.getMaze().decreasePelletNumber();
     }
 
-    boolean isAtIntersection(Vector2D position, MovableGameElement.Direction direction) {
+    boolean isAtIntersection(Vector2D position, Direction direction) {
         int emptyBlockCounter = 0;
         if (!(getNextUpElement(position) instanceof Block)) {
             emptyBlockCounter++;
@@ -139,7 +144,7 @@ public class WorldRenderer implements InputProcessor {
      * @param direction The direction of the element who wants to know the next block.
      * @return The next GameElement on the map.
      */
-    private GameElement getNextElement(Vector2D position, MovableGameElement.Direction direction) {
+    private GameElement getNextElement(Vector2D position, Direction direction) {
         switch (direction) {
             case LEFT:
                 return getNextLeftElement(position);
@@ -160,22 +165,56 @@ public class WorldRenderer implements InputProcessor {
                 (int) Math.ceil((position.getY() / ((float) mCoef))) - 1);
     }
 
-    private GameElement getNextDownElement(Vector2D position) {
+    public GameElement getNextDownElement(Vector2D position) {
         return mWorld.getMaze().getBlock(
                 position.getX() / mCoef,
                 (position.getY() / mCoef) + 1);
     }
 
-    private GameElement getNextRightElement(Vector2D position) {
+    public GameElement getNextRightElement(Vector2D position) {
         return mWorld.getMaze().getBlock(
                 (position.getX() / mCoef) + 1,
                 position.getY() / mCoef);
     }
 
-    private GameElement getNextLeftElement(Vector2D position) {
+    public GameElement getNextLeftElement(Vector2D position) {
         return mWorld.getMaze().getBlock(
                 (int) Math.ceil((position.getX() / ((float) mCoef)) - 1),
                 position.getY() / mCoef);
+    }
+
+    public HashMap<Direction, GameElement>
+    getPossibleDirections(Vector2D position, Direction direction) {
+        HashMap<Direction, GameElement> possibleDirections
+                = new HashMap<Direction, GameElement>();
+
+        GameElement element = getNextLeftElement(position);
+        if (!(element instanceof Block) && direction != Direction.RIGHT) {
+            possibleDirections.put(Direction.LEFT, element);
+        }
+
+        element = getNextRightElement(position);
+        if (!(element instanceof Block) && direction != Direction.LEFT) {
+            possibleDirections.put(Direction.RIGHT, element);
+        }
+
+        element = getNextUpElement(position);
+        if (!(element instanceof Block)  && direction != Direction.DOWN) {
+            possibleDirections.put(Direction.UP, element);
+        }
+
+        element = getNextDownElement(position);
+        if (!(element instanceof Block) && direction != Direction.UP) {
+            possibleDirections.put(Direction.DOWN, element);
+        }
+
+        return possibleDirections;
+    }
+
+    public double getDistance(Vector2D position1, Vector2D position2) {
+        double diffX = position1.getX() - position2.getX();
+        double diffY = position1.getY() - position2.getY();
+        return Math.sqrt((diffX * diffX) + (diffY * diffY));
     }
 
     /**
@@ -218,7 +257,7 @@ public class WorldRenderer implements InputProcessor {
      * @param pacman          The {@link Pacman} that is moving.
      * @param wantedDirection The direction the {@link Pacman} wants to go.
      */
-    private void checkWantedDirection(MovableGameElement pacman, Pacman.Direction wantedDirection) {
+    private void checkWantedDirection(MovableGameElement pacman, Direction wantedDirection) {
         GameElement nextBlock = getNextElement(pacman.getPosition(), pacman.getWantedDirection());
 
         switch (wantedDirection) {
@@ -253,7 +292,8 @@ public class WorldRenderer implements InputProcessor {
 
         checkWantedDirection(movableGameElement, movableGameElement.getWantedDirection());
 
-        GameElement nextBlock = getNextElement(movableGameElement.getPosition(), movableGameElement.getCurrentDirection());
+        GameElement nextBlock = getNextElement(movableGameElement.getPosition(),
+                movableGameElement.getCurrentDirection());
 
         if (!(nextBlock instanceof Block)) {
             movableGameElement.updatePosition(deltaTime);
@@ -283,9 +323,13 @@ public class WorldRenderer implements InputProcessor {
         }
 
         if ((movableGameElement.getPosition().x / mCoef) == 0
-                && movableGameElement.getCurrentDirection() == Pacman.Direction.LEFT) {
+                && movableGameElement.getCurrentDirection() == Direction.LEFT) {
             movableGameElement.setPosition(new Vector2D(27 * mCoef, movableGameElement.getPosition().y));
         }
+    }
+
+    public World getWorld() {
+        return mWorld;
     }
 
     @Override
@@ -293,16 +337,16 @@ public class WorldRenderer implements InputProcessor {
         Pacman pacman = mWorld.getPacman();
         switch (keycode) {
             case Input.Keys.LEFT:
-                pacman.setWantedDirection(Pacman.Direction.LEFT);
+                pacman.setWantedDirection(Direction.LEFT);
                 break;
             case Input.Keys.RIGHT:
-                pacman.setWantedDirection(Pacman.Direction.RIGHT);
+                pacman.setWantedDirection(Direction.RIGHT);
                 break;
             case Input.Keys.UP:
-                pacman.setWantedDirection(Pacman.Direction.UP);
+                pacman.setWantedDirection(Direction.UP);
                 break;
             case Input.Keys.DOWN:
-                pacman.setWantedDirection(Pacman.Direction.DOWN);
+                pacman.setWantedDirection(Direction.DOWN);
                 break;
         }
 

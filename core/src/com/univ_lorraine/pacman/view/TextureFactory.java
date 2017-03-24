@@ -6,6 +6,7 @@ import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
+import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Pacman;
 
 import java.util.HashMap;
@@ -50,6 +51,7 @@ public class TextureFactory {
         mTextureMap.put(Block.class, new DefaultTextureWrapper(null, blocTexture));
         mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(null, emptyTexture));
         mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(null, basicPelletTexture));
+        mTextureMap.put(GhostHouseTile.class, new DefaultTextureWrapper(null, emptyTexture));
     }
 
     /**

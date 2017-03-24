@@ -209,6 +209,9 @@ public class Maze implements Iterable<GameElement> {
                         blocks[x][y] = new BasicPellet(new Vector2D(x * coeff, y * coeff), world);
                         pelletNumber++;
                     }
+                    else if (c == '4') {
+                        blocks[x][y] = new GhostHouseTile(new Vector2D(x * coeff, y * coeff), world);
+                    }
                     else
                         blocks[x][y] = new EmptyTile(new Vector2D(x * coeff, y * coeff), world);
                 }
