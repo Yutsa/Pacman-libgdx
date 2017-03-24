@@ -12,23 +12,23 @@ public class SwitchAI extends GhostAI {
     private GhostAI randomAI;
     private GhostAI searchAI;
 
-    public SwitchAI(WorldRenderer worldRenderer) {
-        super(worldRenderer);
+    public SwitchAI(MovementController movementController) {
+        super(movementController);
     }
 
     @Override
     public void setGhost(Ghost ghost) {
         super.setGhost(ghost);
-        randomAI = new RandomAI(mWorldRenderer);
+        randomAI = new RandomAI(mMovementController);
         randomAI.setGhost(ghost);
-        searchAI = new SearchPacmanAI(mWorldRenderer);
+        searchAI = new SearchPacmanAI(mMovementController);
         searchAI.setGhost(ghost);
         usedAI = searchAI;
     }
 
     @Override
     public void setDirection(MovableGameElement movableGameElement) {
-        if (mWorldRenderer.isAtIntersection(movableGameElement.getPosition(),
+        if (mMovementController.isAtIntersection(movableGameElement.getPosition(),
                 movableGameElement.getCurrentDirection())) {
             usedAI.setDirection(movableGameElement);
             if (usedAI instanceof SearchPacmanAI) {

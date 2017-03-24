@@ -13,27 +13,27 @@ import com.univ_lorraine.pacman.model.YellowGhost;
  */
 
 public class OutOfHouseAI extends GhostAI {
-    public OutOfHouseAI(WorldRenderer worldRenderer) {
-        super(worldRenderer);
+    public OutOfHouseAI(MovementController movementController) {
+        super(movementController);
     }
 
     @Override
     public void setDirection(MovableGameElement movableGameElement) {
-        if (mWorldRenderer.getElementAtPosition(movableGameElement) instanceof GhostHouseTile) {
+        if (mMovementController.getElementAtPosition(movableGameElement) instanceof GhostHouseTile) {
             movableGameElement.setWantedDirection(Direction.UP);
         }
         else {
             if (movableGameElement instanceof RedGhost) {
-                ((RedGhost) movableGameElement).setAi(new RandomAI(mWorldRenderer));
+                ((RedGhost) movableGameElement).setAi(new RandomAI(mMovementController));
                 ((RedGhost) movableGameElement).getAi().setGhost((Ghost) movableGameElement);
 
             }
             else if (movableGameElement instanceof YellowGhost) {
-                ((YellowGhost) movableGameElement).setAi(new SearchPacmanAI(mWorldRenderer));
+                ((YellowGhost) movableGameElement).setAi(new SearchPacmanAI(mMovementController));
                 ((YellowGhost) movableGameElement).getAi().setGhost((Ghost) movableGameElement);
             }
             else if (movableGameElement instanceof PinkGhost) {
-                ((PinkGhost) movableGameElement).setAi(new SwitchAI(mWorldRenderer));
+                ((PinkGhost) movableGameElement).setAi(new SwitchAI(mMovementController));
                 ((PinkGhost) movableGameElement).getAi().setGhost((Ghost) movableGameElement);
             }
         }

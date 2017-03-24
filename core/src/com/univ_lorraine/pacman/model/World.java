@@ -1,8 +1,8 @@
 package com.univ_lorraine.pacman.model;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import com.univ_lorraine.pacman.controller.MovementController;
 import com.univ_lorraine.pacman.controller.OutOfHouseAI;
-import com.univ_lorraine.pacman.controller.WorldRenderer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,7 +33,7 @@ public class World implements Iterable<GameElement> {
      * The time at which the game started.
      */
     long startTime;
-    WorldRenderer mWorldRenderer;
+    MovementController mMovementController;
 
     /**
      * The GameElements in this world.
@@ -51,11 +51,11 @@ public class World implements Iterable<GameElement> {
 
     public void createGhosts() {
         redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
-                new OutOfHouseAI(mWorldRenderer));
+                new OutOfHouseAI(mMovementController));
         yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
-                new OutOfHouseAI(mWorldRenderer));
+                new OutOfHouseAI(mMovementController));
         pinkGhost = new PinkGhost(new Vector2D(12 * mCoef, 13 * mCoef), this, 500,
-                new OutOfHouseAI(mWorldRenderer));
+                new OutOfHouseAI(mMovementController));
 
         redGhost.getAi().setGhost(redGhost);
         yellowGhost.getAi().setGhost(yellowGhost);
@@ -159,12 +159,12 @@ public class World implements Iterable<GameElement> {
         return mMaze;
     }
 
-    public WorldRenderer getWorldRenderer() {
-        return mWorldRenderer;
+    public MovementController getMovementController() {
+        return mMovementController;
     }
 
-    public void setWorldRenderer(WorldRenderer worldRenderer) {
-        mWorldRenderer = worldRenderer;
+    public void setMovementController(MovementController movementController) {
+        mMovementController = movementController;
     }
 
     /**

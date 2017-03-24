@@ -9,22 +9,18 @@ import com.univ_lorraine.pacman.model.MovableGameElement;
  */
 
 public abstract class GhostAI {
-    protected WorldRenderer mWorldRenderer;
+    protected MovementController mMovementController;
     protected Ghost mGhost;
 
-    public GhostAI(WorldRenderer worldRenderer) {
-        setWorldRenderer(worldRenderer);
+    public GhostAI(MovementController movementController) {
+        setMovementControler(movementController);
     }
 
-    public void setWorldRenderer(WorldRenderer worldRenderer) {
-        if (worldRenderer == null) {
+    public void setMovementControler(MovementController movementController) {
+        if (movementController == null) {
             throw new IllegalArgumentException("World renderer can't be null");
         }
-        mWorldRenderer = worldRenderer;
-    }
-
-    public WorldRenderer getWorldRenderer() {
-        return mWorldRenderer;
+        mMovementController = movementController;
     }
 
     public Ghost getGhost() {

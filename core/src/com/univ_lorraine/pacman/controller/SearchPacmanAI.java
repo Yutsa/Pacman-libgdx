@@ -14,27 +14,27 @@ import java.util.Map;
  */
 
 public class SearchPacmanAI extends GhostAI {
-    public SearchPacmanAI(WorldRenderer worldRenderer) {
-        super(worldRenderer);
+    public SearchPacmanAI(MovementController movementController) {
+        super(movementController);
     }
 
     @Override
     public void setDirection(MovableGameElement movableGameElement) {
-        if (mWorldRenderer.isAtIntersection(movableGameElement.getPosition(),
+        if (mMovementController.isAtIntersection(movableGameElement.getPosition(),
                 movableGameElement.getCurrentDirection())) {
             HashMap<Direction, GameElement> availableDirections;
-            Pacman pacman = mWorldRenderer.getWorld().getPacman();
+            Pacman pacman = mMovementController.getWorld().getPacman();
             Vector2D position = movableGameElement.getPosition();
 
             double min = Double.MAX_VALUE;
             Direction resDirection = null;
 
-            availableDirections = mWorldRenderer.getPossibleDirections(movableGameElement.getPosition(),
+            availableDirections = mMovementController.getPossibleDirections(movableGameElement.getPosition(),
                     movableGameElement.getCurrentDirection());
 
 
             for (Map.Entry<Direction, GameElement> entry : availableDirections.entrySet()) {
-                double distance = mWorldRenderer.getDistance(entry.getValue().getPosition(),
+                double distance = mMovementController.getDistance(entry.getValue().getPosition(),
                         pacman.getPosition());
                 if (distance < min) {
                     resDirection = entry.getKey();
