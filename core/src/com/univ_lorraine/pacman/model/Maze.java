@@ -206,7 +206,7 @@ public class Maze implements Iterable<GameElement> {
                         pelletNumber++;
                     }
                     else if (c == '3') {
-                        blocks[x][y] = new BasicPellet(new Vector2D(x * coeff, y * coeff), world);
+                        blocks[x][y] = new SuperPellet(new Vector2D(x * coeff, y * coeff), world);
                         pelletNumber++;
                     }
                     else if (c == '4') {

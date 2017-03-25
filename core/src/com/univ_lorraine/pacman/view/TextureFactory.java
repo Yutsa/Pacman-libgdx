@@ -10,6 +10,7 @@ import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.PinkGhost;
 import com.univ_lorraine.pacman.model.RedGhost;
+import com.univ_lorraine.pacman.model.SuperPellet;
 import com.univ_lorraine.pacman.model.YellowGhost;
 
 import java.util.HashMap;
@@ -49,16 +50,19 @@ public class TextureFactory {
         Texture pinkGhost = new Texture("ghost2.png");
         Texture blueGhost = new Texture("ghost3.png");
         Texture yellowGhost = new Texture("ghost4.png");
+        Texture superPellet = new Texture("superpellet.png");
         mTextureMap = new HashMap<Class<?>, ITexturable>();
         mTextureMap.put(Pacman.class, new PacmanTextureWrapper());
         mTextureMap.put(RedGhost.class, new GhostTextureWrapper(redGhost));
         mTextureMap.put(PinkGhost.class, new GhostTextureWrapper(pinkGhost));
         mTextureMap.put(BlueGhost.class, new GhostTextureWrapper(blueGhost));
         mTextureMap.put(YellowGhost.class, new GhostTextureWrapper(yellowGhost));
+
         mTextureMap.put(Block.class, new DefaultTextureWrapper(blocTexture));
         mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(emptyTexture));
         mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(basicPelletTexture));
         mTextureMap.put(GhostHouseTile.class, new DefaultTextureWrapper(emptyTexture));
+        mTextureMap.put(SuperPellet.class, new DefaultTextureWrapper(superPellet));
     }
 
     /**
