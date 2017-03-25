@@ -11,6 +11,7 @@ public abstract class Ghost extends MovableGameElement {
      * The color of the ghost.
      */
     private GhostAI ai = null;
+    private static float mFrightenedTimer = 0;
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
@@ -37,6 +38,18 @@ public abstract class Ghost extends MovableGameElement {
         ai.setDirection(this);
     }
 
+    public static void setFrightenedTimer(float frightenedTimer) {
+        mFrightenedTimer = frightenedTimer;
+    }
 
+    public static void decreaseFrightenedTimer(float time) {
+        mFrightenedTimer -= time;
+        if (mFrightenedTimer < 0) {
+            mFrightenedTimer = 0;
+        }
+    }
 
+    public static float getFrightenedTimer() {
+        return mFrightenedTimer;
+    }
 }

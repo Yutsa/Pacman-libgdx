@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
@@ -233,8 +234,10 @@ public abstract class MovementController {
         long timeElapsed = TimeUtils.timeSinceMillis(mWorld.getStartTime());
         int baseScore;
         int timeMalus = (int) (timeElapsed / 1000);
+        int frightenedDuration = 5;
         if (gameElement instanceof SuperPellet) {
             baseScore = 100;
+            Ghost.setFrightenedTimer(frightenedDuration);
         }
         else {
             baseScore = 10;
