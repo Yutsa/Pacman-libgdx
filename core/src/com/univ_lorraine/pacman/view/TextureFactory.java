@@ -46,9 +46,6 @@ public class TextureFactory {
     private static Texture yellowGhost;
     private static Texture pinkGhost;
 
-    private float time = 0;
-    private int state = 0;
-
     /**
      * Constructor that loads the textures.
      */
@@ -87,7 +84,7 @@ public class TextureFactory {
 
     // TODO: 25/03/17 Should change the pacman texture according to the time using update.
     public void update(float deltaTime) {
-        time += deltaTime;
+        ((PacmanTextureWrapper) mTextureMap.get(Pacman.class)).update(deltaTime);
     }
 
     /**

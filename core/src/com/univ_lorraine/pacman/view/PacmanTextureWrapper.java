@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Pacman;
@@ -41,14 +42,19 @@ public class PacmanTextureWrapper extends TextureWrapper {
      * The texture for the pacman left and closed.
      */
     private Texture pacmanLeftClosed;
-    /**
-     * The counter for the open/close animation.
-     */
-    private int animationCounter = 0;
-    /**
-     * The time limit to change the sprite, and do the animation.
-     */
-    private int animationLimit;
+
+    private Texture pacmanClosed;
+
+    private Texture UpTextures[] = new Texture[4];
+
+    private Texture DownTextures[] = new Texture[4];
+
+    private Texture LeftTextures[] = new Texture[4];
+
+    private Texture RightTextures[] = new Texture[4];
+
+    private float time = 0;
+    private int state = 0;
 
     /**
      * Creates the wrapper.
@@ -63,6 +69,42 @@ public class PacmanTextureWrapper extends TextureWrapper {
         pacmanLeftOpen = new Texture("pacmanLeft-2.png");
         pacmanDownOpen = new Texture("pacmanDown-2.png");
         pacmanRightOpen = new Texture("pacmanRight-2.png");
+        pacmanClosed = new Texture("pacman-3.png");
+
+        UpTextures[0] = pacmanClosed;
+        UpTextures[1] = pacmanUpClosed;
+        UpTextures[2] = pacmanUpOpen;
+        UpTextures[3] = pacmanUpClosed;
+
+        DownTextures[0] = pacmanClosed;
+        DownTextures[1] = pacmanDownClosed;
+        DownTextures[2] = pacmanDownOpen;
+        DownTextures[3] = pacmanDownClosed;
+
+        LeftTextures[0] = pacmanClosed;
+        LeftTextures[1] = pacmanLeftClosed;
+        LeftTextures[2] = pacmanLeftOpen;
+        LeftTextures[3] = pacmanLeftClosed;
+
+        RightTextures[0] = pacmanClosed;
+        RightTextures[1] = pacmanRightClosed;
+        RightTextures[2] = pacmanRightOpen;
+        RightTextures[3] = pacmanRightClosed;
+
+    }
+
+    public void update(float deltaTime) {
+        time += deltaTime;
+        Gdx.app.log(getClass().getSimpleName(), "Time = " + time);
+        state = (int) (time * (getPacman().getSpeed() / 50)) % 4;
+    }
+
+    public Pacman getPacman() {
+        if (getWrappedObject() instanceof Pacman) {
+            Pacman wrappedObject = (Pacman) getWrappedObject();
+            return wrappedObject;
+        }
+        throw new RuntimeException("The wrapped object wasn't a pacman : " +getWrappedObject());
     }
 
     @Override
@@ -73,44 +115,20 @@ public class PacmanTextureWrapper extends TextureWrapper {
             throw new IllegalArgumentException("PacmanTextureWrapper's wrapped object should" +
                     " be a pacman.");
         }
-
-        animationLimit = ((1000 / ((Pacman) wrappedObject).getSpeed()) * 5) + 1;
     }
 
     @Override
     public Texture getTexture() {
-        if (animationCounter < 2 * animationLimit) {
-            ++animationCounter;
-        } else {
-            animationCounter = 0;
-        }
         Pacman pacman = (Pacman) getWrappedObject();
         switch (pacman.getCurrentDirection()) {
             case UP:
-                if (animationCounter < animationLimit) {
-                    return pacmanUpClosed;
-                }
-                else {
-                    return pacmanUpOpen;
-                }
+                return UpTextures[state];
             case RIGHT:
-                if (animationCounter < animationLimit) {
-                    return pacmanRightClosed;
-                } else {
-                    return  pacmanRightOpen;
-                }
+                return RightTextures[state];
             case DOWN:
-                if (animationCounter < animationLimit) {
-                    return pacmanDownClosed;
-                } else {
-                    return pacmanDownOpen;
-                }
+                return DownTextures[state];
             case LEFT:
-                if (animationCounter < animationLimit) {
-                    return pacmanLeftClosed;
-                } else {
-                    return  pacmanLeftOpen;
-                }
+                return LeftTextures[state];
             default:
                 throw new RuntimeException("Direction inconnue.");
         }

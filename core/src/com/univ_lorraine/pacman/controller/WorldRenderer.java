@@ -73,6 +73,7 @@ public class WorldRenderer implements InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         drawWorld();
         moveGameElements(deltaTime);
+        textureFactory.update(deltaTime);
     }
 
     public void checkWin() {
