@@ -19,10 +19,11 @@ import java.util.HashMap;
  * @author Édouard WILLISSECK
  */
 
+@SuppressWarnings("SameParameterValue")
 public class MovementController {
     private World mWorld;
     private int mCoef;
-    private double epsilon;
+    private final double epsilon;
 
     public MovementController(World world) {
         setWorld(world);
@@ -164,7 +165,7 @@ public class MovementController {
     /**
      * Fix the position of the element. If he went a little too far it repositions it.
      *
-     * @param element The elemen to fix the position.
+     * @param element The element to fix the position.
      */
     public void fixPosition(MovableGameElement element) {
         switch (element.getCurrentDirection()) {

@@ -13,18 +13,14 @@ public abstract class GhostAI {
     protected Ghost mGhost;
 
     public GhostAI(MovementController movementController) {
-        setMovementControler(movementController);
+        setMovementController(movementController);
     }
 
-    public void setMovementControler(MovementController movementController) {
+    public void setMovementController(MovementController movementController) {
         if (movementController == null) {
             throw new IllegalArgumentException("World renderer can't be null");
         }
         mMovementController = movementController;
-    }
-
-    public Ghost getGhost() {
-        return mGhost;
     }
 
     public void setGhost(Ghost ghost) {

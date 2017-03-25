@@ -11,6 +11,7 @@ import java.util.Iterator;
  * The class representing the maze of the map.
  */
 
+@SuppressWarnings("SameParameterValue")
 public class Maze implements Iterable<GameElement> {
     /**
      * The width of the maze.
@@ -123,7 +124,7 @@ public class Maze implements Iterable<GameElement> {
     }
 
     /**
-     * Sets the block at postion (x, y) to the gameElement passed.
+     * Sets the block at position (x, y) to the gameElement passed.
      *
      * @param gameElement The new GameElement at this position.
      * @param x           the x-axis coordinate of the element to change.
@@ -149,21 +150,22 @@ public class Maze implements Iterable<GameElement> {
      */
     @Override
     public Iterator<GameElement> iterator() {
-        Iterator<GameElement> it = new Iterator<GameElement>() {
+
+        return new Iterator<GameElement>() {
             private int x = 0;
             private int y = 0;
 
             @Override
             public boolean hasNext() {
-                return x < width && y < height;
+                return x < Maze.this.width && y < Maze.this.height;
             }
 
             @Override
             public GameElement next() {
                 GameElement gameElement;
-                gameElement = blocks[x][y];
+                gameElement = Maze.this.blocks[x][y];
                 x++;
-                if (x >= width) {
+                if (x >= Maze.this.width) {
                     x = 0;
                     y++;
                 }
@@ -175,8 +177,6 @@ public class Maze implements Iterable<GameElement> {
                 throw new UnsupportedOperationException();
             }
         };
-
-        return it;
     }
 
     /**

@@ -13,15 +13,6 @@ public abstract class TextureWrapper implements ITexturable {
      */
     private GameElement wrappedObject;
 
-    /**
-     * Creates the wrapper
-     *
-     * @param wrappedObject The GameElement to be wrapped.
-     */
-    public TextureWrapper(GameElement wrappedObject) {
-        this.wrappedObject = wrappedObject;
-    }
-
     public TextureWrapper() {
         this.wrappedObject = null;
     }

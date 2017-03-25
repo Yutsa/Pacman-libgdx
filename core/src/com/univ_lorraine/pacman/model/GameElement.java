@@ -12,6 +12,7 @@ public abstract class GameElement {
     /**
      * The World in which the element is.
      */
+    @SuppressWarnings("unused")
     protected World mWorld;
 
     /**

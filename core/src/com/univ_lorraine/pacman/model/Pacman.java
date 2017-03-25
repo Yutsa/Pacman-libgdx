@@ -4,6 +4,7 @@ package com.univ_lorraine.pacman.model;
  * The class representing Pacman
  */
 
+@SuppressWarnings("SameParameterValue")
 public class Pacman extends MovableGameElement {
 
     /**

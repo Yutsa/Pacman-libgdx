@@ -6,6 +6,7 @@ import com.univ_lorraine.pacman.controller.GhostAI;
  * @author Édouard WILLISSECK
  */
 
+@SuppressWarnings("SameParameterValue")
 public class RedGhost extends Ghost {
     public RedGhost(Vector2D position, World world, int speed, GhostAI ai) {
         super(position, world, speed, ai);

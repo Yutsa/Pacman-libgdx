@@ -7,13 +7,10 @@ import com.univ_lorraine.pacman.controller.GhostAI;
  */
 
 public abstract class Ghost extends MovableGameElement {
-
     /**
      * The color of the ghost.
      */
     private GhostAI ai = null;
-
-    boolean alive = true;
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
@@ -40,11 +37,6 @@ public abstract class Ghost extends MovableGameElement {
         ai.setDirection(this);
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
+
 }

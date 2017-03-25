@@ -6,6 +6,7 @@ import com.univ_lorraine.pacman.controller.GhostAI;
  * @author Édouard WILLISSECK
  */
 
+@SuppressWarnings("SameParameterValue")
 public class PinkGhost extends Ghost {
     /**
      * Creates a GameElement with a mPosition and a mWorld.

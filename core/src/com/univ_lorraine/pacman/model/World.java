@@ -12,19 +12,19 @@ public class World implements Iterable<GameElement> {
     /**
      * The Pacman of this world.
      */
-    private Pacman mPacman;
+    private final Pacman mPacman;
     private RedGhost redGhost;
     private YellowGhost yellowGhost;
     private PinkGhost pinkGhost;
-    private ArrayList<Ghost> mGhosts = new ArrayList<Ghost>();
+    private final ArrayList<Ghost> mGhosts = new ArrayList<Ghost>();
     /**
      * The Maze of this world.
      */
-    private Maze mMaze;
+    private final Maze mMaze;
     /**
      * The coefficient by which the logical world is bigger than the onscreen world.
      */
-    private int mCoef = 100;
+    private final int mCoef = 100;
     /**
      * The score of the player.
      */
@@ -32,7 +32,7 @@ public class World implements Iterable<GameElement> {
     /**
      * The time at which the game started.
      */
-    long startTime;
+    final long startTime;
     MovementController mMovementController;
 
     /**
@@ -79,16 +79,8 @@ public class World implements Iterable<GameElement> {
         return startTime;
     }
 
-    public void resetStartTime() {
-        startTime = TimeUtils.millis();
-    }
-
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public void winPoint(int wonPoint) {
@@ -96,15 +88,6 @@ public class World implements Iterable<GameElement> {
             wonPoint = 5;
         }
         score += wonPoint;
-    }
-
-    /**
-     * Gets the coef.
-     *
-     * @return The coef.
-     */
-    public int getCoef() {
-        return mCoef;
     }
 
     /**
@@ -134,22 +117,6 @@ public class World implements Iterable<GameElement> {
         return mPacman;
     }
 
-    public RedGhost getRedGhost() {
-        return redGhost;
-    }
-
-    public YellowGhost getYellowGhost() {
-        return yellowGhost;
-    }
-
-    public PinkGhost getPinkGhost() {
-        return pinkGhost;
-    }
-
-    public void setPinkGhost(PinkGhost pinkGhost) {
-        this.pinkGhost = pinkGhost;
-    }
-
     /**
      * Gets the world's Maze.
      *
@@ -157,10 +124,6 @@ public class World implements Iterable<GameElement> {
      */
     public Maze getMaze() {
         return mMaze;
-    }
-
-    public MovementController getMovementController() {
-        return mMovementController;
     }
 
     public void setMovementController(MovementController movementController) {
@@ -182,8 +145,8 @@ public class World implements Iterable<GameElement> {
      */
     class WorldIterator implements Iterator<GameElement> {
 
-        Iterator<GameElement> mazeIterator = mMaze.iterator();
-        Iterator<GameElement> mGameElementIterator = mGameElements.iterator();
+        final Iterator<GameElement> mazeIterator = mMaze.iterator();
+        final Iterator<GameElement> mGameElementIterator = mGameElements.iterator();
 
         @Override
         public boolean hasNext() {

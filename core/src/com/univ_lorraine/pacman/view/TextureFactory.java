@@ -23,40 +23,32 @@ public class TextureFactory {
     /**
      * A map that associates a GameElement to its texture.
      */
-    private Map<Class<?>, ITexturable> mTextureMap;
+    private final Map<Class<?>, ITexturable> mTextureMap;
     /**
      * An instance of the TextureFactory
      */
     private static TextureFactory instance;
-    /**
-     * The texture for the blocs
-     */
-    private static Texture blocTexture;
-    /**
-     * The texture for the empty blocks
-     */
-    private static Texture emptyTexture;
-    /**
-     * The texture for the basic pellets
-     */
-    private static Texture basicPelletTexture;
-
-    private static Texture redGhost;
-    private static Texture blueGhost;
-    private static Texture yellowGhost;
-    private static Texture pinkGhost;
 
     /**
      * Constructor that loads the textures.
      */
     private TextureFactory() {
-        blocTexture = new Texture("bloc.png");
-        emptyTexture = new Texture("dark.png");
-        basicPelletTexture = new Texture("pellet.png");
-        redGhost = new Texture("ghost1.png");
-        pinkGhost = new Texture("ghost2.png");
-        blueGhost = new Texture("ghost3.png");
-        yellowGhost = new Texture("ghost4.png");
+        /*
+      The texture for the blocs
+     */
+        Texture blocTexture = new Texture("bloc.png");
+        /*
+      The texture for the empty blocks
+     */
+        Texture emptyTexture = new Texture("dark.png");
+        /*
+      The texture for the basic pellets
+     */
+        Texture basicPelletTexture = new Texture("pellet.png");
+        Texture redGhost = new Texture("ghost1.png");
+        Texture pinkGhost = new Texture("ghost2.png");
+        Texture blueGhost = new Texture("ghost3.png");
+        Texture yellowGhost = new Texture("ghost4.png");
         mTextureMap = new HashMap<Class<?>, ITexturable>();
         mTextureMap.put(Pacman.class, new PacmanTextureWrapper());
         mTextureMap.put(RedGhost.class, new GhostTextureWrapper(redGhost));

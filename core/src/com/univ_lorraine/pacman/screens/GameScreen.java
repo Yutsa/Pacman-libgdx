@@ -15,28 +15,21 @@ import com.univ_lorraine.pacman.model.World;
  */
 
 public class GameScreen implements Screen {
-    private World mWorld;
-    private WorldRenderer mWorldRenderer;
-    private MovementController mMovementController;
-    private OrthographicCamera mCamera;
+    private final World mWorld;
+    private final WorldRenderer mWorldRenderer;
+    private final OrthographicCamera mCamera;
     private BitmapFont font;
     private SpriteBatch batch;
-    private Game mGame;
 
 
     public GameScreen(Game game)
     {
         mWorld = new World();
-        mMovementController = new MovementController(mWorld);
-        mWorldRenderer = new WorldRenderer(mWorld, game, mMovementController);
-        mWorld.setMovementController(mMovementController);
+        MovementController movementController = new MovementController(mWorld);
+        mWorldRenderer = new WorldRenderer(mWorld, game, movementController);
+        mWorld.setMovementController(movementController);
         mWorld.createGhosts();
         mCamera = new OrthographicCamera();
-        mGame = game;
-    }
-
-    public WorldRenderer getWorldRenderer() {
-        return mWorldRenderer;
     }
 
     @Override

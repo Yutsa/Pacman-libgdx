@@ -23,17 +23,17 @@ import com.univ_lorraine.pacman.view.TextureFactory;
 
 public class WorldRenderer implements InputProcessor {
     float size;
-    private SpriteBatch batch;
-    private TextureFactory textureFactory;
-    private World mWorld;
-    private Game mGame;
+    private final SpriteBatch batch;
+    private final TextureFactory textureFactory;
+    private final World mWorld;
+    private final Game mGame;
     private MovementController mMovementController;
 
     /**
      * Creates the WorldRenderer.
      *
      * @param world The world being controlled by the {@link WorldRenderer}
-     * @param movementController
+     * @param movementController The {@link MovementController} used.
      */
     public WorldRenderer(World world, Game game, MovementController movementController) {
         textureFactory = TextureFactory.getInstance();
@@ -109,10 +109,6 @@ public class WorldRenderer implements InputProcessor {
             ghost.useAI();
             mMovementController.moveElement(ghost, deltaTime);
         }
-    }
-
-    public World getWorld() {
-        return mWorld;
     }
 
     @Override

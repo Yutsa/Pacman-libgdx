@@ -10,13 +10,13 @@ import com.univ_lorraine.pacman.model.Pacman;
 
 public class PacmanTextureWrapper extends TextureWrapper {
 
-    private Texture UpTextures[] = new Texture[4];
+    private final Texture[] UpTextures = new Texture[4];
 
-    private Texture DownTextures[] = new Texture[4];
+    private final Texture[] DownTextures = new Texture[4];
 
-    private Texture LeftTextures[] = new Texture[4];
+    private final Texture[] LeftTextures = new Texture[4];
 
-    private Texture RightTextures[] = new Texture[4];
+    private final Texture[] RightTextures = new Texture[4];
 
     private float time = 0;
     private int state = 0;
@@ -65,8 +65,7 @@ public class PacmanTextureWrapper extends TextureWrapper {
 
     public Pacman getPacman() {
         if (getWrappedObject() instanceof Pacman) {
-            Pacman wrappedObject = (Pacman) getWrappedObject();
-            return wrappedObject;
+            return (Pacman) getWrappedObject();
         }
         throw new RuntimeException("The wrapped object wasn't a pacman : " +getWrappedObject());
     }

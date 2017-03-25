@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
  * @author Édouard WILLISSECK
  */
 
-// TODO: 25/03/17 Shoudln't have a wrapped object for this wrapper, it's useless.
+// TODO: 25/03/17 Shouldn't have a wrapped object for this wrapper, it's useless.
 
 public class DefaultTextureWrapper implements ITexturable {
     /**
