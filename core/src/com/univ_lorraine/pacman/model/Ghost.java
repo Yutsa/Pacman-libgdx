@@ -1,6 +1,8 @@
 package com.univ_lorraine.pacman.model;
 
 import com.univ_lorraine.pacman.controller.GhostAI;
+import com.univ_lorraine.pacman.controller.MovementController;
+import com.univ_lorraine.pacman.controller.RandomAI;
 
 /**
  * @author Édouard WILLISSECK
@@ -11,6 +13,7 @@ public abstract class Ghost extends MovableGameElement {
      * The color of the ghost.
      */
     private GhostAI ai = null;
+    private GhostAI frightenedAI = null;
     private static float mFrightenedTimer = 0;
 
     /**
@@ -21,6 +24,13 @@ public abstract class Ghost extends MovableGameElement {
     protected Ghost(Vector2D position, World world, int speed, GhostAI ai) {
         super(position, world, speed);
         setAi(ai);
+        frightenedAI = new RandomAI();
+    }
+
+    @Override
+    public void setMovementController(MovementController movementController) {
+        super.setMovementController(movementController);
+        frightenedAI.setGhost(this);
     }
 
     public GhostAI getAi() {
@@ -35,7 +45,12 @@ public abstract class Ghost extends MovableGameElement {
     }
 
     public void useAI() {
-        ai.setDirection(this);
+        if (mFrightenedTimer > 0) {
+            frightenedAI.setDirection(this);
+        }
+        else {
+            ai.setDirection(this);
+        }
     }
 
     public static void setFrightenedTimer(float frightenedTimer) {
