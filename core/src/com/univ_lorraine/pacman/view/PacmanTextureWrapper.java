@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Pacman;
@@ -95,7 +94,6 @@ public class PacmanTextureWrapper extends TextureWrapper {
 
     public void update(float deltaTime) {
         time += deltaTime;
-        Gdx.app.log(getClass().getSimpleName(), "Time = " + time);
         state = (int) (time * (getPacman().getSpeed() / 50)) % 4;
     }
 
