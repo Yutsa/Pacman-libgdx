@@ -34,17 +34,8 @@ public class TextureFactory {
      * Constructor that loads the textures.
      */
     private TextureFactory() {
-        /*
-      The texture for the blocs
-     */
         Texture blocTexture = new Texture("bloc.png");
-        /*
-      The texture for the empty blocks
-     */
         Texture emptyTexture = new Texture("dark.png");
-        /*
-      The texture for the basic pellets
-     */
         Texture basicPelletTexture = new Texture("pellet.png");
         Texture redGhost = new Texture("ghost1.png");
         Texture pinkGhost = new Texture("ghost2.png");
