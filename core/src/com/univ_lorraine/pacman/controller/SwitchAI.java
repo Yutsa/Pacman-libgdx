@@ -12,16 +12,16 @@ public class SwitchAI extends GhostAI {
     private GhostAI randomAI;
     private GhostAI searchAI;
 
-    public SwitchAI(MovementController movementController) {
-        super(movementController);
+    public SwitchAI() {
+        super();
     }
 
     @Override
     public void setGhost(Ghost ghost) {
         super.setGhost(ghost);
-        randomAI = new RandomAI(mMovementController);
+        randomAI = new RandomAI();
         randomAI.setGhost(ghost);
-        searchAI = new SearchPacmanAI(mMovementController);
+        searchAI = new SearchPacmanAI();
         searchAI.setGhost(ghost);
         usedAI = searchAI;
     }

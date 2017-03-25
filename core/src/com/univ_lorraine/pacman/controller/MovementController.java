@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
@@ -23,12 +24,12 @@ import java.util.HashMap;
 public abstract class MovementController {
     protected World mWorld;
     protected int mCoef;
-    private final double epsilon;
+    protected double epsilon;
 
     public MovementController(World world) {
         setWorld(world);
         setCoef(100);
-        epsilon = (mWorld.getPacman().getSpeed() / 6000f);
+        Gdx.app.log(getClass().getSimpleName(), "Epsilon = "+ epsilon);
     }
 
     public void setWorld(World world) {
@@ -260,21 +261,21 @@ public abstract class MovementController {
         switch (wantedDirection) {
             case LEFT:
             case RIGHT:
-                if (isExactlyOnTile(pacman.getPosition())) {
+                if (pacman.getPosition().getY() % 100 == 0) {
                     if (!(nextBlock instanceof Block)) {
                         pacman.setCurrentDirection(wantedDirection);
                     }
                 }
                 break;
             case UP:
-                if (isExactlyOnTile(pacman.getPosition())) {
+                if (pacman.getPosition().getX() % 100 == 0) {
                     if (!(nextBlock instanceof Block)) {
                         pacman.setCurrentDirection(wantedDirection);
                     }
                 }
                 break;
             case DOWN:
-                if (isExactlyOnTile(pacman.getPosition())) {
+                if (pacman.getPosition().getX() % 100 == 0) {
                     if (!(nextBlock instanceof Block) && !(nextBlock instanceof GhostHouseTile)) {
                         pacman.setCurrentDirection(wantedDirection);
                     }

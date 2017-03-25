@@ -1,5 +1,7 @@
 package com.univ_lorraine.pacman.model;
 
+import com.univ_lorraine.pacman.controller.MovementController;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -10,11 +12,6 @@ import java.util.Random;
  */
 
 public class MovableGameElement extends GameElement {
-    /**
-     * The direction the player wants pacman to go next.
-     */
-    private Direction mWantedDirection;
-
     /**
      * An enum for the directions.
      */
@@ -32,6 +29,11 @@ public class MovableGameElement extends GameElement {
     }
 
     /**
+     * The direction the player wants pacman to go next.
+     */
+    private Direction mWantedDirection;
+
+    /**
      * The direction in which the pacman is oriented/going.
      */
     private Direction mCurrentDirection;
@@ -39,11 +41,12 @@ public class MovableGameElement extends GameElement {
     /**
      * The speed of the element.
      */
-    public int mSpeed;
+    public static int mSpeed;
+
+    protected MovementController mMovementController;
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
-     *
      * @param position The mPosition of the element.
      * @param world    The mWorld of the element.
      */
@@ -102,6 +105,14 @@ public class MovableGameElement extends GameElement {
         mSpeed = speed;
     }
 
+    public MovementController getMovementController() {
+        return mMovementController;
+    }
+
+    public void setMovementController(MovementController movementController) {
+        mMovementController = movementController;
+    }
+
     /**
      * Updates the mPosition of pacman.
      */
@@ -120,5 +131,12 @@ public class MovableGameElement extends GameElement {
                 mPosition.y += (mSpeed * deltaTime);
                 break;
         }
+    }
+
+    public void move(float deltaTime) {
+        if (mMovementController == null) {
+            throw new RuntimeException("No movement controller has been set.");
+        }
+        mMovementController.moveElement(this, deltaTime);
     }
 }

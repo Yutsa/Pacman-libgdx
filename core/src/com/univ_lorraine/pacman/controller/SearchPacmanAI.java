@@ -14,8 +14,8 @@ import java.util.Map;
  */
 
 public class SearchPacmanAI extends GhostAI {
-    public SearchPacmanAI(MovementController movementController) {
-        super(movementController);
+    public SearchPacmanAI() {
+        super();
     }
 
     @Override

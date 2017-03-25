@@ -27,30 +27,21 @@ public class WorldRenderer implements InputProcessor {
     private final TextureFactory textureFactory;
     private final World mWorld;
     private final Game mGame;
-    private MovementController mMovementController;
 
     /**
      * Creates the WorldRenderer.
+     *  @param world The world being controlled by the {@link WorldRenderer}
      *
-     * @param world The world being controlled by the {@link WorldRenderer}
-     * @param movementController The {@link MovementController} used.
      */
-    public WorldRenderer(World world, Game game, MovementController movementController) {
+    public WorldRenderer(World world, Game game) {
         textureFactory = TextureFactory.getInstance();
-        setMovementController(movementController);
         batch = new SpriteBatch();
         mWorld = world;
         Gdx.input.setInputProcessor(this);
-        mWorld.getMaze().loadDemoLevel(movementController.getCoef());
+        // TODO: 25/03/17 get the coef.
+        mWorld.getMaze().loadDemoLevel(mWorld.getCoef());
         mGame = game;
 
-    }
-
-    public void setMovementController(MovementController movementController) {
-        if (movementController == null) {
-            throw new IllegalArgumentException();
-        }
-        mMovementController = movementController;
     }
 
     /**
@@ -91,8 +82,8 @@ public class WorldRenderer implements InputProcessor {
             Vector2D position = e.getPosition();
             Texture texture = textureFactory.getTexture(e);
             batch.draw(texture,
-                    ((position.x / ((float) mMovementController.getCoef())) - mWorld.getWidth() / 2f) * size,
-                    ((position.y / ((float) mMovementController.getCoef())) - mWorld.getHeight() / 2f) * size, size, size,
+                    ((position.x / ((float) mWorld.getCoef())) - mWorld.getWidth() / 2f) * size,
+                    ((position.y / ((float) mWorld.getCoef())) - mWorld.getHeight() / 2f) * size, size, size,
                     0, 0,
                     texture.getWidth(), texture.getHeight(), false, true);
         }
@@ -104,10 +95,10 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time elapsed between this render and the last one.
      */
     public void moveGameElements(float deltaTime) {
-        mMovementController.moveElement(mWorld.getPacman(), deltaTime);
+        mWorld.getPacman().move(deltaTime);
         for (Ghost ghost : mWorld.getGhosts()) {
             ghost.useAI();
-            mMovementController.moveElement(ghost, deltaTime);
+            ghost.move(deltaTime);
         }
     }
 

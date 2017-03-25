@@ -13,8 +13,8 @@ import com.univ_lorraine.pacman.model.YellowGhost;
  */
 
 public class OutOfHouseAI extends GhostAI {
-    public OutOfHouseAI(MovementController movementController) {
-        super(movementController);
+    public OutOfHouseAI() {
+        super();
     }
 
     @Override
@@ -24,16 +24,16 @@ public class OutOfHouseAI extends GhostAI {
         }
         else {
             if (movableGameElement instanceof RedGhost) {
-                ((RedGhost) movableGameElement).setAi(new RandomAI(mMovementController));
+                ((RedGhost) movableGameElement).setAi(new RandomAI());
                 ((RedGhost) movableGameElement).getAi().setGhost((Ghost) movableGameElement);
 
             }
             else if (movableGameElement instanceof YellowGhost) {
-                ((YellowGhost) movableGameElement).setAi(new SearchPacmanAI(mMovementController));
+                ((YellowGhost) movableGameElement).setAi(new SearchPacmanAI());
                 ((YellowGhost) movableGameElement).getAi().setGhost((Ghost) movableGameElement);
             }
             else if (movableGameElement instanceof PinkGhost) {
-                ((PinkGhost) movableGameElement).setAi(new SwitchAI(mMovementController));
+                ((PinkGhost) movableGameElement).setAi(new SwitchAI());
                 ((PinkGhost) movableGameElement).getAi().setGhost((Ghost) movableGameElement);
             }
         }

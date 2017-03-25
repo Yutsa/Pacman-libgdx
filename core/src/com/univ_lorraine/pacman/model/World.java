@@ -1,12 +1,15 @@
 package com.univ_lorraine.pacman.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.univ_lorraine.pacman.controller.MovementController;
+import com.univ_lorraine.pacman.controller.GhostMoveController;
 import com.univ_lorraine.pacman.controller.OutOfHouseAI;
+import com.univ_lorraine.pacman.controller.PacmanMoveController;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
+// TODO: 25/03/17 Check that coef is only there and in no other classes.
 public class World implements Iterable<GameElement> {
 
     /**
@@ -33,8 +36,6 @@ public class World implements Iterable<GameElement> {
      * The time at which the game started.
      */
     final long startTime;
-    MovementController mMovementController;
-
     /**
      * The GameElements in this world.
      */
@@ -44,22 +45,22 @@ public class World implements Iterable<GameElement> {
      * Creates the World, the Pacman and the Maze.
      */
     public World() {
-        mPacman = new Pacman(new Vector2D(14 * mCoef, 17 * mCoef), this, 500);
+        mPacman = new Pacman(new Vector2D(14 * mCoef, 17 * mCoef), this,
+                500, null);
+        mPacman.setMovementController(new PacmanMoveController(this));
+        Gdx.app.log(getClass().getSimpleName(), "Speed = " + mPacman.getSpeed());
         mMaze = new Maze(this);
         startTime = TimeUtils.millis();
     }
 
     public void createGhosts() {
+        // TODO: 25/03/17 The AI might not need the movecontroller anymore
         redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
-                new OutOfHouseAI(mMovementController));
+                new OutOfHouseAI());
         yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
-                new OutOfHouseAI(mMovementController));
+                new OutOfHouseAI());
         pinkGhost = new PinkGhost(new Vector2D(12 * mCoef, 13 * mCoef), this, 500,
-                new OutOfHouseAI(mMovementController));
-
-        redGhost.getAi().setGhost(redGhost);
-        yellowGhost.getAi().setGhost(yellowGhost);
-        pinkGhost.getAi().setGhost(pinkGhost);
+                new OutOfHouseAI());
 
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
@@ -69,6 +70,15 @@ public class World implements Iterable<GameElement> {
         mGhosts.add(yellowGhost);
         mGameElements.add(pinkGhost);
         mGhosts.add(pinkGhost);
+
+        GhostMoveController ghostMoveController = new GhostMoveController(this);
+        for (Ghost ghost : mGhosts) {
+            ghost.setMovementController(ghostMoveController);
+        }
+
+        redGhost.getAi().setGhost(redGhost);
+        yellowGhost.getAi().setGhost(yellowGhost);
+        pinkGhost.getAi().setGhost(pinkGhost);
     }
 
     public ArrayList<Ghost> getGhosts() {
@@ -126,10 +136,6 @@ public class World implements Iterable<GameElement> {
         return mMaze;
     }
 
-    public void setMovementController(MovementController movementController) {
-        mMovementController = movementController;
-    }
-
     /**
      * Returns an iterator to iterate through the World.
      *
@@ -165,5 +171,9 @@ public class World implements Iterable<GameElement> {
         public void remove() {
             throw new UnsupportedOperationException("Remove is not supported.");
         }
+    }
+
+    public int getCoef() {
+        return mCoef;
     }
 }

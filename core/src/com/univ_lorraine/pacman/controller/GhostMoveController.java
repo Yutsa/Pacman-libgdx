@@ -2,6 +2,7 @@ package com.univ_lorraine.pacman.controller;
 
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.World;
@@ -12,9 +13,10 @@ import static com.univ_lorraine.pacman.model.MovableGameElement.Direction.DOWN;
  * @author Édouard WILLISSECK
  */
 
-class GhostMoveController extends MovementController {
+public class GhostMoveController extends MovementController {
     public GhostMoveController(World world) {
         super(world);
+        epsilon = (Ghost.mSpeed / 6000f);
     }
 
     @Override

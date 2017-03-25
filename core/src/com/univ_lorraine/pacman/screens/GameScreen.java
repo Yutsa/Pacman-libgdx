@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.univ_lorraine.pacman.controller.MovementController;
 import com.univ_lorraine.pacman.controller.WorldRenderer;
 import com.univ_lorraine.pacman.model.World;
 
@@ -25,10 +24,8 @@ public class GameScreen implements Screen {
     public GameScreen(Game game)
     {
         mWorld = new World();
-        MovementController movementController = new MovementController(mWorld);
-        mWorldRenderer = new WorldRenderer(mWorld, game, movementController);
-        mWorld.setMovementController(movementController);
         mWorld.createGhosts();
+        mWorldRenderer = new WorldRenderer(mWorld, game);
         mCamera = new OrthographicCamera();
     }
 

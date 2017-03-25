@@ -14,7 +14,7 @@ public abstract class Ghost extends MovableGameElement {
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
-     *  @param position The mPosition of the element.
+     * @param position The mPosition of the element.
      * @param world    The mWorld of the element.
      */
     protected Ghost(Vector2D position, World world, int speed, GhostAI ai) {

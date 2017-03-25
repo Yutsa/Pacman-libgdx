@@ -8,8 +8,8 @@ import com.univ_lorraine.pacman.model.Vector2D;
  */
 
 public class RandomAI extends GhostAI {
-    public RandomAI(MovementController movementController) {
-        super(movementController);
+    public RandomAI() {
+        super();
     }
 
     @Override
