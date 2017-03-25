@@ -9,40 +9,6 @@ import com.univ_lorraine.pacman.model.Pacman;
  */
 
 public class PacmanTextureWrapper extends TextureWrapper {
-    /**
-     * The texture for the pacman up and open.
-     */
-    private Texture pacmanUpOpen;
-    /**
-     * The texture for the pacman right and open.
-     */
-    private Texture pacmanRightOpen;
-    /**
-     * The texture for the pacman down and open.
-     */
-    private Texture pacmanDownOpen;
-    /**
-     * The texture for the pacman left and open.
-     */
-    private Texture pacmanLeftOpen;
-    /**
-     * The texture for the pacman up and closed.
-     */
-    private Texture pacmanUpClosed;
-    /**
-     * The texture for the pacman right and closed.
-     */
-    private Texture pacmanRightClosed;
-    /**
-     * The texture for the pacman down and closed.
-     */
-    private Texture pacmanDownClosed;
-    /**
-     * The texture for the pacman left and closed.
-     */
-    private Texture pacmanLeftClosed;
-
-    private Texture pacmanClosed;
 
     private Texture UpTextures[] = new Texture[4];
 
@@ -60,15 +26,15 @@ public class PacmanTextureWrapper extends TextureWrapper {
      */
     public PacmanTextureWrapper() {
         super();
-        pacmanUpClosed = new Texture("pacmanUp.png");
-        pacmanLeftClosed = new Texture("pacmanLeft.png");
-        pacmanDownClosed = new Texture("pacmanDown.png");
-        pacmanRightClosed = new Texture("pacmanRight.png");
-        pacmanUpOpen = new Texture("pacmanUp-2.png");
-        pacmanLeftOpen = new Texture("pacmanLeft-2.png");
-        pacmanDownOpen = new Texture("pacmanDown-2.png");
-        pacmanRightOpen = new Texture("pacmanRight-2.png");
-        pacmanClosed = new Texture("pacman-3.png");
+        Texture pacmanUpClosed = new Texture("pacmanUp.png");
+        Texture pacmanLeftClosed = new Texture("pacmanLeft.png");
+        Texture pacmanDownClosed = new Texture("pacmanDown.png");
+        Texture pacmanRightClosed = new Texture("pacmanRight.png");
+        Texture pacmanUpOpen = new Texture("pacmanUp-2.png");
+        Texture pacmanLeftOpen = new Texture("pacmanLeft-2.png");
+        Texture pacmanDownOpen = new Texture("pacmanDown-2.png");
+        Texture pacmanRightOpen = new Texture("pacmanRight-2.png");
+        Texture pacmanClosed = new Texture("pacman-3.png");
 
         UpTextures[0] = pacmanClosed;
         UpTextures[1] = pacmanUpClosed;
