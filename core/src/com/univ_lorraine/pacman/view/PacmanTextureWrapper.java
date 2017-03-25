@@ -52,11 +52,9 @@ public class PacmanTextureWrapper extends TextureWrapper {
 
     /**
      * Creates the wrapper.
-     * @param wrappedObject The object to be wrapped.
      */
-    public PacmanTextureWrapper(GameElement wrappedObject) {
-        super(wrappedObject);
-
+    public PacmanTextureWrapper() {
+        super();
         pacmanUpClosed = new Texture("pacmanUp.png");
         pacmanLeftClosed = new Texture("pacmanLeft.png");
         pacmanDownClosed = new Texture("pacmanDown.png");

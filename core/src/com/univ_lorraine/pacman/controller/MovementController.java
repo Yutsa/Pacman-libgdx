@@ -224,6 +224,7 @@ public class MovementController {
         }
     }
 
+    // TODO: 25/03/17 Make a move method for pacman and another for the ghosts.
     /**
      * Moves the pacman on the {@link Maze}
      *

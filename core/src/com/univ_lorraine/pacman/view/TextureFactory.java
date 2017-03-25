@@ -23,7 +23,7 @@ public class TextureFactory {
     /**
      * A map that associates a GameElement to its texture.
      */
-    private Map<Class<?>, TextureWrapper> mTextureMap;
+    private Map<Class<?>, ITexturable> mTextureMap;
     /**
      * An instance of the TextureFactory
      */
@@ -60,16 +60,16 @@ public class TextureFactory {
         pinkGhost = new Texture("ghost2.png");
         blueGhost = new Texture("ghost3.png");
         yellowGhost = new Texture("ghost4.png");
-        mTextureMap = new HashMap<Class<?>, TextureWrapper>();
-        mTextureMap.put(Pacman.class, new PacmanTextureWrapper(null));
-        mTextureMap.put(RedGhost.class, new GhostTextureWrapper(null, redGhost));
-        mTextureMap.put(PinkGhost.class, new GhostTextureWrapper(null, pinkGhost));
-        mTextureMap.put(BlueGhost.class, new GhostTextureWrapper(null, blueGhost));
-        mTextureMap.put(YellowGhost.class, new GhostTextureWrapper(null, yellowGhost));
-        mTextureMap.put(Block.class, new DefaultTextureWrapper(null, blocTexture));
-        mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(null, emptyTexture));
-        mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(null, basicPelletTexture));
-        mTextureMap.put(GhostHouseTile.class, new DefaultTextureWrapper(null, emptyTexture));
+        mTextureMap = new HashMap<Class<?>, ITexturable>();
+        mTextureMap.put(Pacman.class, new PacmanTextureWrapper());
+        mTextureMap.put(RedGhost.class, new GhostTextureWrapper(redGhost));
+        mTextureMap.put(PinkGhost.class, new GhostTextureWrapper(pinkGhost));
+        mTextureMap.put(BlueGhost.class, new GhostTextureWrapper(blueGhost));
+        mTextureMap.put(YellowGhost.class, new GhostTextureWrapper(yellowGhost));
+        mTextureMap.put(Block.class, new DefaultTextureWrapper(blocTexture));
+        mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(emptyTexture));
+        mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(basicPelletTexture));
+        mTextureMap.put(GhostHouseTile.class, new DefaultTextureWrapper(emptyTexture));
     }
 
     /**
@@ -85,19 +85,27 @@ public class TextureFactory {
         return instance;
     }
 
+    // TODO: 25/03/17 Should change the pacman texture according to the time using update.
     public void update(float deltaTime) {
         time += deltaTime;
     }
+
     /**
      * Gets the Texture for the given GameElement.
+     *
      * @param element The GameElement to get the Texture.
      * @return The Texture for the given GameElement.
      */
     public Texture getTexture(GameElement element) {
-        TextureWrapper textureWrapper = mTextureMap.get(element.getClass());
-        if (textureWrapper.getWrappedObject() == null) {
-            textureWrapper.setWrappedObject(element);
+        ITexturable iTexturable = mTextureMap.get(element.getClass());
+
+        if (iTexturable instanceof TextureWrapper) {
+            TextureWrapper textureWrapper = (TextureWrapper) iTexturable;
+            if (textureWrapper.getWrappedObject() == null) {
+                textureWrapper.setWrappedObject(element);
+            }
         }
-        return textureWrapper.getTexture();
+
+        return iTexturable.getTexture();
     }
 }

@@ -1,13 +1,14 @@
 package com.univ_lorraine.pacman.view;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.univ_lorraine.pacman.model.GameElement;
 
 /**
  * @author Édouard WILLISSECK
  */
 
-public class DefaultTextureWrapper extends TextureWrapper {
+// TODO: 25/03/17 Shoudln't have a wrapped object for this wrapper, it's useless.
+
+public class DefaultTextureWrapper implements ITexturable {
     /**
      * The default texture for the wrapped GameElement.
      */
@@ -16,11 +17,8 @@ public class DefaultTextureWrapper extends TextureWrapper {
     /**
      * Creates the wrapper.
      *
-     * @param wrappedObject  The object to be wrapped.
-     * @param defaultTexture The default texture for the wrapped object.
-     */
-    public DefaultTextureWrapper(GameElement wrappedObject, Texture defaultTexture) {
-        super(wrappedObject);
+     * @param defaultTexture The default texture for the wrapped object.*/
+    public DefaultTextureWrapper(Texture defaultTexture) {
         setDefaultTexture(defaultTexture);
     }
 

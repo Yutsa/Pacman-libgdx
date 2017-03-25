@@ -5,10 +5,9 @@ import com.univ_lorraine.pacman.model.GameElement;
 
 /**
  * @author Édouard WILLISSECK
- *         The abstract class that wrapps an object to get the right texture.
  */
 
-public abstract class TextureWrapper {
+public abstract class TextureWrapper implements ITexturable {
     /**
      * The object to get the right texture.
      */
@@ -21,6 +20,10 @@ public abstract class TextureWrapper {
      */
     public TextureWrapper(GameElement wrappedObject) {
         this.wrappedObject = wrappedObject;
+    }
+
+    public TextureWrapper() {
+        this.wrappedObject = null;
     }
 
     /**
@@ -44,10 +47,6 @@ public abstract class TextureWrapper {
         this.wrappedObject = wrappedObject;
     }
 
-    /**
-     * Returns the right texture for the wrapped GameElement.
-     *
-     * @return The right texture for the wrapped GameElement.
-     */
-    abstract public Texture getTexture();
+    @Override
+    public abstract Texture getTexture();
 }

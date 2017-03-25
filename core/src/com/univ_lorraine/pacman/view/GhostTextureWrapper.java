@@ -16,10 +16,9 @@ public class GhostTextureWrapper extends TextureWrapper {
     /**
      * Creates the wrapper
      *
-     * @param wrappedObject The GameElement to be wrapped.
      */
-    public GhostTextureWrapper(GameElement wrappedObject, Texture defaultTexture) {
-        super(wrappedObject);
+    public GhostTextureWrapper(Texture defaultTexture) {
+        super();
         setNormalTexture(defaultTexture);
     }
 

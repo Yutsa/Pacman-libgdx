@@ -35,4 +35,6 @@ public abstract class GhostAI {
     }
 
     public abstract void setDirection(MovableGameElement movableGameElement);
+
+    // TODO: 25/03/17 Make a run away mode for the AI or create a run away AI.
 }
