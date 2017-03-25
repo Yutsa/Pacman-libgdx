@@ -38,7 +38,6 @@ public class WorldRenderer implements InputProcessor {
         batch = new SpriteBatch();
         mWorld = world;
         Gdx.input.setInputProcessor(this);
-        // TODO: 25/03/17 get the coef.
         mWorld.getMaze().loadDemoLevel(mWorld.getCoef());
         mGame = game;
 
@@ -63,8 +62,8 @@ public class WorldRenderer implements InputProcessor {
         checkWin();
         batch.setProjectionMatrix(camera.combined);
         drawWorld();
-        moveGameElements(deltaTime);
         textureFactory.update(deltaTime);
+        moveGameElements(deltaTime);
     }
 
     public void checkWin() {

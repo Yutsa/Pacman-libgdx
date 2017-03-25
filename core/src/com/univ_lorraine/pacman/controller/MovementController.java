@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
@@ -28,8 +27,7 @@ public abstract class MovementController {
 
     public MovementController(World world) {
         setWorld(world);
-        setCoef(100);
-        Gdx.app.log(getClass().getSimpleName(), "Epsilon = "+ epsilon);
+        setCoef(world.getCoef());
     }
 
     public void setWorld(World world) {
@@ -45,10 +43,6 @@ public abstract class MovementController {
 
     public void setCoef(int coef) {
         mCoef = coef;
-    }
-
-    public int getCoef() {
-        return mCoef;
     }
 
     /**

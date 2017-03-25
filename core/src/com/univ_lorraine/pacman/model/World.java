@@ -9,16 +9,12 @@ import com.univ_lorraine.pacman.controller.PacmanMoveController;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-// TODO: 25/03/17 Check that coef is only there and in no other classes.
 public class World implements Iterable<GameElement> {
 
     /**
      * The Pacman of this world.
      */
     private final Pacman mPacman;
-    private RedGhost redGhost;
-    private YellowGhost yellowGhost;
-    private PinkGhost pinkGhost;
     private final ArrayList<Ghost> mGhosts = new ArrayList<Ghost>();
     /**
      * The Maze of this world.
@@ -54,12 +50,11 @@ public class World implements Iterable<GameElement> {
     }
 
     public void createGhosts() {
-        // TODO: 25/03/17 The AI might not need the movecontroller anymore
-        redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
+        RedGhost redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
                 new OutOfHouseAI());
-        yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
+        YellowGhost yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
                 new OutOfHouseAI());
-        pinkGhost = new PinkGhost(new Vector2D(12 * mCoef, 13 * mCoef), this, 500,
+        PinkGhost pinkGhost = new PinkGhost(new Vector2D(12 * mCoef, 13 * mCoef), this, 500,
                 new OutOfHouseAI());
 
         mGameElements = new ArrayList<GameElement>();
