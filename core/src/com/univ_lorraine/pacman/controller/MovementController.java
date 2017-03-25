@@ -1,7 +1,6 @@
 package com.univ_lorraine.pacman.controller;
 
 import com.badlogic.gdx.utils.TimeUtils;
-import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
 import com.univ_lorraine.pacman.model.GameElement;
@@ -10,6 +9,7 @@ import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Pacman;
+import com.univ_lorraine.pacman.model.SuperPellet;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
 
@@ -20,9 +20,9 @@ import java.util.HashMap;
  */
 
 @SuppressWarnings("SameParameterValue")
-public class MovementController {
-    private World mWorld;
-    private int mCoef;
+public abstract class MovementController {
+    protected World mWorld;
+    protected int mCoef;
     private final double epsilon;
 
     public MovementController(World world) {
@@ -197,73 +197,16 @@ public class MovementController {
     }
 
     /**
-     * Checks if the pacman can go to the wanted direction or not.
-     *
-     * @param pacman          The {@link Pacman} that is moving.
-     * @param wantedDirection The direction the {@link Pacman} wants to go.
+     * Gets the {@link GameElement} at the element's position.
+     * @param element The element used to get the position.
+     * @return The {@link GameElement} at element's position.
      */
-    public void checkWantedDirection(MovableGameElement pacman, Direction wantedDirection) {
-        GameElement nextBlock = getNextElement(pacman.getPosition(), pacman.getWantedDirection());
-
-        switch (wantedDirection) {
-            case LEFT:
-            case RIGHT:
-                if (!(nextBlock instanceof Block)) {
-                    if (pacman.getPosition().y == nextBlock.getPosition().y) {
-                        pacman.setCurrentDirection(wantedDirection);
-                    }
-                }
-                break;
-            case UP:
-            case DOWN:
-                if (!(nextBlock instanceof Block)) {
-                    if (pacman.getPosition().x == nextBlock.getPosition().x) {
-                        pacman.setCurrentDirection(wantedDirection);
-                    }
-                }
-                break;
-        }
-    }
-
-    // TODO: 25/03/17 Make a move method for pacman and another for the ghosts.
-    /**
-     * Moves the pacman on the {@link Maze}
-     *
-     * @param deltaTime The time elapsed between two renders.
-     */
-    public void moveElement(MovableGameElement movableGameElement, float deltaTime) {
-        checkTunnel(movableGameElement);
-        Vector2D currentPosition;
-        GameElement currentGameElement;
-
-        checkWantedDirection(movableGameElement, movableGameElement.getWantedDirection());
-
-        GameElement nextBlock = getNextElement(movableGameElement.getPosition(),
-                movableGameElement.getCurrentDirection());
-
-        if (!(nextBlock instanceof Block) &&
-                !((movableGameElement.getCurrentDirection() == Direction.DOWN)
-                        && (nextBlock instanceof GhostHouseTile))) {
-            movableGameElement.updatePosition(deltaTime);
-        }
-
-        fixPosition(movableGameElement);
-        currentPosition = movableGameElement.getPosition();
-        currentGameElement = mWorld.getMaze().getBlock(
-                (currentPosition.getX() + 50) / mCoef,
-                (currentPosition.getY() + 50) / mCoef);
-
-        if (currentGameElement instanceof BasicPellet && movableGameElement instanceof Pacman) {
-            eatPellet(currentGameElement);
-        }
-
-    }
-
     public GameElement getElementAtPosition(GameElement element) {
         int x = element.getPosition().getX() / mCoef;
         int y = element.getPosition().getY() / mCoef;
         return mWorld.getMaze().getBlock(x, y);
     }
+
     /**
      * Checks if we are going through the tunnel and teleports the {@link MovableGameElement}
      *
@@ -291,8 +234,59 @@ public class MovementController {
         Vector2D gameElementPosition = gameElement.getPosition();
         mWorld.getMaze().setBlock(new EmptyTile(gameElementPosition, mWorld),
                 position.getX(), position.getY());
+
         long timeElapsed = TimeUtils.timeSinceMillis(mWorld.getStartTime());
-        mWorld.winPoint(10 - (int) (timeElapsed / 1000));
+        int baseScore;
+        int timeMalus = (int) (timeElapsed / 1000);
+        if (gameElement instanceof SuperPellet) {
+            baseScore = 100;
+        }
+        else {
+            baseScore = 10;
+        }
+        mWorld.winPoint(baseScore - timeMalus);
         mWorld.getMaze().decreasePelletNumber();
     }
+
+    /**
+     * Checks if the pacman can go to the wanted direction or not.
+     *
+     * @param pacman          The {@link Pacman} that is moving.
+     * @param wantedDirection The direction the {@link Pacman} wants to go.
+     */
+    public void checkWantedDirection(MovableGameElement pacman, Direction wantedDirection) {
+        GameElement nextBlock = getNextElement(pacman.getPosition(), pacman.getWantedDirection());
+
+        switch (wantedDirection) {
+            case LEFT:
+            case RIGHT:
+                if (isExactlyOnTile(pacman.getPosition())) {
+                    if (!(nextBlock instanceof Block)) {
+                        pacman.setCurrentDirection(wantedDirection);
+                    }
+                }
+                break;
+            case UP:
+                if (isExactlyOnTile(pacman.getPosition())) {
+                    if (!(nextBlock instanceof Block)) {
+                        pacman.setCurrentDirection(wantedDirection);
+                    }
+                }
+                break;
+            case DOWN:
+                if (isExactlyOnTile(pacman.getPosition())) {
+                    if (!(nextBlock instanceof Block) && !(nextBlock instanceof GhostHouseTile)) {
+                        pacman.setCurrentDirection(wantedDirection);
+                    }
+                }
+                break;
+        }
+    }
+
+    /**
+     * Moves the pacman on the {@link Maze}
+     *
+     * @param deltaTime The time elapsed between two renders.
+     */
+    public abstract void moveElement(MovableGameElement movableGameElement, float deltaTime);
 }
