@@ -46,6 +46,14 @@ public abstract class MovementController {
         mCoef = coef;
     }
 
+    public void setEpsilon(double epsilon) {
+        this.epsilon = epsilon;
+    }
+
+    public double getEpsilon() {
+        return epsilon;
+    }
+
     /**
      * Gets the next block given a position and a direction.
      *

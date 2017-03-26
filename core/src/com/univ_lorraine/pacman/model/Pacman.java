@@ -8,7 +8,6 @@ import com.univ_lorraine.pacman.controller.MovementController;
 
 @SuppressWarnings("SameParameterValue")
 public class Pacman extends MovableGameElement {
-
     /**
      * Calls the GameElement constructor to create the Pacman instance.
      *

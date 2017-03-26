@@ -15,6 +15,8 @@ public abstract class Ghost extends MovableGameElement {
     private GhostAI ai = null;
     private GhostAI frightenedAI = null;
     private static float mFrightenedTimer = 0;
+    private int frightenedSpeed = 300;
+    private int normalSpeed;
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
@@ -25,6 +27,7 @@ public abstract class Ghost extends MovableGameElement {
         super(position, world, speed);
         setAi(ai);
         frightenedAI = new RandomAI();
+        normalSpeed = speed;
     }
 
     @Override
@@ -46,9 +49,15 @@ public abstract class Ghost extends MovableGameElement {
 
     public void useAI() {
         if (mFrightenedTimer > 0) {
+            if (mSpeed != frightenedSpeed) {
+                setSpeed(frightenedSpeed);
+            }
             frightenedAI.setDirection(this);
         }
         else {
+            if (mSpeed != normalSpeed) {
+                setSpeed(normalSpeed);
+            }
             ai.setDirection(this);
         }
     }

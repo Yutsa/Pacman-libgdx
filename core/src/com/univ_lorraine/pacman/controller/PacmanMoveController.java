@@ -6,7 +6,6 @@ import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
-import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.SuperPellet;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
@@ -18,7 +17,7 @@ import com.univ_lorraine.pacman.model.World;
 public class PacmanMoveController extends MovementController {
     public PacmanMoveController(World world) {
         super(world);
-        epsilon = (Pacman.mSpeed / 6000f);
+        epsilon = (world.getPacman().getSpeed() / 6000f);
     }
 
     /**

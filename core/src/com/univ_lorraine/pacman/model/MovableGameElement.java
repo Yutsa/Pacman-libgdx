@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.model;
 
+import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.controller.MovementController;
 
 import java.util.Arrays;
@@ -38,10 +39,11 @@ public class MovableGameElement extends GameElement {
      */
     private Direction mCurrentDirection;
 
+    // TODO: 25/03/17 Don't make it static but find a way to have the right epsilon on the move controllers
     /**
      * The speed of the element.
      */
-    public static int mSpeed;
+    public int mSpeed;
 
     protected MovementController mMovementController;
 
@@ -103,6 +105,10 @@ public class MovableGameElement extends GameElement {
             throw new IllegalArgumentException("The speed must be positive.");
         }
         mSpeed = speed;
+        if (mMovementController != null) {
+            mMovementController.setEpsilon(speed / 6000f);
+            Gdx.app.log(getClass().getSimpleName(), "Epsilon = " + mMovementController.getEpsilon());
+        }
     }
 
     public MovementController getMovementController() {

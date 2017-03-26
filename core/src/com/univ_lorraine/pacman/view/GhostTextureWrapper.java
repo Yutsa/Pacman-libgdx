@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
@@ -38,7 +37,6 @@ public class GhostTextureWrapper extends TextureWrapper {
     public void update(float deltaTime) {
         if (Ghost.getFrightenedTimer() > 0) {
             Ghost.decreaseFrightenedTimer(deltaTime);
-            Gdx.app.log(getClass().getSimpleName(), "Timer = " + Ghost.getFrightenedTimer());
         }
     }
 
