@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.model;
 
-import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.controller.MovementController;
 
 import java.util.Arrays;
@@ -110,9 +109,6 @@ public class MovableGameElement extends GameElement {
             throw new IllegalArgumentException("The speed must be positive.");
         }
         mSpeed = speed;
-        if (mMovementController != null) {
-            Gdx.app.log(getClass().getSimpleName(), "Epsilon = " + getMovementController().getEpsilon());
-        }
     }
 
     public MovementController getMovementController() {

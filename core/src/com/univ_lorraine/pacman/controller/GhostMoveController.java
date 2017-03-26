@@ -77,7 +77,8 @@ public class GhostMoveController extends MovementController {
             case LEFT:
             case RIGHT:
                 if (movableGameElement.getPosition().getY() % 100 == 0) {
-                    if (!(nextBlock instanceof Block)) {
+                    if (!(nextBlock instanceof Block)
+                            && (!ghost.isAlive() || !(nextBlock instanceof GhostHouseTile))) {
                         movableGameElement.setCurrentDirection(wantedDirection);
                     }
                 }
