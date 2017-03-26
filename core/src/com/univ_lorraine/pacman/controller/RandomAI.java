@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.Vector2D;
 
@@ -8,8 +9,8 @@ import com.univ_lorraine.pacman.model.Vector2D;
  */
 
 public class RandomAI extends GhostAI {
-    public RandomAI() {
-        super();
+    public RandomAI(Ghost ghost) {
+        super(ghost);
     }
 
     @Override

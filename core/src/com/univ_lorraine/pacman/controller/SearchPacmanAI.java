@@ -1,6 +1,7 @@
 package com.univ_lorraine.pacman.controller;
 
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Pacman;
@@ -14,8 +15,8 @@ import java.util.Map;
  */
 
 public class SearchPacmanAI extends GhostAI {
-    public SearchPacmanAI() {
-        super();
+    public SearchPacmanAI(Ghost ghost) {
+        super(ghost);
     }
 
     @Override

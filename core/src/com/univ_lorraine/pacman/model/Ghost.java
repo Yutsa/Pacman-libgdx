@@ -1,7 +1,7 @@
 package com.univ_lorraine.pacman.model;
 
 import com.univ_lorraine.pacman.controller.GhostAI;
-import com.univ_lorraine.pacman.controller.MovementController;
+import com.univ_lorraine.pacman.controller.OutOfHouseAI;
 import com.univ_lorraine.pacman.controller.RandomAI;
 
 /**
@@ -12,8 +12,10 @@ public abstract class Ghost extends MovableGameElement {
     /**
      * The color of the ghost.
      */
-    private GhostAI ai = null;
+    private GhostAI usedAI = null;
+    private GhostAI defaultAI = null;
     private GhostAI frightenedAI = null;
+    private GhostAI outOfHouseAI = null;
     private static float mFrightenedTimer = 0;
     private int frightenedSpeed = 300;
     private int normalSpeed;
@@ -23,28 +25,39 @@ public abstract class Ghost extends MovableGameElement {
      * @param position The mPosition of the element.
      * @param world    The mWorld of the element.
      */
-    protected Ghost(Vector2D position, World world, int speed, GhostAI ai) {
+    protected Ghost(Vector2D position, World world, int speed) {
         super(position, world, speed);
-        setAi(ai);
-        frightenedAI = new RandomAI();
         normalSpeed = speed;
     }
 
-    @Override
-    public void setMovementController(MovementController movementController) {
-        super.setMovementController(movementController);
-        frightenedAI.setGhost(this);
+    public void initAI(GhostAI defaultAI) {
+        this.defaultAI = defaultAI;
+        frightenedAI = new RandomAI(this);
+        outOfHouseAI = new OutOfHouseAI(this);
+        usedAI = outOfHouseAI;
     }
 
-    public GhostAI getAi() {
-        return ai;
+    public void switchToFrightenedAI() {
+        usedAI = frightenedAI;
     }
 
-    public void setAi(GhostAI ai) {
-        if (ai == null) {
+    public void switchToOutAI() {
+        usedAI = outOfHouseAI;
+    }
+
+    public void switchToDefaultAI() {
+        usedAI = defaultAI;
+    }
+
+    public GhostAI getUsedAI() {
+        return usedAI;
+    }
+
+    public void setUsedAI(GhostAI usedAI) {
+        if (usedAI == null) {
             throw new IllegalArgumentException("The AI can't be null");
         }
-        this.ai = ai;
+        this.usedAI = usedAI;
     }
 
     public void useAI() {
@@ -58,7 +71,7 @@ public abstract class Ghost extends MovableGameElement {
             if (mSpeed != normalSpeed) {
                 setSpeed(normalSpeed);
             }
-            ai.setDirection(this);
+            usedAI.setDirection(this);
         }
     }
 

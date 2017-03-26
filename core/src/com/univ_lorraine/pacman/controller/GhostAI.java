@@ -12,7 +12,9 @@ public abstract class GhostAI {
     protected MovementController mMovementController;
     protected Ghost mGhost;
 
-    public GhostAI() {
+    public GhostAI(Ghost ghost) {
+        mGhost = ghost;
+        mMovementController = ghost.getMovementController();
     }
 
     public void setMovementController(MovementController movementController) {
@@ -21,14 +23,6 @@ public abstract class GhostAI {
         }
         mMovementController = movementController;
     }
-
-    public void setGhost(Ghost ghost) {
-        if (ghost == null) {
-            throw new IllegalArgumentException("Ghost can't be null");
-        }
-        mGhost = ghost;
-        mMovementController = ghost.getMovementController();
-    }
-
+    
     public abstract void setDirection(MovableGameElement movableGameElement);
 }

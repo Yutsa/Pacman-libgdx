@@ -3,8 +3,10 @@ package com.univ_lorraine.pacman.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.controller.GhostMoveController;
-import com.univ_lorraine.pacman.controller.OutOfHouseAI;
 import com.univ_lorraine.pacman.controller.PacmanMoveController;
+import com.univ_lorraine.pacman.controller.RandomAI;
+import com.univ_lorraine.pacman.controller.SearchPacmanAI;
+import com.univ_lorraine.pacman.controller.SwitchAI;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -74,30 +76,28 @@ public class World implements Iterable<GameElement> {
     }
 
     public void createGhosts() {
-        RedGhost redGhost = new RedGhost(new Vector2D(redGhostStartingPos), this, 500,
-                new OutOfHouseAI());
-        YellowGhost yellowGhost = new YellowGhost(new Vector2D(yellowGhostStartingPos), this, 500,
-                new OutOfHouseAI());
-        PinkGhost pinkGhost = new PinkGhost(new Vector2D(pinkGhostStartingPos), this, 500,
-                new OutOfHouseAI());
+        RedGhost redGhost = new RedGhost(new Vector2D(redGhostStartingPos), this, 500);
+        YellowGhost yellowGhost = new YellowGhost(new Vector2D(yellowGhostStartingPos), this, 500);
+        PinkGhost pinkGhost = new PinkGhost(new Vector2D(pinkGhostStartingPos), this, 500);
 
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
         mGameElements.add(redGhost);
-        mGhosts.add(redGhost);
         mGameElements.add(yellowGhost);
-        mGhosts.add(yellowGhost);
         mGameElements.add(pinkGhost);
+
         mGhosts.add(pinkGhost);
+        mGhosts.add(yellowGhost);
+        mGhosts.add(redGhost);
 
         GhostMoveController ghostMoveController = new GhostMoveController(this);
         for (Ghost ghost : mGhosts) {
             ghost.setMovementController(ghostMoveController);
         }
 
-        redGhost.getAi().setGhost(redGhost);
-        yellowGhost.getAi().setGhost(yellowGhost);
-        pinkGhost.getAi().setGhost(pinkGhost);
+        pinkGhost.initAI(new SwitchAI(pinkGhost));
+        yellowGhost.initAI(new SearchPacmanAI(yellowGhost));
+        redGhost.initAI(new RandomAI(redGhost));
     }
 
     public ArrayList<Ghost> getGhosts() {

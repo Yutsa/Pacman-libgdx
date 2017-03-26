@@ -12,17 +12,10 @@ public class SwitchAI extends GhostAI {
     private GhostAI randomAI;
     private GhostAI searchAI;
 
-    public SwitchAI() {
-        super();
-    }
-
-    @Override
-    public void setGhost(Ghost ghost) {
-        super.setGhost(ghost);
-        randomAI = new RandomAI();
-        randomAI.setGhost(ghost);
-        searchAI = new SearchPacmanAI();
-        searchAI.setGhost(ghost);
+    public SwitchAI(Ghost ghost) {
+        super(ghost);
+        randomAI = new RandomAI(ghost);
+        searchAI = new SearchPacmanAI(ghost);
         usedAI = searchAI;
     }
 

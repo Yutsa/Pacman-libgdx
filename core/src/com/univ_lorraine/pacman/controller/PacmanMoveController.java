@@ -71,6 +71,9 @@ public class PacmanMoveController extends MovementController {
     public void resolveCollision(Ghost ghost) {
         if (Ghost.isFrightened()) {
             Gdx.app.log(getClass().getSimpleName(), "Pacman eats ghost");
+            ghost.resetPosition();
+            ghost.switchToOutAI();
+            mWorld.winPoint(500);
         }
         else {
             World.decreaseLifeCounter();
@@ -78,8 +81,7 @@ public class PacmanMoveController extends MovementController {
             mWorld.getPacman().setCurrentDirection(RIGHT);
             for (Ghost ghost2 : mWorld.getGhosts()) {
                 ghost2.resetPosition();
-                ghost2.setAi(new OutOfHouseAI());
-                ghost2.getAi().setGhost(ghost2);
+                ghost2.switchToOutAI();
             }
         }
     }
