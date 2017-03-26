@@ -212,6 +212,19 @@ public abstract class MovementController {
     }
 
     /**
+     * Gets the rounded position.
+     * @param position The raw position.
+     * @return The rounded position
+     */
+    public Vector2D getExactPosition(Vector2D position) {
+        return new Vector2D(position.getX() / mCoef, position.getY() / mCoef);
+    }
+
+    public boolean isOnSameTile(Vector2D position1, Vector2D position2) {
+        return getExactPosition(position1).equals(getExactPosition(position2));
+    }
+
+    /**
      * Checks if we are going through the tunnel and teleports the {@link MovableGameElement}
      *
      * @param movableGameElement The {@link MovableGameElement} that is going through th tunnel.

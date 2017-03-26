@@ -50,7 +50,7 @@ public class World implements Iterable<GameElement> {
     }
 
     public void createGhosts() {
-        RedGhost redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
+        RedGhost redGhost = new RedGhost(new Vector2D(14 * mCoef, 17 * mCoef), this, 500,
                 new OutOfHouseAI());
         YellowGhost yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
                 new OutOfHouseAI());

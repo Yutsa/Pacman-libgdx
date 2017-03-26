@@ -37,4 +37,8 @@ public class Vector2D {
                 ", y=" + y +
                 '}';
     }
+
+    public boolean equals(Vector2D o) {
+        return x == o.x && y == o.y;
+    }
 }

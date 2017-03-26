@@ -1,8 +1,10 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.GameElement;
+import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
@@ -27,6 +29,7 @@ public class PacmanMoveController extends MovementController {
      */
     @Override
     public void moveElement(MovableGameElement movableGameElement, float deltaTime) {
+        checkPacmanGhostCollision();
         checkTunnel(movableGameElement);
 
         checkWantedDirection(movableGameElement, movableGameElement.getWantedDirection());
@@ -49,6 +52,17 @@ public class PacmanMoveController extends MovementController {
                 || currentGameElement instanceof SuperPellet) {
             eatPellet(currentGameElement);
         }
+    }
 
+    /**
+     * Checks if pacman and a Ghost are on the same tile and does what must be done.
+     */
+    public void checkPacmanGhostCollision() {
+        Vector2D pacmanPosition = mWorld.getPacman().getPosition();
+        for (Ghost ghost : mWorld.getGhosts()) {
+            if (isOnSameTile(pacmanPosition, ghost.getPosition())) {
+                Gdx.app.log(getClass().getSimpleName(), "Collision");
+            }
+        }
     }
 }
