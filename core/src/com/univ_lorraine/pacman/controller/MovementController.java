@@ -23,12 +23,11 @@ import java.util.HashMap;
 @SuppressWarnings("SameParameterValue")
 public abstract class MovementController {
     protected World mWorld;
-    protected int mCoef;
+    protected int mCoef = World.getCoef();
     protected double epsilon;
 
     public MovementController(World world) {
         setWorld(world);
-        setCoef(world.getCoef());
     }
 
     public void setWorld(World world) {
@@ -40,10 +39,6 @@ public abstract class MovementController {
 
     public World getWorld() {
         return mWorld;
-    }
-
-    public void setCoef(int coef) {
-        mCoef = coef;
     }
 
     public void setEpsilon(double epsilon) {

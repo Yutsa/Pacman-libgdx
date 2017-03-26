@@ -12,6 +12,8 @@ import com.univ_lorraine.pacman.model.SuperPellet;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
 
+import static com.univ_lorraine.pacman.model.MovableGameElement.Direction.RIGHT;
+
 /**
  * @author Édouard WILLISSECK
  */
@@ -61,8 +63,19 @@ public class PacmanMoveController extends MovementController {
         Vector2D pacmanPosition = mWorld.getPacman().getPosition();
         for (Ghost ghost : mWorld.getGhosts()) {
             if (isOnSameTile(pacmanPosition, ghost.getPosition())) {
-                Gdx.app.log(getClass().getSimpleName(), "Collision");
+                resolveCollision(ghost);
             }
+        }
+    }
+
+    public void resolveCollision(Ghost ghost) {
+        if (Ghost.isFrightened()) {
+            Gdx.app.log(getClass().getSimpleName(), "Pacman eats ghost");
+        }
+        else {
+            World.decreaseLifeCounter();
+            mWorld.getPacman().setPosition(new Vector2D(World.getPacmanStartingPosition()));
+            mWorld.getPacman().setCurrentDirection(RIGHT);
         }
     }
 }

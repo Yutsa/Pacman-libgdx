@@ -76,4 +76,8 @@ public abstract class Ghost extends MovableGameElement {
     public static float getFrightenedTimer() {
         return mFrightenedTimer;
     }
+
+    public static boolean isFrightened() {
+        return mFrightenedTimer > 0;
+    }
 }

@@ -23,7 +23,7 @@ public class World implements Iterable<GameElement> {
     /**
      * The coefficient by which the logical world is bigger than the onscreen world.
      */
-    private final int mCoef = 100;
+    private final static int mCoef = 100;
     /**
      * The score of the player.
      */
@@ -36,12 +36,14 @@ public class World implements Iterable<GameElement> {
      * The GameElements in this world.
      */
     private ArrayList<GameElement> mGameElements;
+    private static int lifeCounter = 3;
+    private static Vector2D pacmanStartingPosition = new Vector2D(14 * mCoef, 17 * mCoef);
 
     /**
      * Creates the World, the Pacman and the Maze.
      */
     public World() {
-        mPacman = new Pacman(new Vector2D(14 * mCoef, 17 * mCoef), this,
+        mPacman = new Pacman(new Vector2D(pacmanStartingPosition), this,
                 500, null);
         mPacman.setMovementController(new PacmanMoveController(this));
         Gdx.app.log(getClass().getSimpleName(), "Speed = " + mPacman.getSpeed());
@@ -49,8 +51,27 @@ public class World implements Iterable<GameElement> {
         startTime = TimeUtils.millis();
     }
 
+    public static Vector2D getPacmanStartingPosition() {
+        return pacmanStartingPosition;
+    }
+
+    public static int getLifeCounter() {
+        return lifeCounter;
+    }
+
+    public static void setLifeCounter(int lifeCounter) {
+        World.lifeCounter = lifeCounter;
+    }
+
+    public static void decreaseLifeCounter() {
+        lifeCounter--;
+        if (lifeCounter <= 0) {
+            lifeCounter = 0;
+        }
+    }
+
     public void createGhosts() {
-        RedGhost redGhost = new RedGhost(new Vector2D(14 * mCoef, 17 * mCoef), this, 500,
+        RedGhost redGhost = new RedGhost(new Vector2D(14 * mCoef, 13 * mCoef), this, 500,
                 new OutOfHouseAI());
         YellowGhost yellowGhost = new YellowGhost(new Vector2D(13 * mCoef, 13 * mCoef), this, 500,
                 new OutOfHouseAI());
@@ -168,7 +189,7 @@ public class World implements Iterable<GameElement> {
         }
     }
 
-    public int getCoef() {
+    public static int getCoef() {
         return mCoef;
     }
 }
