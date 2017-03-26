@@ -303,4 +303,6 @@ public abstract class MovementController {
      * @param deltaTime The time elapsed between two renders.
      */
     public abstract void moveElement(MovableGameElement movableGameElement, float deltaTime);
+
+    public abstract void updateEpsilon(float deltaTime);
 }

@@ -105,8 +105,7 @@ public class MovableGameElement extends GameElement {
         }
         mSpeed = speed;
         if (mMovementController != null) {
-            mMovementController.setEpsilon(speed / 6000f);
-            Gdx.app.log(getClass().getSimpleName(), "Epsilon = " + mMovementController.getEpsilon());
+            Gdx.app.log(getClass().getSimpleName(), "Epsilon = " + getMovementController().getEpsilon());
         }
     }
 

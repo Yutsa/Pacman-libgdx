@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +15,7 @@ import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Pacman;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
-import com.univ_lorraine.pacman.screens.WinScreen;
+import com.univ_lorraine.pacman.screens.EndScreen;
 import com.univ_lorraine.pacman.view.TextureFactory;
 
 /**
@@ -27,6 +28,7 @@ public class WorldRenderer implements InputProcessor {
     private final TextureFactory textureFactory;
     private final World mWorld;
     private final Game mGame;
+    private FPSLogger mFPSLogger = new FPSLogger();
 
     /**
      * Creates the WorldRenderer.
@@ -38,7 +40,7 @@ public class WorldRenderer implements InputProcessor {
         batch = new SpriteBatch();
         mWorld = world;
         Gdx.input.setInputProcessor(this);
-        mWorld.getMaze().loadDemoLevel(mWorld.getCoef());
+        mWorld.getMaze().loadDemoLevel(World.getCoef());
         mGame = game;
 
     }
@@ -60,21 +62,37 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time passed between two renders.
      */
     public void render(OrthographicCamera camera, float deltaTime) {
+//        setLag(50);
+        updateEpsilons(deltaTime);
         checkEndGame();
         batch.setProjectionMatrix(camera.combined);
         drawWorld();
         textureFactory.update(deltaTime);
         moveGameElements(deltaTime);
+        mFPSLogger.log();
+    }
+
+    public void setLag(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateEpsilons(float deltaTime) {
+        mWorld.getPacman().getMovementController().updateEpsilon(deltaTime);
+        mWorld.getGhosts().get(0).getMovementController().updateEpsilon(deltaTime);
     }
 
     public void checkEndGame() {
         if (mWorld.getMaze().getPelletNumber() == 0) {
             Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
-            mGame.setScreen(new WinScreen());
+            mGame.setScreen(new EndScreen(true));
         }
         else if (World.getLifeCounter() <= 0) {
             Gdx.app.log(getClass().getSimpleName(), "Vous avez perdu !");
-            mGame.setScreen(new WinScreen());
+            mGame.setScreen(new EndScreen(false));
         }
     }
 
@@ -86,8 +104,8 @@ public class WorldRenderer implements InputProcessor {
             Vector2D position = e.getPosition();
             Texture texture = textureFactory.getTexture(e);
             batch.draw(texture,
-                    ((position.x / ((float) mWorld.getCoef())) - mWorld.getWidth() / 2f) * size,
-                    ((position.y / ((float) mWorld.getCoef())) - mWorld.getHeight() / 2f) * size, size, size,
+                    ((position.x / ((float) World.getCoef())) - mWorld.getWidth() / 2f) * size,
+                    ((position.y / ((float) World.getCoef())) - mWorld.getHeight() / 2f) * size, size, size,
                     0, 0,
                     texture.getWidth(), texture.getHeight(), false, true);
         }

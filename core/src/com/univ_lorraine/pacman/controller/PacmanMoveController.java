@@ -78,4 +78,15 @@ public class PacmanMoveController extends MovementController {
             mWorld.getPacman().setCurrentDirection(RIGHT);
         }
     }
+
+    public void updateEpsilon(float deltaTime) {
+        float fps = 1 / deltaTime;
+        float newEpsilon = mWorld.getPacman().getSpeed() / (fps * World.getCoef());
+        if (newEpsilon < 0.5) {
+            epsilon = newEpsilon;
+        }
+        else {
+            epsilon = 0.45;
+        }
+    }
 }
