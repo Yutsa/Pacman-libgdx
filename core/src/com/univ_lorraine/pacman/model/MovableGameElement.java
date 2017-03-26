@@ -29,6 +29,7 @@ public class MovableGameElement extends GameElement {
         }
     }
 
+    private Vector2D startingPos;
     /**
      * The direction the player wants pacman to go next.
      */
@@ -56,6 +57,11 @@ public class MovableGameElement extends GameElement {
         mCurrentDirection = Direction.RIGHT;
         mWantedDirection = Direction.RIGHT;
         setSpeed(speed);
+        startingPos = new Vector2D(position);
+    }
+
+    public void resetPosition() {
+        mPosition = new Vector2D(startingPos);
     }
 
     /**

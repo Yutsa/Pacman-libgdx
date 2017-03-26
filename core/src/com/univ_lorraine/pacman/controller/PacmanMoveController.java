@@ -74,8 +74,13 @@ public class PacmanMoveController extends MovementController {
         }
         else {
             World.decreaseLifeCounter();
-            mWorld.getPacman().setPosition(new Vector2D(World.getPacmanStartingPosition()));
+            mWorld.getPacman().resetPosition();
             mWorld.getPacman().setCurrentDirection(RIGHT);
+            for (Ghost ghost2 : mWorld.getGhosts()) {
+                ghost2.resetPosition();
+                ghost2.setAi(new OutOfHouseAI());
+                ghost2.getAi().setGhost(ghost2);
+            }
         }
     }
 
