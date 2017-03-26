@@ -253,7 +253,11 @@ public abstract class MovementController {
         int frightenedDuration = 5;
         if (gameElement instanceof SuperPellet) {
             baseScore = 100;
-            Ghost.setFrightenedTimer(frightenedDuration);
+            for (Ghost ghost : mWorld.getGhosts()) {
+                if (ghost.isAlive()) {
+                    ghost.setFrightenedTimer(frightenedDuration);
+                }
+            }
         }
         else {
             baseScore = 10;

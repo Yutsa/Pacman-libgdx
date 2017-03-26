@@ -54,7 +54,6 @@ public class WorldRenderer implements InputProcessor {
         this.size = size;
     }
 
-    // TODO: 26/03/17 Check if there is a collision between pacman and a ghost a act accordingly.
     /**
      * Renders the maze and the {@link GameElement}s
      *

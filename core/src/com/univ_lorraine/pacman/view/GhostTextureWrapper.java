@@ -35,8 +35,8 @@ public class GhostTextureWrapper extends TextureWrapper {
     }
 
     public void update(float deltaTime) {
-        if (Ghost.getFrightenedTimer() > 0) {
-            Ghost.decreaseFrightenedTimer(deltaTime);
+        if (((Ghost) wrappedObject).getFrightenedTimer() > 0) {
+            ((Ghost) wrappedObject).decreaseFrightenedTimer(deltaTime);
         }
     }
 
@@ -52,8 +52,11 @@ public class GhostTextureWrapper extends TextureWrapper {
 
     @Override
     public Texture getTexture() {
-        if (Ghost.getFrightenedTimer() > 0) {
+        if (((Ghost) wrappedObject).getFrightenedTimer() > 0) {
             return frightenedTexture;
+        }
+        if (!((Ghost) wrappedObject).isAlive()) {
+            return deadTexture;
         }
         return normalTexture;
     }

@@ -23,6 +23,6 @@ public abstract class GhostAI {
         }
         mMovementController = movementController;
     }
-    
+
     public abstract void setDirection(MovableGameElement movableGameElement);
 }

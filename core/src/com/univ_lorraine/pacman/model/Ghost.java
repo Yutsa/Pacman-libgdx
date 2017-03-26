@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.model;
 
+import com.univ_lorraine.pacman.controller.DeadGhostAI;
 import com.univ_lorraine.pacman.controller.GhostAI;
 import com.univ_lorraine.pacman.controller.OutOfHouseAI;
 import com.univ_lorraine.pacman.controller.RandomAI;
@@ -16,9 +17,12 @@ public abstract class Ghost extends MovableGameElement {
     private GhostAI defaultAI = null;
     private GhostAI frightenedAI = null;
     private GhostAI outOfHouseAI = null;
-    private static float mFrightenedTimer = 0;
+    private GhostAI deadAI = null;
+    private boolean alive = true;
+    private float mFrightenedTimer = 0;
     private int frightenedSpeed = 300;
     private int normalSpeed;
+    private Vector2D startingPos;
 
     /**
      * Creates a GameElement with a mPosition and a mWorld.
@@ -28,13 +32,31 @@ public abstract class Ghost extends MovableGameElement {
     protected Ghost(Vector2D position, World world, int speed) {
         super(position, world, speed);
         normalSpeed = speed;
+        startingPos = new Vector2D(position);
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    public Vector2D getStartingPos() {
+        return startingPos;
     }
 
     public void initAI(GhostAI defaultAI) {
         this.defaultAI = defaultAI;
         frightenedAI = new RandomAI(this);
         outOfHouseAI = new OutOfHouseAI(this);
+        deadAI = new DeadGhostAI(this);
         usedAI = outOfHouseAI;
+    }
+
+    public void switchToDeadAI() {
+        usedAI = deadAI;
     }
 
     public void switchToFrightenedAI() {
@@ -61,36 +83,29 @@ public abstract class Ghost extends MovableGameElement {
     }
 
     public void useAI() {
-        if (mFrightenedTimer > 0) {
-            if (mSpeed != frightenedSpeed) {
-                setSpeed(frightenedSpeed);
-            }
-            frightenedAI.setDirection(this);
-        }
-        else {
-            if (mSpeed != normalSpeed) {
-                setSpeed(normalSpeed);
-            }
-            usedAI.setDirection(this);
-        }
+        usedAI.setDirection(this);
     }
 
-    public static void setFrightenedTimer(float frightenedTimer) {
+    public void setFrightenedTimer(float frightenedTimer) {
         mFrightenedTimer = frightenedTimer;
+        if (frightenedTimer > 0) {
+            switchToFrightenedAI();
+        }
     }
 
-    public static void decreaseFrightenedTimer(float time) {
+    public void decreaseFrightenedTimer(float time) {
         mFrightenedTimer -= time;
         if (mFrightenedTimer < 0) {
             mFrightenedTimer = 0;
+            switchToDefaultAI();
         }
     }
 
-    public static float getFrightenedTimer() {
+    public float getFrightenedTimer() {
         return mFrightenedTimer;
     }
 
-    public static boolean isFrightened() {
+    public boolean isFrightened() {
         return mFrightenedTimer > 0;
     }
 }
