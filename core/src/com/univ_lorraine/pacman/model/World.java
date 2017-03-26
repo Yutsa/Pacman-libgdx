@@ -90,9 +90,8 @@ public class World implements Iterable<GameElement> {
         mGhosts.add(yellowGhost);
         mGhosts.add(redGhost);
 
-        GhostMoveController ghostMoveController = new GhostMoveController(this);
         for (Ghost ghost : mGhosts) {
-            ghost.setMovementController(ghostMoveController);
+            ghost.setMovementController(new GhostMoveController(this, ghost));
         }
 
         pinkGhost.initAI(new SwitchAI(pinkGhost));

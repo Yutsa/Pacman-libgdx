@@ -68,7 +68,7 @@ public class WorldRenderer implements InputProcessor {
         drawWorld();
         textureFactory.update(deltaTime);
         moveGameElements(deltaTime);
-        mFPSLogger.log();
+//        mFPSLogger.log();
     }
 
     public void setLag(int millis) {
@@ -81,7 +81,9 @@ public class WorldRenderer implements InputProcessor {
 
     public void updateEpsilons(float deltaTime) {
         mWorld.getPacman().getMovementController().updateEpsilon(deltaTime);
-        mWorld.getGhosts().get(0).getMovementController().updateEpsilon(deltaTime);
+        for (Ghost ghost : mWorld.getGhosts()) {
+            ghost.getMovementController().updateEpsilon(deltaTime);
+        }
     }
 
     public void checkEndGame() {

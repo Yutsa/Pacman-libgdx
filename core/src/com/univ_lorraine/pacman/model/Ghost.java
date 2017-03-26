@@ -20,7 +20,7 @@ public abstract class Ghost extends MovableGameElement {
     private GhostAI deadAI = null;
     private boolean alive = true;
     private float mFrightenedTimer = 0;
-    private int frightenedSpeed = 300;
+    private int frightenedSpeed = 100;
     private int normalSpeed;
     private Vector2D startingPos;
 
@@ -90,6 +90,10 @@ public abstract class Ghost extends MovableGameElement {
         mFrightenedTimer = frightenedTimer;
         if (frightenedTimer > 0) {
             switchToFrightenedAI();
+            setSpeed(frightenedSpeed);
+        }
+        else if (frightenedTimer == 0) {
+            setSpeed(normalSpeed);
         }
     }
 
@@ -98,6 +102,7 @@ public abstract class Ghost extends MovableGameElement {
         if (mFrightenedTimer < 0) {
             mFrightenedTimer = 0;
             switchToDefaultAI();
+            setSpeed(normalSpeed);
         }
     }
 
