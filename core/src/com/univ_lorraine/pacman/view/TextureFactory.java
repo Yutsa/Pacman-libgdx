@@ -69,7 +69,6 @@ public class TextureFactory {
         return instance;
     }
 
-    // TODO: 25/03/17 Should change the pacman texture according to the time using update.
     public void update(float deltaTime) {
         ((PacmanTextureWrapper) mTextureMap.get(Pacman.class)).update(deltaTime);
         ((GhostTextureWrapper) mTextureMap.get(PinkGhost.class)).update(deltaTime);

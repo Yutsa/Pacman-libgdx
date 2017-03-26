@@ -15,7 +15,6 @@ import static com.univ_lorraine.pacman.model.MovableGameElement.Direction.DOWN;
 public class GhostMoveController extends MovementController {
     public GhostMoveController(World world) {
         super(world);
-        // TODO: 25/03/17 Don't use the static speed.
         epsilon = (world.getGhosts().get(0).getSpeed() / 6000f);
     }
 

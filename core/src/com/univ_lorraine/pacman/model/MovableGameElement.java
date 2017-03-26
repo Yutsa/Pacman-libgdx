@@ -39,7 +39,6 @@ public class MovableGameElement extends GameElement {
      */
     private Direction mCurrentDirection;
 
-    // TODO: 25/03/17 Don't make it static but find a way to have the right epsilon on the move controllers
     /**
      * The speed of the element.
      */
