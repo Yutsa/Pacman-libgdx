@@ -60,16 +60,20 @@ public class WorldRenderer implements InputProcessor {
      * @param deltaTime The time passed between two renders.
      */
     public void render(OrthographicCamera camera, float deltaTime) {
-        checkWin();
+        checkEndGame();
         batch.setProjectionMatrix(camera.combined);
         drawWorld();
         textureFactory.update(deltaTime);
         moveGameElements(deltaTime);
     }
 
-    public void checkWin() {
+    public void checkEndGame() {
         if (mWorld.getMaze().getPelletNumber() == 0) {
             Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
+            mGame.setScreen(new WinScreen());
+        }
+        else if (World.getLifeCounter() <= 0) {
+            Gdx.app.log(getClass().getSimpleName(), "Vous avez perdu !");
             mGame.setScreen(new WinScreen());
         }
     }
