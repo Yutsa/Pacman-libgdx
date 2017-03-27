@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
@@ -26,7 +25,6 @@ public class DeadGhostAI extends GhostAI {
                 GhostHouseTile) {
             mGhost.setAlive(true);
             mGhost.switchToOutAI();
-            Gdx.app.log(getClass().getSimpleName(), "AI switched to : " + mGhost.getUsedAI());
         }
         if (!mGhost.isAlive()) {
             HashMap<Direction, GameElement> availableDirections;

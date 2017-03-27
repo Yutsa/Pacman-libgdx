@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.controller.GhostMoveController;
 import com.univ_lorraine.pacman.controller.PacmanMoveController;
@@ -51,7 +50,6 @@ public class World implements Iterable<GameElement> {
         mPacman = new Pacman(new Vector2D(pacmanStartingPosition), this,
                 500, null);
         mPacman.setMovementController(new PacmanMoveController(this));
-        Gdx.app.log(getClass().getSimpleName(), "Speed = " + mPacman.getSpeed());
         mMaze = new Maze(this);
         startTime = TimeUtils.millis();
     }

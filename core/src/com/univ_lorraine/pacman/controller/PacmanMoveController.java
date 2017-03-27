@@ -1,6 +1,5 @@
 package com.univ_lorraine.pacman.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
@@ -66,13 +65,11 @@ public class PacmanMoveController extends MovementController {
                 || nextBlock instanceof SuperPellet) {
 
             if (!pacmanSound.isLooping()) {
-                Gdx.app.log(getClass().getSimpleName(), "sound");
                 pacmanSound.setLooping(true);
                 pacmanSound.play();
             }
         }
         else {
-            Gdx.app.log(getClass().getSimpleName(), "stop");
             pacmanSound.setLooping(false);
         }
     }
@@ -91,7 +88,6 @@ public class PacmanMoveController extends MovementController {
 
     public void resolveCollision(Ghost ghost) {
         if (ghost.isFrightened()) {
-            Gdx.app.log(getClass().getSimpleName(), "Ate a ghost");
             ghost.setFrightenedTimer(0);
             ghost.switchToDeadAI();
             ghost.setAlive(false);
