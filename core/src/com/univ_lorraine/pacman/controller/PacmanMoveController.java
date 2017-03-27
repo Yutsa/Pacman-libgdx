@@ -1,6 +1,7 @@
 package com.univ_lorraine.pacman.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.univ_lorraine.pacman.model.BasicPellet;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.GameElement;
@@ -50,9 +51,29 @@ public class PacmanMoveController extends MovementController {
                 (currentPosition.getX() + 50) / mCoef,
                 (currentPosition.getY() + 50) / mCoef);
 
+
         if (currentGameElement instanceof BasicPellet
                 || currentGameElement instanceof SuperPellet) {
             eatPellet(currentGameElement);
+        }
+
+        playEatingSound(nextBlock);
+    }
+
+    public void playEatingSound(GameElement nextBlock) {
+        Music pacmanSound = mWorld.getPacman().getPacmanSound();
+        if (nextBlock instanceof BasicPellet
+                || nextBlock instanceof SuperPellet) {
+
+            if (!pacmanSound.isLooping()) {
+                Gdx.app.log(getClass().getSimpleName(), "sound");
+                pacmanSound.setLooping(true);
+                pacmanSound.play();
+            }
+        }
+        else {
+            Gdx.app.log(getClass().getSimpleName(), "stop");
+            pacmanSound.setLooping(false);
         }
     }
 
