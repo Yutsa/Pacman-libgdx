@@ -1,7 +1,9 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
+import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Vector2D;
@@ -18,13 +20,13 @@ public class DeadGhostAI extends GhostAI {
         super(ghost);
     }
 
-    // TODO: 26/03/17 Can't enter the house for now.
     @Override
     public void setDirection(MovableGameElement movableGameElement) {
-        if (mGhost.getMovementController().isOnSameTile(movableGameElement.getPosition(),
-                mGhost.getStartingPos())) {
+        if (mGhost.getMovementController().getElementAtPosition(mGhost) instanceof
+                GhostHouseTile) {
             mGhost.setAlive(true);
             mGhost.switchToOutAI();
+            Gdx.app.log(getClass().getSimpleName(), "AI switched to : " + mGhost.getUsedAI());
         }
         if (!mGhost.isAlive()) {
             HashMap<Direction, GameElement> availableDirections;

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 
 /**
  * @author Édouard WILLISSECK
@@ -17,10 +18,16 @@ public class EndScreen implements Screen {
     private SpriteBatch batch;
     private boolean won;
     private OrthographicCamera mCamera;
+    private int score;
 
-    public EndScreen(boolean won) {
+    public EndScreen(boolean won, int score) {
         this.won = won;
+        setScore(score);
         init();
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public void init() {
@@ -48,7 +55,9 @@ public class EndScreen implements Screen {
         else {
             text = "Vous avez perdu !";
         }
-        font.draw(batch, text, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        text = text + "\nScore = " + score;
+        font.draw(batch, text, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0,
+                Align.center, false);
         batch.end();
     }
 

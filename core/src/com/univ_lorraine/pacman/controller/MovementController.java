@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.EmptyTile;
@@ -10,6 +11,7 @@ import com.univ_lorraine.pacman.model.Maze;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Pacman;
+import com.univ_lorraine.pacman.model.RedGhost;
 import com.univ_lorraine.pacman.model.SuperPellet;
 import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
@@ -177,7 +179,12 @@ public abstract class MovementController {
             case RIGHT:
                 if ((element.getPosition().getX() / mCoef) + 1
                         - element.getPosition().getX() / ((float) mCoef) < epsilon) {
+                    Vector2D old = new Vector2D(element.getPosition());
                     element.getPosition().setX(((element.getPosition().x / mCoef) + 1) * mCoef);
+                    if (element instanceof RedGhost) {
+                        Gdx.app.log(getClass().getSimpleName(), "Old position = " + old);
+                        Gdx.app.log(getClass().getSimpleName(), "Fixed position = " + element.getPosition());
+                    }
                 }
                 break;
             case UP:

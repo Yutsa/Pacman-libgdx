@@ -66,6 +66,7 @@ public class GhostMoveController extends MovementController {
         return possibleDirections;
     }
 
+    // TODO: 26/03/17 Red ghost is sometimes blocked with the RIGHT direction when wanting to go up.
     @Override
     public void checkWantedDirection(MovableGameElement movableGameElement, Direction wantedDirection) {
         GameElement nextBlock = getNextElement(movableGameElement.getPosition(),
