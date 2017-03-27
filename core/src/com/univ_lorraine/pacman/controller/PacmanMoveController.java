@@ -88,12 +88,14 @@ public class PacmanMoveController extends MovementController {
 
     public void resolveCollision(Ghost ghost) {
         if (ghost.isFrightened()) {
+            SoundManager.getInstance().getEatingGhostSound().play();
             ghost.setFrightenedTimer(0);
             ghost.switchToDeadAI();
             ghost.setAlive(false);
             mWorld.winPoint(500);
         }
         else if (ghost.isAlive()){
+            SoundManager.getInstance().getDeadPacmanSound().play();
             World.decreaseLifeCounter();
             mWorld.getPacman().resetPosition();
             mWorld.getPacman().setCurrentDirection(RIGHT);
