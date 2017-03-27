@@ -98,6 +98,7 @@ public class PacmanMoveController extends MovementController {
             SoundManager.getInstance().getDeadPacmanSound().play();
             World.decreaseLifeCounter();
             mWorld.getPacman().resetPosition();
+            mWorld.getPacman().setDeadCounter(2);
             mWorld.getPacman().setCurrentDirection(RIGHT);
             for (Ghost ghost2 : mWorld.getGhosts()) {
                 ghost2.resetPosition();

@@ -71,8 +71,16 @@ public class WorldRenderer implements InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         drawWorld();
         textureFactory.update(deltaTime);
-        moveGameElements(deltaTime);
+        if (!isPaused(deltaTime)) {
+            moveGameElements(deltaTime);
+        }
 //        mFPSLogger.log();
+    }
+
+    public boolean isPaused(float deltaTime) {
+        Pacman pacman = mWorld.getPacman();
+        pacman.decreaseDeadCounter(deltaTime);
+        return pacman.getDeadCounter() > 0;
     }
 
     public void setLag(int millis) {
