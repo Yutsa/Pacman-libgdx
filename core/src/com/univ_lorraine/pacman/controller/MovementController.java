@@ -227,7 +227,7 @@ public abstract class MovementController {
      */
     public void checkTunnel(MovableGameElement movableGameElement) {
     /* Handles TP */
-        if ((movableGameElement.getPosition().x / mCoef) == mWorld.getWidth() - 1) {
+        if ((movableGameElement.getPosition().x / mCoef) == mWorld.getMaze().getWidth() - 1) {
             movableGameElement.setPosition(new Vector2D(0, movableGameElement.getPosition().y));
         }
 

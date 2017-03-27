@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class World implements Iterable<GameElement> {
-
+    private int width = 30;
+    private int height = 35;
     /**
      * The Pacman of this world.
      */
@@ -38,6 +39,7 @@ public class World implements Iterable<GameElement> {
      */
     private ArrayList<GameElement> mGameElements;
     private static int lifeCounter = 3;
+    public static final int maxLife = 3;
     public static Vector2D pacmanStartingPosition = new Vector2D(14 * mCoef, 17 * mCoef);
     public static Vector2D redGhostStartingPos = new Vector2D(14 * mCoef, 13 * mCoef);
     public static Vector2D yellowGhostStartingPos = new Vector2D(13 * mCoef, 13 * mCoef);
@@ -122,7 +124,8 @@ public class World implements Iterable<GameElement> {
      * @return The world's width.
      */
     public int getWidth() {
-        return mMaze.getWidth();
+//        return mMaze.getWidth() + 3;
+        return width;
     }
 
     /**
@@ -131,7 +134,8 @@ public class World implements Iterable<GameElement> {
      * @return The world's height.
      */
     public int getHeight() {
-        return mMaze.getHeight();
+//        return mMaze.getHeight() + 2;
+        return height;
     }
 
     /**

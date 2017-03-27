@@ -54,6 +54,10 @@ public class WorldRenderer implements InputProcessor {
         this.size = size;
     }
 
+    public float getSize() {
+        return size;
+    }
+
     /**
      * Renders the maze and the {@link GameElement}s
      *
@@ -105,8 +109,9 @@ public class WorldRenderer implements InputProcessor {
             Vector2D position = e.getPosition();
             Texture texture = textureFactory.getTexture(e);
             batch.draw(texture,
-                    ((position.x / ((float) World.getCoef())) - mWorld.getWidth() / 2f) * size,
-                    ((position.y / ((float) World.getCoef())) - mWorld.getHeight() / 2f) * size, size, size,
+                    ((position.x / ((float) World.getCoef())) - mWorld.getMaze().getWidth() / 2f) * size,
+                    ((position.y / ((float) World.getCoef())) - mWorld.getMaze().getHeight() / 2f) * size,
+                    size, size,
                     0, 0,
                     texture.getWidth(), texture.getHeight(), false, true);
         }

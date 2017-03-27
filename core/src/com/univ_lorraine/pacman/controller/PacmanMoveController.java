@@ -60,7 +60,7 @@ public class PacmanMoveController extends MovementController {
     }
 
     public void playEatingSound(GameElement nextBlock) {
-        Music pacmanSound = mWorld.getPacman().getPacmanSound();
+        Music pacmanSound = SoundManager.getInstance().getEatingPelletSound();
         if (nextBlock instanceof BasicPellet
                 || nextBlock instanceof SuperPellet) {
 

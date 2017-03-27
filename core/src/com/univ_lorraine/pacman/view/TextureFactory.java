@@ -30,6 +30,8 @@ public class TextureFactory {
      */
     private static TextureFactory instance;
 
+    private Texture livesTexture = new Texture("pacmanRight.png");
+
     /**
      * Constructor that loads the textures.
      */
@@ -93,5 +95,9 @@ public class TextureFactory {
         }
 
         return iTexturable.getTexture();
+    }
+
+    public Texture getLivesTexture() {
+        return livesTexture;
     }
 }
