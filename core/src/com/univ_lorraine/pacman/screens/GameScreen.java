@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
+import com.univ_lorraine.pacman.controller.SoundManager;
 import com.univ_lorraine.pacman.controller.WorldRenderer;
 import com.univ_lorraine.pacman.model.World;
 import com.univ_lorraine.pacman.view.TextureFactory;
@@ -46,6 +47,7 @@ public class GameScreen implements Screen {
         GUIcamera.position.set(0, 0, 0);
         GUIcamera.setToOrtho(true);
         GUIcamera.update();
+        SoundManager.getInstance().getBeginningMusic().play();
     }
 
     @Override

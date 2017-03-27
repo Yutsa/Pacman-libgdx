@@ -23,6 +23,10 @@ public class SoundManager {
             Gdx.files.internal("sounds/pacman_death.ogg")
     );
 
+    private Sound beginningMusic = Gdx.audio.newSound(
+            Gdx.files.internal("sounds/pacman_beginning.ogg")
+    );
+
     private SoundManager() {
     }
 
@@ -43,5 +47,9 @@ public class SoundManager {
 
     public Sound getDeadPacmanSound() {
         return deadPacmanSound;
+    }
+
+    public Sound getBeginningMusic() {
+        return beginningMusic;
     }
 }

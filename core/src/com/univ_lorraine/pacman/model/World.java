@@ -40,6 +40,7 @@ public class World implements Iterable<GameElement> {
     private ArrayList<GameElement> mGameElements;
     private static int lifeCounter = 3;
     public static final int maxLife = 3;
+    private float globalPauseTimer = 4;
     public static Vector2D pacmanStartingPosition = new Vector2D(14 * mCoef, 17 * mCoef);
     public static Vector2D redGhostStartingPos = new Vector2D(14 * mCoef, 13 * mCoef);
     public static Vector2D yellowGhostStartingPos = new Vector2D(13 * mCoef, 13 * mCoef);
@@ -195,5 +196,20 @@ public class World implements Iterable<GameElement> {
 
     public static int getCoef() {
         return mCoef;
+    }
+
+    public float getGlobalPauseTimer() {
+        return globalPauseTimer;
+    }
+
+    public void setGlobalPauseTimer(float globalPauseTimer) {
+        this.globalPauseTimer = globalPauseTimer;
+    }
+
+    public void decreaseGlobalPauseTimer(float deltaTime) {
+        globalPauseTimer -= deltaTime;
+        if (globalPauseTimer < 0) {
+            globalPauseTimer = 0;
+        }
     }
 }

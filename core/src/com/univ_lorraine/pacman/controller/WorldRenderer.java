@@ -79,8 +79,15 @@ public class WorldRenderer implements InputProcessor {
 
     public boolean isPaused(float deltaTime) {
         Pacman pacman = mWorld.getPacman();
-        pacman.decreaseDeadCounter(deltaTime);
-        return pacman.getDeadCounter() > 0;
+        if (pacman.getDeadCounter() > 0) {
+            pacman.decreaseDeadCounter(deltaTime);
+            return true;
+        }
+        if (mWorld.getGlobalPauseTimer() > 0) {
+            mWorld.decreaseGlobalPauseTimer(deltaTime);
+            return true;
+        }
+        return false;
     }
 
     public void setLag(int millis) {
