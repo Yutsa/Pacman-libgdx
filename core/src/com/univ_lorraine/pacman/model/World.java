@@ -1,10 +1,12 @@
 package com.univ_lorraine.pacman.model;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import com.univ_lorraine.pacman.controller.GhostAI;
 import com.univ_lorraine.pacman.controller.GhostMoveController;
 import com.univ_lorraine.pacman.controller.PacmanMoveController;
 import com.univ_lorraine.pacman.controller.RandomAI;
 import com.univ_lorraine.pacman.controller.SearchPacmanAI;
+import com.univ_lorraine.pacman.controller.ShortestPathAI;
 import com.univ_lorraine.pacman.controller.SwitchAI;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class World implements Iterable<GameElement> {
     private float globalPauseTimer = 4;
     public static Vector2D pacmanStartingPosition = new Vector2D(14 * mCoef, 17 * mCoef);
     public static Vector2D redGhostStartingPos = new Vector2D(14 * mCoef, 13 * mCoef);
+    public static Vector2D blueGhostStartingPos = new Vector2D(14 * mCoef, 14 * mCoef);
     public static Vector2D yellowGhostStartingPos = new Vector2D(13 * mCoef, 13 * mCoef);
     public static Vector2D pinkGhostStartingPos = new Vector2D(13 * mCoef, 14 * mCoef);
 
@@ -80,16 +83,19 @@ public class World implements Iterable<GameElement> {
         RedGhost redGhost = new RedGhost(new Vector2D(redGhostStartingPos), this, 500);
         YellowGhost yellowGhost = new YellowGhost(new Vector2D(yellowGhostStartingPos), this, 500);
         PinkGhost pinkGhost = new PinkGhost(new Vector2D(pinkGhostStartingPos), this, 500);
+        BlueGhost blueGhost = new BlueGhost(new Vector2D(blueGhostStartingPos), this, 500);
 
         mGameElements = new ArrayList<GameElement>();
         mGameElements.add(mPacman);
         mGameElements.add(redGhost);
         mGameElements.add(yellowGhost);
         mGameElements.add(pinkGhost);
+        mGameElements.add(blueGhost);
 
         mGhosts.add(pinkGhost);
         mGhosts.add(yellowGhost);
         mGhosts.add(redGhost);
+        mGhosts.add(blueGhost);
 
         for (Ghost ghost : mGhosts) {
             ghost.setMovementController(new GhostMoveController(this, ghost));
@@ -98,6 +104,11 @@ public class World implements Iterable<GameElement> {
         pinkGhost.initAI(new SwitchAI(pinkGhost));
         yellowGhost.initAI(new SearchPacmanAI(yellowGhost));
         redGhost.initAI(new RandomAI(redGhost));
+        blueGhost.initAI(new ShortestPathAI(blueGhost));
+        GhostAI defaultAI = blueGhost.getDefaultAI();
+        if (defaultAI instanceof ShortestPathAI) {
+            ((ShortestPathAI) defaultAI).setGoal(mPacman.getPosition());
+        }
     }
 
     public ArrayList<Ghost> getGhosts() {

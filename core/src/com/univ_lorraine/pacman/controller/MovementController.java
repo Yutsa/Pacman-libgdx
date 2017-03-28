@@ -17,6 +17,7 @@ import com.univ_lorraine.pacman.model.World;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -74,36 +75,36 @@ public abstract class MovementController {
         throw new IllegalArgumentException("Unrecognized Direction.");
     }
 
-    public GameElement getNextUpElement(Vector2D position) {
+    public MazeElement getNextUpElement(Vector2D position) {
         return mWorld.getMaze().getBlock(
                 position.getX() / mCoef,
                 (int) Math.ceil((position.getY() / ((float) mCoef))) - 1);
     }
 
-    public GameElement getNextDownElement(Vector2D position) {
+    public MazeElement getNextDownElement(Vector2D position) {
         return mWorld.getMaze().getBlock(
                 position.getX() / mCoef,
                 (position.getY() / mCoef) + 1);
     }
 
-    public GameElement getNextRightElement(Vector2D position) {
+    public MazeElement getNextRightElement(Vector2D position) {
         return mWorld.getMaze().getBlock(
                 (position.getX() / mCoef) + 1,
                 position.getY() / mCoef);
     }
 
-    public GameElement getNextLeftElement(Vector2D position) {
+    public MazeElement getNextLeftElement(Vector2D position) {
         return mWorld.getMaze().getBlock(
                 (int) Math.ceil((position.getX() / ((float) mCoef)) - 1),
                 position.getY() / mCoef);
     }
 
-    public HashMap<Direction, GameElement>
+    public HashMap<Direction, MazeElement>
     getPossibleDirections(Vector2D position, Direction direction) {
-        HashMap<Direction, GameElement> possibleDirections
-                = new HashMap<Direction, GameElement>();
+        HashMap<Direction, MazeElement> possibleDirections
+                = new HashMap<Direction, MazeElement>();
 
-        GameElement element = getNextLeftElement(position);
+        MazeElement element = getNextLeftElement(position);
         if (!(element instanceof Block) && direction != Direction.RIGHT
                 && !(element instanceof GhostHouseTile)) {
             possibleDirections.put(Direction.LEFT, element);
@@ -128,6 +129,57 @@ public abstract class MovementController {
         }
 
         return possibleDirections;
+    }
+
+    public LinkedList<MazeElement>
+    getAvailableBlocks(Vector2D position) {
+        LinkedList<MazeElement> possibleDirections
+                = new LinkedList<MazeElement>();
+
+        MazeElement element = getNextLeftElement(position);
+        if (!(element instanceof Block)
+                && !(element instanceof GhostHouseTile)) {
+            possibleDirections.add(element);
+        }
+
+        element = getNextRightElement(position);
+        if (!(element instanceof Block)
+                && !(element instanceof GhostHouseTile)) {
+            possibleDirections.add(element);
+        }
+
+        element = getNextUpElement(position);
+        if (!(element instanceof Block)
+                && !(element instanceof GhostHouseTile)) {
+            possibleDirections.add(element);
+        }
+
+        element = getNextDownElement(position);
+        if (!(element instanceof Block)
+                && !(element instanceof GhostHouseTile)) {
+            possibleDirections.add(element);
+        }
+
+        return possibleDirections;
+    }
+
+    public Map.Entry<Direction, MazeElement>
+    getBlockWithSmallestLabel(Vector2D position, Direction direction) {
+        HashMap<Direction, MazeElement> availableBlocks
+                = getPossibleDirections(position, direction);
+
+        Map.Entry<Direction, MazeElement> result = null;
+        int min = Integer.MAX_VALUE;
+
+        for (Map.Entry<Direction, MazeElement> entry : availableBlocks.entrySet()) {
+            int shortestPathLabel = entry.getValue().getShortestPathLabel();
+            if (shortestPathLabel < min) {
+                result = entry;
+                min = entry.getValue().getShortestPathLabel();
+            }
+        }
+
+        return result;
     }
 
     public double getDistance(Vector2D position1, Vector2D position2) {
@@ -328,15 +380,33 @@ public abstract class MovementController {
     /**
      * Labels every MazeElement to find the shortest path.
      */
-    public void FindShortestPath(Vector2D positionObjective,
-                                 MovementController movementController) {
+    public void findShortestPath(Vector2D positionObjective) {
         for (GameElement gameElement : mWorld.getMaze()) {
             if (gameElement instanceof MazeElement) {
                 MazeElement mazeElement = (MazeElement) gameElement;
-
+                mazeElement.setShortestPathLabel(Integer.MAX_VALUE);
             }
         }
         Queue<MazeElement> blockQueue = new LinkedList<MazeElement>();
         MazeElement beginningBlock = getElementAtPosition(positionObjective);
+        MazeElement currentBlock;
+        LinkedList<MazeElement> neighboursBlocks;
+        int label = 0;
+
+        blockQueue.add(beginningBlock);
+        beginningBlock.setShortestPathLabel(label);
+
+        while (!blockQueue.isEmpty()) {
+            currentBlock = blockQueue.remove();
+            label = currentBlock.getShortestPathLabel() + 1;
+            neighboursBlocks = getAvailableBlocks(currentBlock.getPosition());
+            for (MazeElement neighbour : neighboursBlocks) {
+                if (neighbour.getShortestPathLabel() == Integer.MAX_VALUE) {
+                    blockQueue.add(neighbour);
+                    neighbour.setShortestPathLabel(label);
+                }
+            }
+
+        }
     }
 }

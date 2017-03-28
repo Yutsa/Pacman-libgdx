@@ -82,6 +82,10 @@ public abstract class Ghost extends MovableGameElement {
         this.usedAI = usedAI;
     }
 
+    public GhostAI getDefaultAI() {
+        return defaultAI;
+    }
+
     public void useAI() {
         usedAI.setDirection(this);
     }

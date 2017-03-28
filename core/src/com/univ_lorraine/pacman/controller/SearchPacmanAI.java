@@ -1,7 +1,7 @@
 package com.univ_lorraine.pacman.controller;
 
-import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
+import com.univ_lorraine.pacman.model.MazeElement;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Pacman;
@@ -23,7 +23,7 @@ public class SearchPacmanAI extends GhostAI {
     public void setDirection(MovableGameElement movableGameElement) {
         if (mMovementController.isAtIntersection(movableGameElement.getPosition(),
                 movableGameElement.getCurrentDirection())) {
-            HashMap<Direction, GameElement> availableDirections;
+            HashMap<Direction, MazeElement> availableDirections;
             Pacman pacman = mMovementController.getWorld().getPacman();
             Vector2D position = movableGameElement.getPosition();
 
@@ -34,7 +34,7 @@ public class SearchPacmanAI extends GhostAI {
                     movableGameElement.getCurrentDirection());
 
 
-            for (Map.Entry<Direction, GameElement> entry : availableDirections.entrySet()) {
+            for (Map.Entry<Direction, MazeElement> entry : availableDirections.entrySet()) {
                 double distance = mMovementController.getDistance(entry.getValue().getPosition(),
                         pacman.getPosition());
                 if (distance < min) {

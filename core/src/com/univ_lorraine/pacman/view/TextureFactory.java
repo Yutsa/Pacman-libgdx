@@ -76,6 +76,7 @@ public class TextureFactory {
         ((GhostTextureWrapper) mTextureMap.get(PinkGhost.class)).update(deltaTime);
         ((GhostTextureWrapper) mTextureMap.get(RedGhost.class)).update(deltaTime);
         ((GhostTextureWrapper) mTextureMap.get(YellowGhost.class)).update(deltaTime);
+        ((GhostTextureWrapper) mTextureMap.get(BlueGhost.class)).update(deltaTime);
     }
 
     /**
