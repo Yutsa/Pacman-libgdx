@@ -58,8 +58,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        Gdx.app.log(getClass().getSimpleName(), "Size avant = " + mWorldRenderer.getSize());
+
         mWorldRenderer.setSize(Math.min(mCamera.viewportWidth / mWorld.getWidth(),
                 mCamera.viewportHeight / mWorld.getHeight()));
+        
+        Gdx.app.log(getClass().getSimpleName(), "Size après = " + mWorldRenderer.getSize());
 
         mCamera.viewportWidth = 30;
         mCamera.viewportHeight = 35f * height/width;
