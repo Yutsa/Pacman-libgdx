@@ -2,6 +2,7 @@ package com.univ_lorraine.pacman.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -76,7 +77,8 @@ public class EndScreen implements Screen, InputProcessor {
         else {
             text = "Vous avez perdu !";
         }
-        text = text + "\nScore = " + score + "\n Appuyez sur un touche pour rejouer";
+        text = text + "\nScore = " + score + "\n Appuyez sur Q pour quitter.\n" +
+                "Appuyez sur une autre touche pour rejouer";
         font.draw(batch, text, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0,
                 Align.center, false);
         batch.end();
@@ -111,6 +113,9 @@ public class EndScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.Q) {
+            Gdx.app.exit();
+        }
         replay();
         return false;
     }
