@@ -330,6 +330,12 @@ public abstract class MovementController {
      */
     public void FindShortestPath(Vector2D positionObjective,
                                  MovementController movementController) {
+        for (GameElement gameElement : mWorld.getMaze()) {
+            if (gameElement instanceof MazeElement) {
+                MazeElement mazeElement = (MazeElement) gameElement;
+
+            }
+        }
         Queue<MazeElement> blockQueue = new LinkedList<MazeElement>();
         MazeElement beginningBlock = getElementAtPosition(positionObjective);
     }

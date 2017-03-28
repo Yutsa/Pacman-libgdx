@@ -161,8 +161,8 @@ public class Maze implements Iterable<GameElement> {
             }
 
             @Override
-            public GameElement next() {
-                GameElement gameElement;
+            public MazeElement next() {
+                MazeElement gameElement;
                 gameElement = Maze.this.blocks[x][y];
                 x++;
                 if (x >= Maze.this.width) {
