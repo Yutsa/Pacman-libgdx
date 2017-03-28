@@ -1,7 +1,6 @@
 package com.univ_lorraine.pacman.screens;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -58,23 +57,16 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        Gdx.app.log(getClass().getSimpleName(), "Size avant = " + mWorldRenderer.getSize());
-
-        mWorldRenderer.setSize(Math.min(mCamera.viewportWidth / mWorld.getWidth(),
-                mCamera.viewportHeight / mWorld.getHeight()));
-        
-        Gdx.app.log(getClass().getSimpleName(), "Size après = " + mWorldRenderer.getSize());
-
         mCamera.viewportWidth = 30;
         mCamera.viewportHeight = 35f * height/width;
         mCamera.position.set(0, 0, 0);
         mCamera.update();
 
-        GUIcamera.viewportHeight = VIEWPORT_GUI_HEIGHT;
-        GUIcamera.viewportWidth = (VIEWPORT_GUI_HEIGHT / (float) height) * (float) width;
-        GUIcamera.position.set(GUIcamera.viewportWidth / 2, GUIcamera.viewportHeight / 2, 0);
+        mWorldRenderer.setSize(Math.min(mCamera.viewportWidth / mWorld.getWidth(),
+                mCamera.viewportHeight / mWorld.getHeight()));
+        
+        GUIcamera.viewportHeight = VIEWPORT_GUI_HEIGHT * (width / height);
         GUIcamera.update();
-        Gdx.app.log(getClass().getSimpleName(), "Pos = " + GUIcamera.position);
     }
 
     public void renderGUISCore (SpriteBatch batch) {

@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
@@ -15,13 +16,27 @@ import com.badlogic.gdx.utils.Align;
  */
 
 public class LoadingScreen implements Screen, InputProcessor {
+    private final int mViewportWidth;
+    private final int mViewportHeight;
     private BitmapFont font;
     private SpriteBatch batch;
     private Game mGame;
+    private OrthographicCamera mCamera;
 
     public LoadingScreen(Game game) {
         mGame = game;
         Gdx.input.setInputProcessor(this);
+        mViewportWidth = 300;
+        mViewportHeight = 200;
+        createCamera();
+    }
+
+    public void createCamera() {
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+        mCamera = new OrthographicCamera(mViewportWidth, mViewportHeight * (h / w));
+        mCamera.setToOrtho(false, mViewportWidth, mViewportHeight);
+        mCamera.update();
     }
 
     @Override
@@ -33,19 +48,25 @@ public class LoadingScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        String text;
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        text = "PACMAN";
+        renderWelcomeInstructions(batch);
+        batch.end();
+    }
+
+    public void renderWelcomeInstructions(SpriteBatch batch) {
+        String text = "PACMAN";
         text = text + "\nAppuyez sur n'importe quelle touche pour commencer.";
         font.draw(batch, text, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0,
                 Align.center, false);
-        batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
+        mCamera.viewportHeight = mViewportHeight * (width / height);
+        mCamera.position.set(mCamera.viewportWidth / 2, mCamera.viewportHeight / 2, 0);
+        mCamera.update();
     }
 
     @Override

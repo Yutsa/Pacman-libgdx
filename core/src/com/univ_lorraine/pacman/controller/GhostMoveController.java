@@ -119,6 +119,8 @@ public class GhostMoveController extends MovementController {
         }
 
         fixPosition(movableGameElement);
+
+//        checkLocked();
     }
 
     @Override
@@ -131,6 +133,13 @@ public class GhostMoveController extends MovementController {
         else {
             epsilon = 0.45;
         }
-        Gdx.app.log(getClass().getSimpleName(), "Epsilon : " + epsilon);
+    }
+
+    public void checkLocked() {
+        if (mGhost.getPosition().getX() % 100 <= epsilon * 10
+                || mGhost.getPosition().getY() % 100 <= epsilon * 10) {
+            Gdx.app.log(getClass().getSimpleName(), "Bloqué en : " + mGhost.getPosition()
+                    + " avec un epsilon de " + epsilon);
+        }
     }
 }
