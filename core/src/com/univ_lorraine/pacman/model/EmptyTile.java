@@ -4,7 +4,7 @@ package com.univ_lorraine.pacman.model;
  * @author Édouard WILLISSECK
  */
 
-public class EmptyTile extends GameElement {
+public class EmptyTile extends MazeElement {
     /**
      * Creates a GameElement with a mPosition and a mWorld.
      *

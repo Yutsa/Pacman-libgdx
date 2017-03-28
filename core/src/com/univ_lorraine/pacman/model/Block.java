@@ -4,7 +4,7 @@ package com.univ_lorraine.pacman.model;
  * The class representing a block in the pacman game.
  */
 
-public class Block extends GameElement {
+public class Block extends MazeElement {
 
     /**
      * Creates a block at a given mPosition in a given mWorld.

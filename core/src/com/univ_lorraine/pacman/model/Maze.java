@@ -28,7 +28,7 @@ public class Maze implements Iterable<GameElement> {
     /**
      * The blocks GameElement composing the maze.
      */
-    private GameElement[][] blocks;
+    private MazeElement[][] blocks;
     /**
      * The number of pellets on the map.
      */
@@ -105,7 +105,7 @@ public class Maze implements Iterable<GameElement> {
      * @param y The y-axis coordinate of the block to get.
      * @return Gets the block at the coordinates given.
      */
-    public GameElement getBlock(int x, int y) {
+    public MazeElement getBlock(int x, int y) {
         if (x >= width) {
             x = width - 1;
             Gdx.app.log(Maze.class.getSimpleName(), "Changed x to " + x);
@@ -130,7 +130,7 @@ public class Maze implements Iterable<GameElement> {
      * @param x           the x-axis coordinate of the element to change.
      * @param y           the y-axis coordinate of the element to change.
      */
-    public void setBlock(GameElement gameElement, int x, int y) {
+    public void setBlock(MazeElement gameElement, int x, int y) {
         blocks[x][y] = gameElement;
     }
 
@@ -187,7 +187,7 @@ public class Maze implements Iterable<GameElement> {
     public void loadDemoLevel(int coeff) {
         setWidth(28);
         setHeight(31);
-        blocks = new GameElement[width][height];
+        blocks = new MazeElement[width][height];
         FileHandle handle = Gdx.files.internal("levels/base_lvl.txt");
         InputStream stream = handle.read();
         try {

@@ -4,7 +4,7 @@ package com.univ_lorraine.pacman.model;
  * @author Édouard WILLISSECK
  */
 
-public class BasicPellet extends GameElement {
+public class BasicPellet extends MazeElement {
     /**
      * Creates a GameElement with a mPosition and a mWorld.
      *

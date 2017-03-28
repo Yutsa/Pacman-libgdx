@@ -7,6 +7,7 @@ import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.GhostHouseTile;
 import com.univ_lorraine.pacman.model.Maze;
+import com.univ_lorraine.pacman.model.MazeElement;
 import com.univ_lorraine.pacman.model.MovableGameElement;
 import com.univ_lorraine.pacman.model.MovableGameElement.Direction;
 import com.univ_lorraine.pacman.model.Pacman;
@@ -15,6 +16,8 @@ import com.univ_lorraine.pacman.model.Vector2D;
 import com.univ_lorraine.pacman.model.World;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author Édouard WILLISSECK
@@ -208,6 +211,17 @@ public abstract class MovementController {
     }
 
     /**
+     * Gets the {@link GameElement} at the element's position.
+     * @param position The position.
+     * @return The {@link GameElement} at element's position.
+     */
+    public MazeElement getElementAtPosition(Vector2D position) {
+        int x = position.getX() / mCoef;
+        int y = position.getY() / mCoef;
+        return mWorld.getMaze().getBlock(x, y);
+    }
+
+    /**
      * Gets the rounded position.
      * @param position The raw position.
      * @return The rounded position
@@ -310,4 +324,13 @@ public abstract class MovementController {
     public abstract void moveElement(MovableGameElement movableGameElement, float deltaTime);
 
     public abstract void updateEpsilon(float deltaTime);
+
+    /**
+     * Labels every MazeElement to find the shortest path.
+     */
+    public void FindShortestPath(Vector2D positionObjective,
+                                 MovementController movementController) {
+        Queue<MazeElement> blockQueue = new LinkedList<MazeElement>();
+        MazeElement beginningBlock = getElementAtPosition(positionObjective);
+    }
 }

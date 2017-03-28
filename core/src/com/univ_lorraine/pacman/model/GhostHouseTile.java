@@ -4,7 +4,7 @@ package com.univ_lorraine.pacman.model;
  * @author Édouard WILLISSECK
  */
 
-public class GhostHouseTile extends GameElement {
+public class GhostHouseTile extends MazeElement {
     /**
      * Creates a GameElement with a mPosition and a mWorld.
      *
