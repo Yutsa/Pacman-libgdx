@@ -1,9 +1,9 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
 import com.univ_lorraine.pacman.model.MazeElement;
 import com.univ_lorraine.pacman.model.MovableGameElement;
-import com.univ_lorraine.pacman.model.Vector2D;
 
 import java.util.Map;
 
@@ -14,16 +14,21 @@ import static com.univ_lorraine.pacman.model.MovableGameElement.Direction;
  */
 
 public class ShortestPathAI extends GhostAI {
-    private Vector2D goal;
+    private GameElement goal;
     public ShortestPathAI(Ghost ghost) {
         super(ghost);
     }
 
-    public Vector2D getGoal() {
+    public ShortestPathAI(Ghost ghost, GameElement goal) {
+        super(ghost);
+        setGoal(goal);
+    }
+
+    public GameElement getGoal() {
         return goal;
     }
 
-    public void setGoal(Vector2D goal) {
+    public void setGoal(GameElement goal) {
         this.goal = goal;
     }
 
@@ -31,7 +36,7 @@ public class ShortestPathAI extends GhostAI {
     public void setDirection(MovableGameElement movableGameElement) {
         if (mMovementController.isAtIntersection(movableGameElement.getPosition(),
                 movableGameElement.getCurrentDirection())) {
-            mMovementController.findShortestPath(goal);
+            mMovementController.findShortestPath(goal.getPosition());
             Map.Entry<Direction, MazeElement> result = mMovementController.getBlockWithSmallestLabel(
                     movableGameElement.getPosition(),
                     movableGameElement.getCurrentDirection()

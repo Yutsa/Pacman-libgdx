@@ -55,7 +55,8 @@ public class TextureFactory {
         mTextureMap.put(EmptyTile.class, new DefaultTextureWrapper(emptyTexture));
         mTextureMap.put(BasicPellet.class, new DefaultTextureWrapper(basicPelletTexture));
         mTextureMap.put(GhostHouseTile.class, new DefaultTextureWrapper(emptyTexture));
-        mTextureMap.put(SuperPellet.class, new DefaultTextureWrapper(superPellet));
+
+        mTextureMap.put(SuperPellet.class, new SuperPelletTextureWrapper());
     }
 
     /**
@@ -77,6 +78,7 @@ public class TextureFactory {
         ((GhostTextureWrapper) mTextureMap.get(RedGhost.class)).update(deltaTime);
         ((GhostTextureWrapper) mTextureMap.get(YellowGhost.class)).update(deltaTime);
         ((GhostTextureWrapper) mTextureMap.get(BlueGhost.class)).update(deltaTime);
+        ((SuperPelletTextureWrapper) mTextureMap.get(SuperPellet.class)).update(deltaTime);
     }
 
     /**

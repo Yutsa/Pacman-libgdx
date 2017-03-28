@@ -1,7 +1,6 @@
 package com.univ_lorraine.pacman.model;
 
 import com.badlogic.gdx.utils.TimeUtils;
-import com.univ_lorraine.pacman.controller.GhostAI;
 import com.univ_lorraine.pacman.controller.GhostMoveController;
 import com.univ_lorraine.pacman.controller.PacmanMoveController;
 import com.univ_lorraine.pacman.controller.RandomAI;
@@ -104,11 +103,7 @@ public class World implements Iterable<GameElement> {
         pinkGhost.initAI(new SwitchAI(pinkGhost));
         yellowGhost.initAI(new SearchPacmanAI(yellowGhost));
         redGhost.initAI(new RandomAI(redGhost));
-        blueGhost.initAI(new ShortestPathAI(blueGhost));
-        GhostAI defaultAI = blueGhost.getDefaultAI();
-        if (defaultAI instanceof ShortestPathAI) {
-            ((ShortestPathAI) defaultAI).setGoal(mPacman.getPosition());
-        }
+        blueGhost.initAI(new ShortestPathAI(blueGhost, mPacman));
     }
 
     public ArrayList<Ghost> getGhosts() {
