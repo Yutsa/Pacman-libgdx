@@ -1,6 +1,8 @@
 package com.univ_lorraine.pacman.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,22 +10,41 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
+import com.univ_lorraine.pacman.model.World;
+import com.univ_lorraine.pacman.view.TextureFactory;
 
 /**
  * @author Édouard WILLISSECK
  */
 
-public class EndScreen implements Screen {
+public class EndScreen implements Screen, InputProcessor {
     private BitmapFont font;
     private SpriteBatch batch;
     private boolean won;
     private OrthographicCamera mCamera;
     private int score;
+    private World mWorld;
+    private Game mGame;
 
-    public EndScreen(boolean won, int score) {
+    public EndScreen(boolean won, int score, World world, Game game) {
         this.won = won;
         setScore(score);
+        setGame(game);
+        setWorld(world);
+        Gdx.input.setInputProcessor(this);
         init();
+    }
+
+    public World getWorld() {
+        return mWorld;
+    }
+
+    public void setWorld(World world) {
+        mWorld = world;
+    }
+
+    public void setGame(Game game) {
+        mGame = game;
     }
 
     public void setScore(int score) {
@@ -55,7 +76,7 @@ public class EndScreen implements Screen {
         else {
             text = "Vous avez perdu !";
         }
-        text = text + "\nScore = " + score;
+        text = text + "\nScore = " + score + "\n Appuyez sur un touche pour rejouer";
         font.draw(batch, text, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0,
                 Align.center, false);
         batch.end();
@@ -86,5 +107,53 @@ public class EndScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        replay();
+        return false;
+    }
+
+    public void replay() {
+        TextureFactory.getInstance().resetTextureFactory();
+        GameScreen screen = new GameScreen(mGame);
+        mGame.setScreen(screen);
+        screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

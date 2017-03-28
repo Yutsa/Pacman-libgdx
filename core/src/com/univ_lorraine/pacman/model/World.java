@@ -22,7 +22,7 @@ public class World implements Iterable<GameElement> {
     /**
      * The Maze of this world.
      */
-    private final Maze mMaze;
+    private Maze mMaze;
     /**
      * The coefficient by which the logical world is bigger than the onscreen world.
      */
@@ -34,7 +34,7 @@ public class World implements Iterable<GameElement> {
     /**
      * The time at which the game started.
      */
-    final long startTime;
+    long startTime;
     /**
      * The GameElements in this world.
      */
@@ -57,6 +57,7 @@ public class World implements Iterable<GameElement> {
         mPacman.setMovementController(new PacmanMoveController(this));
         mMaze = new Maze(this);
         startTime = TimeUtils.millis();
+        setLifeCounter(maxLife);
     }
 
     public static Vector2D getPacmanStartingPosition() {

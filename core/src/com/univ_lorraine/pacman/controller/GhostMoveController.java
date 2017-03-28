@@ -1,5 +1,6 @@
 package com.univ_lorraine.pacman.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.univ_lorraine.pacman.model.Block;
 import com.univ_lorraine.pacman.model.GameElement;
 import com.univ_lorraine.pacman.model.Ghost;
@@ -66,7 +67,6 @@ public class GhostMoveController extends MovementController {
         return possibleDirections;
     }
 
-    // TODO: 26/03/17 Red ghost is sometimes blocked with the RIGHT direction when wanting to go up.
     @Override
     public void checkWantedDirection(MovableGameElement movableGameElement, Direction wantedDirection) {
         GameElement nextBlock = getNextElement(movableGameElement.getPosition(),
@@ -131,5 +131,6 @@ public class GhostMoveController extends MovementController {
         else {
             epsilon = 0.45;
         }
+        Gdx.app.log(getClass().getSimpleName(), "Epsilon : " + epsilon);
     }
 }

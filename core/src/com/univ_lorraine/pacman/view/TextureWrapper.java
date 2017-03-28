@@ -39,6 +39,10 @@ public abstract class TextureWrapper implements ITexturable {
     }
 
     public abstract void update(float deltaTime);
+
+    public void resetWrapper() {
+        this.wrappedObject = null;
+    }
     @Override
     public abstract Texture getTexture();
 }

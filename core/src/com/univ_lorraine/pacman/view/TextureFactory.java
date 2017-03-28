@@ -103,4 +103,12 @@ public class TextureFactory {
     public Texture getLivesTexture() {
         return livesTexture;
     }
+
+    public void resetTextureFactory() {
+        for (ITexturable texturable : mTextureMap.values()) {
+            if (texturable instanceof TextureWrapper) {
+                ((TextureWrapper) texturable).resetWrapper();
+            }
+        }
+    }
 }

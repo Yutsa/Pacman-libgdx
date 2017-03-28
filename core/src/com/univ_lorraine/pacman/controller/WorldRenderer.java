@@ -108,11 +108,11 @@ public class WorldRenderer implements InputProcessor {
     public void checkEndGame() {
         if (mWorld.getMaze().getPelletNumber() == 0) {
             Gdx.app.log(WorldRenderer.class.getSimpleName(), "Vous avez gagné !");
-            mGame.setScreen(new EndScreen(true, mWorld.getScore()));
+            mGame.setScreen(new EndScreen(true, mWorld.getScore(), mWorld, mGame));
         }
         else if (World.getLifeCounter() <= 0) {
             Gdx.app.log(getClass().getSimpleName(), "Vous avez perdu !");
-            mGame.setScreen(new EndScreen(false, mWorld.getScore()));
+            mGame.setScreen(new EndScreen(false, mWorld.getScore(), mWorld, mGame));
         }
     }
 
